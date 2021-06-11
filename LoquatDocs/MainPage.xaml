@@ -11,7 +11,7 @@
   <Border>
     <Page xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
       <Grid>
-        <muxc:NavigationView x:Name="NavView">
+        <muxc:NavigationView x:Name="NavView" IsPaneOpen="False">
           <muxc:NavigationView.MenuItems>
             <muxc:NavigationViewItem Tag="home" Icon="Home" Content="Home"/>
             <muxc:NavigationViewItemSeparator/>
@@ -31,14 +31,12 @@
           </muxc:NavigationView.MenuItems>
 
           <muxc:NavigationView.AutoSuggestBox>
-            <!-- See AutoSuggestBox documentation for
-                 more info about how to implement search. -->
             <AutoSuggestBox x:Name="NavViewSearchBox" QueryIcon="Find"/>
           </muxc:NavigationView.AutoSuggestBox>
 
           <ScrollViewer>
             <StackPanel Padding="30">
-              <TextBlock Text="New Customer" Style="{StaticResource TitleTextBlockStyle}"/>
+              <TextBlock x:Uid="LoquatDocsTitle" Style="{StaticResource TitleTextBlockStyle}"/>
               <Button CornerRadius="0" Height="100" Width="100" Background="LightGray" Content="Add photo" Margin="0,24" Click="Button_Click_2"/>
               <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
               <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
