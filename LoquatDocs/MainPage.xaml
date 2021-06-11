@@ -8,7 +8,75 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+  <Border>
+    <Page xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
+      <Grid>
+        <muxc:NavigationView x:Name="NavView">
+          <muxc:NavigationView.MenuItems>
+            <muxc:NavigationViewItem Tag="home" Icon="Home" Content="Home"/>
+            <muxc:NavigationViewItemSeparator/>
+            <muxc:NavigationViewItemHeader x:Name="MainPagesHeader"
+                                           Content="Main pages"/>
+            <muxc:NavigationViewItem Tag="apps" Content="Apps">
+              <muxc:NavigationViewItem.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB3C;"/>
+              </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Tag="games" Content="Games">
+              <muxc:NavigationViewItem.Icon>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7FC;"/>
+              </muxc:NavigationViewItem.Icon>
+            </muxc:NavigationViewItem>
+            <muxc:NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
+          </muxc:NavigationView.MenuItems>
+
+          <muxc:NavigationView.AutoSuggestBox>
+            <!-- See AutoSuggestBox documentation for
+                 more info about how to implement search. -->
+            <AutoSuggestBox x:Name="NavViewSearchBox" QueryIcon="Find"/>
+          </muxc:NavigationView.AutoSuggestBox>
+
+          <ScrollViewer>
+            <StackPanel Padding="30">
+              <TextBlock Text="New Customer" Style="{StaticResource TitleTextBlockStyle}"/>
+              <Button CornerRadius="0" Height="100" Width="100" Background="LightGray" Content="Add photo" Margin="0,24" Click="Button_Click_2"/>
+              <TextBox x:Name="Name" Header= "Name" Margin="0,24,0,0" MaxLength="32" Width="400" HorizontalAlignment="Left" InputScope="PersonalFullName"/>
+              <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+              <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+              <TextBox x:Name="Address" Header="Address" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+              <TextBox x:Name="Address2" Margin="0,24,0,0" PlaceholderText="Address 2" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+              <RelativePanel>
+                <TextBox x:Name="City" PlaceholderText="City" Margin="0,24,0,0" MaxLength="50" Width="200" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                <ComboBox x:Name="State" PlaceholderText="State" Margin="24,24,0,0"  Width="100" RelativePanel.RightOf="City">
+                  <x:String>WA</x:String>
+                </ComboBox>
+              </RelativePanel>
+              <TextBox x:Name="ZipCode" PlaceholderText="Zip Code" Margin="0,24,0,0" MaxLength="6" Width="100" HorizontalAlignment="Left" InputScope="Number" />
+              <StackPanel Orientation="Horizontal">
+                <Button CornerRadius="0" Content="Save" Margin="0,24" Click="SaveButton_Click"/>
+                <Button CornerRadius="0" Content="Cancel" Margin="24" Click="CancelButton_Click"/>
+              </StackPanel>
+            </StackPanel>
+          </ScrollViewer>
+        </muxc:NavigationView>
+
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroup>
+            <VisualState>
+              <VisualState.StateTriggers>
+              </VisualState.StateTriggers>
+              <VisualState.Setters>
+                <!-- Remove the next 3 lines for left-only navigation. -->
+                <Setter Target="NavView.PaneDisplayMode" Value="Top"/>
+                <Setter Target="NavViewSearchBox.Width" Value="200"/>
+                <Setter Target="MainPagesHeader.Visibility" Value="Collapsed"/>
+                <!-- Leave the next line for left-only navigation. -->
+                <Setter Target="ContentFrame.Padding" Value="24,0,24,24"/>
+              </VisualState.Setters>
+            </VisualState>
+          </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+      </Grid>
+    </Page>
+  </Border>
 </Page>
