@@ -23,11 +23,6 @@ namespace LoquatDocsTest {
 
     }
 
-    [TestMethod]
-    public async Task TestGetDatabaseFileAsync() {
-      await config.GetDatabaseFileAsync();
-    }
-
     private Mock<ILocalAppSettings> CreateMockedLocalAppSettings() {
       Mock<ILocalAppSettings> mockedSettings = new Mock<ILocalAppSettings>();
 
