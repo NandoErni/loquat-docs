@@ -8,31 +8,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-  <Border>
-    <Page xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
       <Grid>
-        <muxc:NavigationView x:Name="NavView" IsPaneOpen="False">
-          <muxc:NavigationView.MenuItems>
-            <muxc:NavigationViewItem Tag="home" Icon="Home" Content="Home"/>
-            <muxc:NavigationViewItemSeparator/>
-            <muxc:NavigationViewItemHeader x:Name="MainPagesHeader"
+        <NavigationView x:Name="NavView" IsPaneOpen="False">
+          <NavigationView.MenuItems>
+            <NavigationViewItem Tag="home" Icon="Home" Content="Home"/>
+            <NavigationViewItemSeparator/>
+            <NavigationViewItemHeader x:Name="MainPagesHeader"
                                            Content="Main pages"/>
-            <muxc:NavigationViewItem Tag="apps" Content="Apps">
-              <muxc:NavigationViewItem.Icon>
+            <NavigationViewItem Tag="apps" Content="Apps">
+              <NavigationViewItem.Icon>
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB3C;"/>
-              </muxc:NavigationViewItem.Icon>
-            </muxc:NavigationViewItem>
-            <muxc:NavigationViewItem Tag="games" Content="Games">
-              <muxc:NavigationViewItem.Icon>
+              </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Tag="games" Content="Games">
+              <NavigationViewItem.Icon>
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7FC;"/>
-              </muxc:NavigationViewItem.Icon>
-            </muxc:NavigationViewItem>
-            <muxc:NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
-          </muxc:NavigationView.MenuItems>
+              </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Tag="music" Icon="Audio" Content="Music"/>
+          </NavigationView.MenuItems>
 
-          <muxc:NavigationView.AutoSuggestBox>
+          <NavigationView.AutoSuggestBox>
             <AutoSuggestBox x:Name="NavViewSearchBox" QueryIcon="Find"/>
-          </muxc:NavigationView.AutoSuggestBox>
+          </NavigationView.AutoSuggestBox>
 
           <ScrollViewer>
             <StackPanel Padding="30">
@@ -56,7 +54,7 @@
               </StackPanel>
             </StackPanel>
           </ScrollViewer>
-        </muxc:NavigationView>
+        </NavigationView>
 
         <VisualStateManager.VisualStateGroups>
           <VisualStateGroup>
@@ -76,5 +74,3 @@
         </VisualStateManager.VisualStateGroups>
       </Grid>
     </Page>
-  </Border>
-</Page>

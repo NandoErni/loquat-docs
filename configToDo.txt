@@ -1,0 +1,21 @@
+General
+- DB Location -> config
+- Aliases -> db
+- Groups -> db
+- config path (saved in installation dir, rest is saved in config)
+
+For each Documents
+- Tags -> db
+- Groupname -> db
+- path -> db
+- addedDate -> db (now)
+- Document date -> db
+- title -> db
+- is invoice -> db
+	- is payed
+	- due to
+
+Aliases -> db
+- Aliasgroup name
+- actual alias
+	BSP: Synonyms: "Doc", "File", "Document" --> "Doc" is groupname and "File", "Document" are aliases
