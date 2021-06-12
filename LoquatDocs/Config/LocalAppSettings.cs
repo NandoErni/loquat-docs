@@ -16,6 +16,10 @@ namespace LoquatDocs.Config {
       set => SetSetting(DATABASE_FILE_PATH_ID, value);
     }
 
+    public void ClearAllValues() {
+      _localSettings.Values.Clear();
+    }
+
     private string GetSettingOrEmpty(string key) {
       if (_localSettings.Values.TryGetValue(key, out object setting)
           && setting is string) {
