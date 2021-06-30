@@ -37,10 +37,6 @@ namespace LoquatDocs {
     }
 
     private void myButton_Click(object sender, RoutedEventArgs e) {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(null, true)) {
-        ctx.Documents.Add(new EntityFramework.Model.Document() { Path = "Lol", Title = "Yeea" });
-        ctx.SaveChanges();
-      }
     }
 
     private void OnNavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
