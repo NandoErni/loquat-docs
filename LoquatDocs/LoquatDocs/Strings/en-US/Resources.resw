@@ -132,6 +132,9 @@
   <data name="Home.Content" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="ImportDatabase.Content" xml:space="preserve">
+    <value>Import Database</value>
+  </data>
   <data name="List.Content" xml:space="preserve">
     <value>List Documents</value>
   </data>

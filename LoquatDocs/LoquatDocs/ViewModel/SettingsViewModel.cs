@@ -1,6 +1,7 @@
 ﻿using LoquatDocs.EntityFramework;
 using LoquatDocs.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,15 @@ namespace LoquatDocs.ViewModel {
     public string DbPath {
       get => _settings.DbPath;
       set => SetProperty(ref _settings.DbPath, value);
+    }
+
+    public IAsyncRelayCommand CreateNewDatabaseCommand { get; }
+
+    public IAsyncRelayCommand ImportDatabaseCommand { get; }
+
+    public SettingsViewModel() {
+      CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
+      ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
     }
 
     public async Task PickDbFile() {
