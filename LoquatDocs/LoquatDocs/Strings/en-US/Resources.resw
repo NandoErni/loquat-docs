@@ -117,7 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LoquatDocsTitle.Text" xml:space="preserve">
-    <value>Loquat Docs</value>
+  <data name="ConfigAliases.Content" xml:space="preserve">
+    <value>Configure Aliases</value>
+  </data>
+  <data name="ConfigGroups.Content" xml:space="preserve">
+    <value>Configure Groups</value>
+  </data>
+  <data name="CreateNewDatabase.Content" xml:space="preserve">
+    <value>Create new Database</value>
+  </data>
+  <data name="DbPath.Header" xml:space="preserve">
+    <value>Database Path</value>
+  </data>
+  <data name="Home.Content" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="List.Content" xml:space="preserve">
+    <value>List Documents</value>
+  </data>
+  <data name="Search.Content" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Settings.Content" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

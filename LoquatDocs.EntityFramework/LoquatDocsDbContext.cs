@@ -8,12 +8,20 @@ namespace LoquatDocs.EntityFramework {
 
     public DbSet<Document> Documents { get; set; }
 
-    public LoquatDocsDbContext(string dbPath) {
+    public LoquatDocsDbContext(string dbPath, bool createNewDatabase = false) {
       DbPath = dbPath;
+      
+      if (createNewDatabase) {
+        CreateNewDatabase();
+      }
+    }
+
+    public void CreateNewDatabase() {
+      Database.Migrate();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-      optionsBuilder.UseSqlite(DbPath); // todo: db path
+      optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
   }
 }

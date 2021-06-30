@@ -7,7 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+  <NavigationView x:Name="MainNavigationView" IsBackEnabled="False" IsBackButtonVisible="Collapsed" ItemInvoked="OnNavigationViewItemInvoked">
+    <NavigationView.MenuItems>
+      <NavigationViewItem Icon="Find" x:Uid="Search" Tag="search"/>
+      <NavigationViewItem Icon="Home" x:Uid="Home" Tag="home"/>
+      <NavigationViewItem Icon="List" x:Uid="List" Tag="list"/>
+    </NavigationView.MenuItems>
+    <Frame Padding="10,10,10,10" Margin="0,0,0,0" x:Name="ContentFrame"/>
+  </NavigationView>
 </Window>
