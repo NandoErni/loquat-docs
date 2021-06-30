@@ -15,15 +15,15 @@ namespace LoquatDocs.EntityFramework {
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    public LoquatDocsDbContext(string dbPath = DEFAULT_DATABASE_PATH, bool createNewDatabase = false) {
+    public LoquatDocsDbContext(string dbPath = DEFAULT_DATABASE_PATH, bool createOrUpdateDatabase = false) {
       DbPath = dbPath;
       
-      if (createNewDatabase) {
-        CreateNewDatabase();
+      if (createOrUpdateDatabase) {
+        CreateOrUpdateDatabase();
       }
     }
 
-    public void CreateNewDatabase() {
+    public void CreateOrUpdateDatabase() {
       Database.Migrate();
     }
 
@@ -34,6 +34,17 @@ namespace LoquatDocs.EntityFramework {
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
       modelBuilder.Entity<Alias>()
         .HasKey(nameof(Alias.AliasName), nameof(Alias.AliasGroupName));
+
+      SeedData(modelBuilder);
+    }
+
+    private void SeedData(ModelBuilder modelBuilder) {
+      modelBuilder.Entity<Group>().HasData(
+        new Group() { Groupname = "Tax" },
+        new Group() { Groupname = "Banking" },
+        new Group() { Groupname = "Contracts" },
+        new Group() { Groupname = "Career" }
+        );
     }
   }
 }

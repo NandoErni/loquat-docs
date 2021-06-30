@@ -29,9 +29,12 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand ImportDatabaseCommand { get; }
 
+    public IAsyncRelayCommand UpdateDatabaseCommand { get; }
+
     public SettingsViewModel() {
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
       ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
+      UpdateDatabaseCommand = new AsyncRelayCommand(UpdateDatabase);
     }
 
     public async Task PickDbFile() {
@@ -55,6 +58,17 @@ namespace LoquatDocs.ViewModel {
 
       StorageFile db = await databaseFolder.GetFileAsync(DEFAULT_DB_NAME);
       DbPath = db != null ? db.Path : string.Empty;
+    }
+
+    public async Task UpdateDatabase() {
+      if (string.IsNullOrWhiteSpace(DbPath)) {
+        await PickDbFile();
+        if (string.IsNullOrWhiteSpace(DbPath)) {
+          return;
+        }
+      }
+
+      using LoquatDocsDbContext context = new LoquatDocsDbContext(DbPath, true);
     }
 
     private bool DoesDbAlreadyExist(string pickedDbPath) {
