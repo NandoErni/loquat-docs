@@ -9,11 +9,14 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Pages\Forms\DocumentPage.xaml" />
     <None Remove="Pages\HomePage.xaml" />
     <None Remove="Pages\ListDocumentsPage.xaml" />
     <None Remove="Pages\SearchPage.xaml" />
     <None Remove="Settings.xaml" />
+    <None Remove="Strings\en-US\Document.resw" />
     <None Remove="Strings\en-US\Resources.resw" />
+    <None Remove="Strings\en-US\Settings.resw" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PRIResource Include="Strings\en-US\Document.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Settings.resw" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +57,12 @@
 
   <ItemGroup>
     <Page Update="Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Pages\Forms\DocumentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

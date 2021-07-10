@@ -17,6 +17,10 @@ namespace LoquatDocs.Model {
     public static StandardFilePicker DatabaseFilePicker => new StandardFilePicker(new List<string>() { ".loquatdb" });
 
     public StandardFilePicker(List<string> fileTypeFilter) {
+      if (!fileTypeFilter.Any()) {
+        throw new ArgumentException("You need to have atleast one file type filter.");
+      }
+
       _filePicker = new FileOpenPicker();
       _filePicker.ViewMode = PickerViewMode.Thumbnail;
       _filePicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
@@ -24,7 +28,7 @@ namespace LoquatDocs.Model {
       fileTypeFilter.ForEach(filter => _filePicker.FileTypeFilter.Add(filter));
     }
 
-    public async Task<StorageFile> PickDatabaseFileAsync() {
+    public async Task<StorageFile> PickSingleFileAsync() {
       SetWindowHandler(_filePicker);
       return await _filePicker.PickSingleFileAsync();
     }

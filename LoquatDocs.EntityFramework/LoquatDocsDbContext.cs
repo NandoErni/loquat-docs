@@ -1,5 +1,6 @@
 ﻿using LoquatDocs.EntityFramework.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace LoquatDocs.EntityFramework {
   public class LoquatDocsDbContext : DbContext {
@@ -15,16 +16,12 @@ namespace LoquatDocs.EntityFramework {
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    public LoquatDocsDbContext(string dbPath = DEFAULT_DATABASE_PATH, bool createOrUpdateDatabase = false) {
+    public LoquatDocsDbContext(string dbPath = DEFAULT_DATABASE_PATH) { // todo: delete default string
       DbPath = dbPath;
-      
-      if (createOrUpdateDatabase) {
-        CreateOrUpdateDatabase();
-      }
     }
 
-    public void CreateOrUpdateDatabase() {
-      Database.Migrate();
+    public async Task CreateOrUpdateDatabaseAsync() {
+      await Database.MigrateAsync();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
@@ -40,10 +37,7 @@ namespace LoquatDocs.EntityFramework {
 
     private void SeedData(ModelBuilder modelBuilder) {
       modelBuilder.Entity<Group>().HasData(
-        new Group() { Groupname = "Tax" },
-        new Group() { Groupname = "Banking" },
-        new Group() { Groupname = "Contracts" },
-        new Group() { Groupname = "Career" }
+        new Group() { Groupname = "Miscellaneous" }
         );
     }
   }

@@ -9,6 +9,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <ScrollViewer>
-    <TextBlock Text="LoquatDocs" Style="{StaticResource TitleTextBlockStyle}"/>
+
+    <StackPanel>
+      <StackPanel Background="Orange"  HorizontalAlignment="Stretch" Padding="50">
+        <Image HorizontalAlignment="Center" Source="../Assets/loquat_title.png" MaxHeight="150"/>
+      </StackPanel>
+
+      <NavigationView 
+                    VerticalAlignment="Top" 
+                    PaneDisplayMode="Top" IsBackButtonVisible="Collapsed" IsSettingsVisible="False"
+                    ItemInvoked="OnNavigationItemInvoked">
+
+        <NavigationView.MenuItems>
+          <NavigationViewItem Content="Document" x:Name="Document"/>
+          <NavigationViewItem Content="Document Group" x:Name="DocumentGroup"/>
+          <NavigationViewItem Content="Alias" x:Name="Alias"/>
+          <NavigationViewItem Content="Alias Group" x:Name="AliasGroup"/>
+        </NavigationView.MenuItems>
+        <Frame HorizontalAlignment="Stretch" Margin="0" x:Name="ContentFrame"/>
+      </NavigationView>
+
+    </StackPanel>
   </ScrollViewer>
 </Page>

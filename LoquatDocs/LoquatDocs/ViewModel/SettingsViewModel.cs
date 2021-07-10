@@ -1,7 +1,9 @@
 ﻿using LoquatDocs.EntityFramework;
 using LoquatDocs.Model;
+using LoquatDocs.Model.Dialog;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using LoquatDocs.Model.Resource;
 
 namespace LoquatDocs.ViewModel {
   public class SettingsViewModel : ObservableObject {
@@ -40,7 +43,7 @@ namespace LoquatDocs.ViewModel {
     public async Task PickDbFile() {
       StandardFilePicker filePicker = StandardFilePicker.DatabaseFilePicker;
 
-      StorageFile db = await filePicker.PickDatabaseFileAsync();
+      StorageFile db = await filePicker.PickSingleFileAsync();
       DbPath = db != null ? db.Path : string.Empty;
     }
 
@@ -48,13 +51,21 @@ namespace LoquatDocs.ViewModel {
       StandardFolderPicker picker = new StandardFolderPicker();
 
       StorageFolder databaseFolder = await picker.PickSingleFolderAsync();
+
+      if (databaseFolder is null) {
+        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource("Settings", "NoFolderChosen"));
+        return;
+      }
       string databaseFilePath = Path.Combine(databaseFolder.Path, DEFAULT_DB_NAME);
 
       if (DoesDbAlreadyExist(databaseFilePath)) {
+        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource("Settings", "DatabaseAlreadyExists"));
         return;
       }
 
-      using LoquatDocsDbContext context = new LoquatDocsDbContext(databaseFilePath, true);
+      using (LoquatDocsDbContext context = new LoquatDocsDbContext(databaseFilePath)) {
+        await context.CreateOrUpdateDatabaseAsync();
+      }
 
       StorageFile db = await databaseFolder.GetFileAsync(DEFAULT_DB_NAME);
       DbPath = db != null ? db.Path : string.Empty;
@@ -68,7 +79,9 @@ namespace LoquatDocs.ViewModel {
         }
       }
 
-      using LoquatDocsDbContext context = new LoquatDocsDbContext(DbPath, true);
+      using (LoquatDocsDbContext context = new LoquatDocsDbContext(DbPath)) {
+        await context.CreateOrUpdateDatabaseAsync();
+      }
     }
 
     private bool DoesDbAlreadyExist(string pickedDbPath) {

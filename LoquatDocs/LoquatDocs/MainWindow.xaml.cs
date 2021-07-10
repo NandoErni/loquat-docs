@@ -24,19 +24,16 @@ namespace LoquatDocs {
   /// An empty window that can be used on its own or navigated to within a Frame.
   /// </summary>
   public sealed partial class MainWindow : Window {
-    private readonly List<(string Tag, Type PageType)> _pages = new List<(string Tag, Type Page)>
+    private readonly List<(string Name, Type PageType)> _pages = new List<(string Tag, Type Page)>
     {
-        ("home", typeof(HomePage)),
-        ("list", typeof(ListDocumentsPage)),
-        ("search", typeof(SearchPage)),
+        (nameof(Home), typeof(HomePage)),
+        (nameof(List), typeof(ListDocumentsPage)),
+        (nameof(Search), typeof(SearchPage)),
     };
 
     public MainWindow() {
-
       this.InitializeComponent();
-    }
-
-    private void myButton_Click(object sender, RoutedEventArgs e) {
+      Navigate(nameof(Home));
     }
 
     private void OnNavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
@@ -47,8 +44,8 @@ namespace LoquatDocs {
         OnSettingsButtonClicked();
         return;
       }
-      var navItemTag = args.InvokedItemContainer.Tag.ToString();
-      Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
+      var navItemName = args.InvokedItemContainer.Name.ToString();
+      Navigate(navItemName);
     }
 
     private void OnSettingsButtonClicked() {
@@ -57,16 +54,16 @@ namespace LoquatDocs {
       }
     }
 
-    private void Navigate(string navItemTag, NavigationTransitionInfo transitionInfo) {
-      Type page = GetPageType(navItemTag);
+    private void Navigate(string navItemName) {
+      Type page = GetPageType(navItemName);
 
       if (page is not null) {
-        ContentFrame.Navigate(page, null, transitionInfo);
+        ContentFrame.Navigate(page);
       }
     }
 
-    private Type GetPageType(string tag) {
-      return _pages.FirstOrDefault(p => p.Tag.Equals(tag)).PageType;
+    private Type GetPageType(string name) {
+      return _pages.FirstOrDefault(p => p.Name.Equals(name)).PageType;
     }
   }
 }
