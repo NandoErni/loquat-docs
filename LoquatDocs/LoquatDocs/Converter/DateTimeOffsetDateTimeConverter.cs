@@ -2,7 +2,7 @@
 using System;
 
 namespace LoquatDocs.Converter {
-  public class DateTimeToDateTimeOffsetConverter : IValueConverter {
+  public class DateTimeOffsetToDateTimeConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, string language) {
       return new DateTimeOffset((DateTime) value);
     }

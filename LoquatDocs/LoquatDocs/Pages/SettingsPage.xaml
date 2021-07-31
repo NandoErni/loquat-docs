@@ -13,7 +13,7 @@
   </Page.DataContext>
   <ScrollViewer Padding="10">
     <StackPanel HorizontalAlignment="Stretch">
-      <TextBlock Margin="0,0,0,20" Text="Settings" Style="{StaticResource SubheaderTextBlockStyle}"/>
+      <TextBlock Margin="0,0,0,20" x:Uid="SettingsTitle" Style="{StaticResource SubheaderTextBlockStyle}"/>
       <TextBox x:Uid="DbPath" IsReadOnly="True" HorizontalAlignment="Stretch" Text="{x:Bind ViewModel.DbPath, Mode=OneWay}"/>
       <Grid Padding="0,5,0,0" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>

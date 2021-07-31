@@ -1,7 +1,7 @@
 ﻿using LoquatDocs.EntityFramework;
 using LoquatDocs.Model;
 using LoquatDocs.Model.Dialog;
-using Microsoft.ApplicationModel.Resources;
+using LoquatDocs.Model.Resource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -12,11 +12,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using EF = LoquatDocs.EntityFramework.Model;
-using EFConverter = LoquatDocs.Converter.EntityFrameworkModelConverter;
-using LoquatDocs.Model.Resource;
+using EFFactory = LoquatDocs.Converter.EntityFrameworkModelFactory;
 
 namespace LoquatDocs.ViewModel {
   public class DocumentViewModel : ObservableObject {
+
+    private const string RESOURCE_KEY = "Document";
 
     private Document _document = new Document();
 
@@ -88,32 +89,33 @@ namespace LoquatDocs.ViewModel {
 
     public async Task SaveDocumentAsync() {
       if (!IsDocumentValidToSave()) {
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource("Document", "ErrorCantSave"));
+        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource(RESOURCE_KEY, "ErrorCantSave"));
         return;
       }
 
       try {
         await SaveDocumentToDatabaseAsync();
-      } catch (DbUpdateException) {
+      } catch (DbUpdateException exception) {
         // todo: log
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource("Document", "ErrorSavingToDatabase"));
+        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource(RESOURCE_KEY, "ErrorSavingToDatabase"));
         return;
       }
-      await InfoDialog.CreateAndShowSuccessAsync(Resource.GetResource("Document", "SavedSuccessfully"));
+      await InfoDialog.CreateAndShowSuccessAsync(Resource.GetResource(RESOURCE_KEY, "SavedSuccessfully"));
     }
 
     private async Task SaveDocumentToDatabaseAsync() {
       using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
         await AddGroupIfNotExistentAsync(ctx);
-        await ctx.Documents.AddAsync(EFConverter.ConvertToEFDocument(GroupName, Title, DocumentPath, DateOfDocument));
-        await ctx.Tags.AddRangeAsync(EFConverter.ConvertToEFTag(Tags, DocumentPath));
+        await ctx.Documents.AddAsync(EFFactory.CreateDocument(GroupName, Title, DocumentPath, DateOfDocument));
+        await ctx.Tags.AddRangeAsync(EFFactory.CreateTag(Tags, DocumentPath));
 
         if (IsInvoice) {
-          await ctx.Invoices.AddAsync(EFConverter.ConvertToEFInvoice(DocumentPath, InvoiceDueDate, IsPayed));
+          await ctx.Invoices.AddAsync(EFFactory.CreateInvoice(DocumentPath, InvoiceDueDate, IsPayed));
         }
 
         await ctx.SaveChangesAsync();
       }
+      await DiscardDocumentAsync();
     }
 
     private async Task AddGroupIfNotExistentAsync(LoquatDocsDbContext ctx) {
@@ -123,8 +125,8 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task DiscardDocumentAsync() {
-      if (await DecisionDialog.CreateAndShowAsync(Resource.GetResource("Document", "DiscardDocument"), 
-        Resource.GetResource("Document", "DiscardDocumentDecision"))) {
+      if (await DecisionDialog.CreateAndShowAsync(Resource.GetResource(RESOURCE_KEY, "DiscardDocument"), 
+        Resource.GetResource(RESOURCE_KEY, "DiscardDocumentDecision"))) {
         ResetValues();
       }
     }
@@ -133,7 +135,7 @@ namespace LoquatDocs.ViewModel {
       StandardFilePicker picker = StandardFilePicker.UniversalFilePicker;
       StorageFile document = await picker.PickSingleFileAsync();
       if (await DoesDocumentAlreadyExistAsync(document.Path)) {
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetFormattedResource("Document", "DocumentAlreadyExistsAtLocation", document.Path));
+        await InfoDialog.CreateAndShowErrorAsync(Resource.GetFormattedResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation", document.Path));
       } else {
         DocumentPath = document.Path;
       }
@@ -187,7 +189,7 @@ namespace LoquatDocs.ViewModel {
       if (string.IsNullOrWhiteSpace(tag) || Tags.Contains(tag)) {
         return;
       }
-      Tags.Add(tag);
+      Tags.Insert(0, tag);
     }
   }
 }

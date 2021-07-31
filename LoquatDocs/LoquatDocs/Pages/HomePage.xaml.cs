@@ -26,6 +26,9 @@ namespace LoquatDocs.Pages {
     private readonly List<(string Tag, Type PageType)> _pages = new List<(string Tag, Type Page)>
     {
         (nameof(Document), typeof(DocumentPage)),
+        (nameof(DocumentGroup), typeof(DocumentGroupPage)),
+        (nameof(Alias), typeof(AliasPage)),
+        //(nameof(AliasGroup), typeof(AliasGroupPage)),
     };
 
     public HomePage() {

@@ -14,7 +14,7 @@
     <vm:DocumentViewModel x:Name="ViewModel"/>
   </Page.DataContext>
   <Page.Resources>
-    <converter:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter"/>
+    <converter:DateTimeOffsetToDateTimeConverter x:Key="DateTimeOffsetToDateTimeConverter"/>
   </Page.Resources>
 
   <StackPanel HorizontalAlignment="Stretch" Padding="30">
@@ -40,7 +40,7 @@
 
       <TextBox Grid.Column="0" Grid.Row="0" x:Uid="DocumentTitle" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
       <DatePicker Grid.Column="1" Grid.Row="0" x:Uid="DocumentDate" HorizontalAlignment="Left" 
-                  Date="{x:Bind ViewModel.DateOfDocument, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"/>
+                  Date="{x:Bind ViewModel.DateOfDocument, Mode=TwoWay, Converter={StaticResource DateTimeOffsetToDateTimeConverter}}"/>
 
       <Grid Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ColumnSpacing="10">
         <Grid.ColumnDefinitions>
@@ -56,7 +56,23 @@
                       ItemsSource="{x:Bind ViewModel.TagSuggestions, Mode=OneWay}"/>
 
 
-      <ListView Grid.Column="1" Grid.Row="2" Margin="0,10,0,0" MaxHeight="200" SelectionMode="Single" ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}" />
+      <ListView Grid.Column="1" Grid.Row="2" Margin="0,10,0,0" MaxHeight="200" SelectionMode="Single" ItemsSource="{x:Bind ViewModel.Tags, Mode=OneWay}" >
+        <ListView.ItemContainerStyle>
+          <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+          </Style>
+        </ListView.ItemContainerStyle>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <RelativePanel>
+              <TextBlock Padding="0,6,0,0" Text="{Binding}" RelativePanel.AlignLeftWithPanel="True"/>
+              <Button Grid.Column="1" Tag="{Binding}" RelativePanel.AlignRightWithPanel="True" Background="Transparent" Click="OnItemDelete">
+                <SymbolIcon Symbol="Cancel" />
+              </Button>
+            </RelativePanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
 
 
       <CheckBox Grid.Column="0" Grid.Row="3" x:Uid="DocumentIsInvoice" VerticalAlignment="Bottom" IsChecked="{x:Bind ViewModel.IsInvoice, Mode=TwoWay}"/>
@@ -67,7 +83,7 @@
         </Grid.ColumnDefinitions>
         <CheckBox Grid.Column="1" Grid.Row="0" x:Uid="DocumentIsPayed" VerticalAlignment="Bottom" IsEnabled="{x:Bind ViewModel.IsInvoice, Mode=OneWay}" IsChecked="{x:Bind ViewModel.IsPayed, Mode=TwoWay}"/>
         <DatePicker Grid.Column="0" Grid.Row="0" x:Uid="DocumentDueDate" HorizontalAlignment="Left" IsEnabled="{x:Bind ViewModel.IsInvoice, Mode=OneWay}" 
-                    Date="{x:Bind ViewModel.InvoiceDueDate, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"/>
+                    Date="{x:Bind ViewModel.InvoiceDueDate, Mode=TwoWay, Converter={StaticResource DateTimeOffsetToDateTimeConverter}}"/>
       </Grid>
     </Grid>
 
@@ -76,8 +92,8 @@
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="auto"/>
       </Grid.ColumnDefinitions>
-      <Button Grid.Column="0" Grid.Row="0" x:Uid="DocumentSave" Command="{x:Bind ViewModel.SaveCommand}"/>
-      <Button Grid.Column="1" Grid.Row="0" x:Uid="DocumentDiscard" Command="{x:Bind ViewModel.DiscardCommand}"/>
+      <Button Grid.Column="0" Grid.Row="0" x:Uid="Save" Command="{x:Bind ViewModel.SaveCommand}"/>
+      <Button Grid.Column="1" Grid.Row="0" x:Uid="Discard" Command="{x:Bind ViewModel.DiscardCommand}"/>
     </Grid>
   </StackPanel>
 </Page>

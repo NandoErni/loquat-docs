@@ -13,6 +13,7 @@ namespace LoquatDocs.EntityFramework.Model {
 
     [ForeignKey(nameof(Document))]
     public string DocumentPath { get; set; }
+
     public Document Document { get; set; }
   }
 }

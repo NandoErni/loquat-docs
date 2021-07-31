@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using EF = LoquatDocs.EntityFramework.Model;
 
 namespace LoquatDocs.Converter {
-  public class EntityFrameworkModelConverter {
-    public static EF.Invoice ConvertToEFInvoice(string documentPath, DateTime dueDate, bool isPayed) {
+  public class EntityFrameworkModelFactory {
+    public static EF.Invoice CreateInvoice(string documentPath, DateTime dueDate, bool isPayed) {
       EF.Invoice invoice = new EF.Invoice();
 
       invoice.DocumentPath = documentPath;
@@ -17,7 +17,7 @@ namespace LoquatDocs.Converter {
       return invoice;
     }
 
-    public static List<EF.Tag> ConvertToEFTag(IList<string> tags, string documentPath) {
+    public static List<EF.Tag> CreateTag(IList<string> tags, string documentPath) {
       var efTags = new List<EF.Tag>();
 
       foreach (string tag in tags) {
@@ -27,7 +27,7 @@ namespace LoquatDocs.Converter {
       return efTags;
     }
 
-    public static EF.Document ConvertToEFDocument(string groupName, string title, string documentPath, DateTime dateOfDocument) {
+    public static EF.Document CreateDocument(string groupName, string title, string documentPath, DateTime dateOfDocument) {
       var document = new EF.Document();
       document.Groupname = groupName;
       document.Title = title;
