@@ -23,14 +23,11 @@ namespace LoquatDocs.EntityFramework.Model {
 
     [ForeignKey(nameof(Group))]
     public string Groupname { get; set; }
-    public Group Group { get; set; }
+
+    public virtual Group Group { get; set; }
 
     public List<Tag> Tags { get; set; }
 
-    public List<Invoice> Invoices { get; set; }
-
-    public bool IsInvoice() {
-      return Invoices.Count != 0;
-    }
+    public virtual List<Invoice> Invoices { get; set; }
   }
 }

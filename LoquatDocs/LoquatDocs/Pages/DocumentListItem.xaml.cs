@@ -5,25 +5,25 @@ using System;
 namespace LoquatDocs.Pages {
   public sealed partial class DocumentListItem : UserControl {
 
-    public bool IsGroup { get; set; }
+    public bool IsGroup { get; set; } = false;
 
     public bool IsDocument => !IsGroup;
 
-    public string Title { get; set; }
+    public string Title { get; set; } = "";
 
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Now;
 
     public string DateAsString => Date.ToShortDateString();
 
-    public bool IsInvoice { get; set; }
+    public bool IsInvoice { get; set; } = false;
 
-    public bool IsInvoicePayed { get; set; }
+    public bool IsInvoicePayed { get; set; } = false;
 
-    public TimeSpan TimeLeftToPay { get; set; }
+    public TimeSpan TimeLeftToPay { get; set; } = TimeSpan.MinValue;
 
     public string PayedText => IsInvoicePayed ? "Payed" : $"Time left to pay: {TimeLeftToPay.Days}";
 
-    public string PathToDocument { get; set; }
+    public string PathToDocument { get; set; } = "";
 
     public DocumentListItem() {
       this.InitializeComponent();

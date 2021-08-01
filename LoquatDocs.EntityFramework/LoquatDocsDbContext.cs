@@ -31,6 +31,17 @@ namespace LoquatDocs.EntityFramework {
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
       modelBuilder.Entity<Alias>()
         .HasKey(nameof(Alias.AliasName), nameof(Alias.AliasGroupName));
+      modelBuilder.Entity<Tag>()
+        .HasKey(nameof(Tag.DocumentPath), nameof(Tag.TagId));
+      modelBuilder.Entity<Document>()
+        .HasMany(e => e.Tags)
+        .WithOne(e => e.Document)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      modelBuilder.Entity<Document>()
+        .HasMany(e => e.Invoices)
+        .WithOne(e => e.Document)
+        .OnDelete(DeleteBehavior.Cascade);
 
       SeedData(modelBuilder);
     }

@@ -24,5 +24,13 @@ namespace LoquatDocs.Pages {
     public SearchPage() {
       this.InitializeComponent();
     }
+
+    private async void OnOpenFile(object sender, RoutedEventArgs e) {
+      await ViewModel.OpenFile(((Button)sender).Tag as string);
+    }
+
+    private async void OnOpenFileLocation(object sender, RoutedEventArgs e) {
+      await ViewModel.OpenFileLocation(((Button)sender).Tag as string);
+    }
   }
 }

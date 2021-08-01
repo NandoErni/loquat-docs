@@ -12,6 +12,6 @@ namespace LoquatDocs.EntityFramework.Model {
 
     [ForeignKey(nameof(AliasGroup))]
     public string AliasGroupName { get; set; }
-    public AliasGroup AliasGroup { get; set; }
+    public virtual AliasGroup AliasGroup { get; set; }
   }
 }

@@ -20,7 +20,5 @@ namespace LoquatDocs.Model {
     public bool IsPayed;
 
     public DateTime InvoiceDueDate = DateTime.Now.AddDays(30);
-
-    public TimeSpan TimeLeftToPay => InvoiceDueDate - DateTime.Now;
   }
 }

@@ -10,6 +10,6 @@ namespace LoquatDocs.EntityFramework.Model {
     [Key]
     public string Groupname { get; set; }
 
-    public List<Document> Documents { get; set; }
+    public virtual List<Document> Documents { get; set; }
   }
 }

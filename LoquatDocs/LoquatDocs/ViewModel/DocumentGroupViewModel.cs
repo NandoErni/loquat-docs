@@ -54,35 +54,40 @@ namespace LoquatDocs.ViewModel {
     }
 
     private async Task DeleteGroup(string groupName) {
+      Group groupToDelete = null;
       using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
-        Group groupToDelete = ctx.Groups.Where(group => group.Groupname.Equals(groupName)).FirstOrDefault();
+        groupToDelete = ctx.Groups.Where(group => group.Groupname.Equals(groupName)).FirstOrDefault();
+      }
+      if (groupToDelete is null) {
+        return;
+      }
 
-        if (groupToDelete is null) {
-          return;
-        }
+      await PromptAndDeleteDocumentsOfGroup(groupToDelete.Groupname);
 
-        await PromptAndDeleteDocumentsOfGroup(groupToDelete, ctx);
-
+      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
         ctx.Groups.Remove(groupToDelete);
         await ctx.SaveChangesAsync();
         _documentGroupNames.Remove(groupName);
       }
     }
 
-    private async Task PromptAndDeleteDocumentsOfGroup(Group groupToDelete, LoquatDocsDbContext context) {
-      var documentsOfGroupToDelete = context.Documents.Where(document => document.Group.Equals(groupToDelete));
-      if (documentsOfGroupToDelete.Any()) {
-        StringBuilder builder = new StringBuilder();
-        foreach (var document in documentsOfGroupToDelete) {
-          builder.AppendLine(document.Title);
+    private async Task PromptAndDeleteDocumentsOfGroup(string groupName) {
+
+      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
+        var documentsOfGroupToDelete = ctx.Documents.Where(document => document.Groupname.Equals(groupName));
+        if (documentsOfGroupToDelete.Any()) {
+          StringBuilder builder = new StringBuilder();
+          foreach (var document in documentsOfGroupToDelete) {
+            builder.AppendLine(document.Title);
+          }
+          var dialog = new DecisionDialog(Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroupTitle", groupName),
+            Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteDocuments", builder.ToString()));
+          if (!await dialog.ShowAsync()) {
+            return;
+          }
+          ctx.Documents.RemoveRange(documentsOfGroupToDelete.ToList());
+          await ctx.SaveChangesAsync();
         }
-        var dialog = new DecisionDialog(Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroupTitle", groupToDelete.Groupname),
-          Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteDocuments", builder.ToString()));
-        if (!await dialog.ShowAsync()) {
-          return;
-        }
-        context.Documents.RemoveRange(documentsOfGroupToDelete);
-        await context.SaveChangesAsync();
       }
     }
 

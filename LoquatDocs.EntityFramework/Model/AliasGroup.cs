@@ -10,6 +10,6 @@ namespace LoquatDocs.EntityFramework.Model {
     [Key]
     public string AliasGroupName { get; set; }
 
-    public List<Alias> Aliases { get; set; }
+    public virtual List<Alias> Aliases { get; set; }
   }
 }

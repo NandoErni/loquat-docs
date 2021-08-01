@@ -11,7 +11,7 @@
   <Page.DataContext>
     <vm:SettingsViewModel x:Name="ViewModel"/>
   </Page.DataContext>
-  <ScrollViewer Padding="10">
+  <ScrollViewer Padding="20">
     <StackPanel HorizontalAlignment="Stretch">
       <TextBlock Margin="0,0,0,20" x:Uid="SettingsTitle" Style="{StaticResource SubheaderTextBlockStyle}"/>
       <TextBox x:Uid="DbPath" IsReadOnly="True" HorizontalAlignment="Stretch" Text="{x:Bind ViewModel.DbPath, Mode=OneWay}"/>

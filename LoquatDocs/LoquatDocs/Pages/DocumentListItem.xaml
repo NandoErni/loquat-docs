@@ -8,17 +8,17 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
   <StackPanel>
-    <TextBlock Visibility="{Binding IsGroup}" Text="{Binding Title}"/>
-    <Grid Visibility="{Binding IsDocument}" BorderBrush="Black" BorderThickness="1">
+    <TextBlock Visibility="{x:Bind IsGroup}" Text="{x:Bind Title}"/>
+    <Grid Visibility="{x:Bind IsDocument}" BorderBrush="Black" BorderThickness="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Column="0" Text="{Binding Title}"/>
-      <TextBlock Grid.Column="1" Text="{Binding DateAsString}"/>
-      <TextBlock Grid.Column="2" Text="{Binding PayedText}" Visibility="{Binding IsInvoice}"/>
+      <TextBlock Grid.Column="0" Text="{x:Bind Title}"/>
+      <TextBlock Grid.Column="1" Text="{x:Bind DateAsString}"/>
+      <TextBlock Grid.Column="2" Text="{x:Bind PayedText}" Visibility="{x:Bind IsInvoice}"/>
       <Button Grid.Column="3" Click="OpenDocument">
         <SymbolIcon Symbol="OpenFile" />
       </Button>

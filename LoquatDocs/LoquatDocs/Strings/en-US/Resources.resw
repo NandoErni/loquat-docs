@@ -211,7 +211,7 @@
     <value>Documents</value>
   </data>
   <data name="SearchTitle.Text" xml:space="preserve">
-    <value>Search Documents</value>
+    <value>Search for Documents</value>
   </data>
   <data name="SettingsTitle.Text" xml:space="preserve">
     <value>Settings</value>

@@ -115,7 +115,7 @@ namespace LoquatDocs.ViewModel {
 
         await ctx.SaveChangesAsync();
       }
-      await DiscardDocumentAsync();
+      ResetValues();
     }
 
     private async Task AddGroupIfNotExistentAsync(LoquatDocsDbContext ctx) {
@@ -134,6 +134,10 @@ namespace LoquatDocs.ViewModel {
     public async Task ChoosePathAndValidateAsync() {
       StandardFilePicker picker = StandardFilePicker.UniversalFilePicker;
       StorageFile document = await picker.PickSingleFileAsync();
+      if (document is null) {
+        return;
+      }
+
       if (await DoesDocumentAlreadyExistAsync(document.Path)) {
         await InfoDialog.CreateAndShowErrorAsync(Resource.GetFormattedResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation", document.Path));
       } else {

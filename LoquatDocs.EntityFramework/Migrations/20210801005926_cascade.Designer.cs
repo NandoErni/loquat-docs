@@ -3,14 +3,16 @@ using System;
 using LoquatDocs.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LoquatDocs.EntityFramework.Migrations
 {
     [DbContext(typeof(LoquatDocsDbContext))]
-    partial class LoquatDocsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210801005926_cascade")]
+    partial class cascade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,13 +102,15 @@ namespace LoquatDocs.EntityFramework.Migrations
 
             modelBuilder.Entity("LoquatDocs.EntityFramework.Model.Tag", b =>
                 {
-                    b.Property<string>("DocumentPath")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("TagId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("DocumentPath", "TagId");
+                    b.Property<string>("DocumentPath")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TagId");
+
+                    b.HasIndex("DocumentPath");
 
                     b.ToTable("Tags");
                 });
@@ -147,8 +151,7 @@ namespace LoquatDocs.EntityFramework.Migrations
                     b.HasOne("LoquatDocs.EntityFramework.Model.Document", "Document")
                         .WithMany("Tags")
                         .HasForeignKey("DocumentPath")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Document");
                 });

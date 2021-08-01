@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace LoquatDocs.EntityFramework.Model {
   public class Tag {
-    [Key]
     public string TagId { get; set; }
 
     [ForeignKey(nameof(Document))]
     public string DocumentPath { get; set; }
 
-    public Document Document { get; set; }
+    public virtual Document Document { get; set; }
   }
 }
