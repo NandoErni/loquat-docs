@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoquatDocs.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -103,7 +104,8 @@ namespace LoquatDocs.Model {
       }
     }
 
-    public string PayedText => IsInvoicePayed ? "Payed" : $"Days left to pay: {TimeLeftToPay.Days}"; // todo: resource
+    public string PayedText => IsInvoicePayed ? SearchDocumentsViewModel.PayedResource :
+      SearchDocumentsViewModel.DaysLeftToPayResource(TimeLeftToPay.Days);
 
     private void NotifyPropertyChanged([CallerMemberName] string propertyName = "") {
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

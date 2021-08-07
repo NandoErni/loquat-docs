@@ -39,8 +39,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task PromptAndDeleteGroupAsync(string groupName) {
-      DecisionDialog decisionDialog = new DecisionDialog(Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroupTitle", groupName),
-        Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroup", groupName));
+      DecisionDialog decisionDialog = new DecisionDialog(PromptDeleteGroupTitleResource(groupName), PromptDeleteGroupResource(groupName));
       if (!await decisionDialog.ShowAsync()) {
         return;
       }
@@ -67,8 +66,7 @@ namespace LoquatDocs.ViewModel {
       }
 
       var documentList = BuildListOfDocuments(documentsOfGroup);
-      var dialog = new DecisionDialog(Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroupTitle", groupName),
-            Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteDocuments", documentList));
+      var dialog = new DecisionDialog(PromptDeleteGroupTitleResource(groupName), PromptDeleteDocumentsResource(documentList));
       if (!await dialog.ShowAsync()) {
         return;
       }

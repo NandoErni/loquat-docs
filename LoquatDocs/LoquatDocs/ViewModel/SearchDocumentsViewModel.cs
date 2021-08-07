@@ -35,7 +35,7 @@ namespace LoquatDocs.ViewModel {
 
     public async Task SafeDeleteDocument(string documentPath) {
       string documentTitle = await GetTitleOfPath(documentPath);
-      var dialog = new DecisionDialog(Resource.GetResource(RESOURCE_KEY, "FileDialogTitle"), Resource.GetFormattedResource(RESOURCE_KEY, "PromptSureToDeleteDocument", documentTitle));
+      var dialog = new DecisionDialog(FileDialogTitleResource, PromptSureToDeleteDocumentResource(documentTitle));
       if (!await dialog.ShowAsync()) {
         return;
       }
@@ -43,13 +43,11 @@ namespace LoquatDocs.ViewModel {
         _documentListItems.Remove(_documentListItems.FirstOrDefault(d => d.PathToDocument.Equals(documentPath)));
         await _repository.DeleteDocument(documentPath);
       } catch {
-        var dialogError = new InfoDialog(Resource.GetResource(RESOURCE_KEY, "FileDialogTitle"),
-          Resource.GetFormattedResource(RESOURCE_KEY, "ErrorWhileDelete", documentTitle));
+        var dialogError = new InfoDialog(FileDialogTitleResource, ErrorWhileDeleteResource(documentTitle));
         await dialogError.ShowAsync();
         return;
       }
-      var dialogSuccess = new InfoDialog(Resource.GetResource(RESOURCE_KEY, "FileDialogTitle"),
-        Resource.GetFormattedResource(RESOURCE_KEY, "SuccessDelete", documentTitle));
+      var dialogSuccess = new InfoDialog(FileDialogTitleResource, SuccessDeleteResource(documentTitle));
       await dialogSuccess.ShowAsync();
     }
 
@@ -84,8 +82,7 @@ namespace LoquatDocs.ViewModel {
       try {
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
       } catch {
-        var dialog = new InfoDialog(Resource.GetResource(RESOURCE_KEY, "FileDialogTitle"), 
-          Resource.GetFormattedResource(RESOURCE_KEY, "ErrorWhileOpenFile", filePath));
+        var dialog = new InfoDialog(FileDialogTitleResource, ErrorWhileOpenFileResource(filePath));
         await dialog.ShowAsync();
         await OpenFileLocation(filePath);
       }
@@ -93,8 +90,7 @@ namespace LoquatDocs.ViewModel {
 
     private async Task<bool> FileExist(string filePath) {
       if (!File.Exists(filePath)) {
-        var dialog = new InfoDialog(Resource.GetResource(RESOURCE_KEY, "FileDialogTitle"),
-          Resource.GetFormattedResource(RESOURCE_KEY, "ErrorFileNotExist", filePath));
+        var dialog = new InfoDialog(FileDialogTitleResource, ErrorFileNotExistResource(filePath));
         await dialog.ShowAsync();
         return false;
       }

@@ -9,17 +9,17 @@ namespace LoquatDocs.ViewModel {
   public partial class SearchDocumentsViewModel {
     private const string RESOURCE_KEY = "SearchDocuments";
 
-    public string ErrorFileNotExistResource => Resource.GetResource(RESOURCE_KEY, "ErrorFileNotExist");
+    public string ErrorFileNotExistResource(string filePath) => string.Format(Resource.GetResource(RESOURCE_KEY, "ErrorFileNotExist"), filePath);
 
-    public string ErrorWhileDeleteResource => Resource.GetResource(RESOURCE_KEY, "ErrorWhileDelete");
+    public string ErrorWhileDeleteResource(string documentTitle) => string.Format(Resource.GetResource(RESOURCE_KEY, "ErrorWhileDelete"), documentTitle);
 
-    public string ErrorWhileOpenFileResource => Resource.GetResource(RESOURCE_KEY, "ErrorWhileOpenFile");
+    public string ErrorWhileOpenFileResource(string filePath) => string.Format(Resource.GetResource(RESOURCE_KEY, "ErrorWhileOpenFile"), filePath);
 
     public string FileDialogTitleResource => Resource.GetResource(RESOURCE_KEY, "FileDialogTitle");
 
-    public string PromptSureToDeleteDocumentResource => Resource.GetResource(RESOURCE_KEY, "PromptSureToDeleteDocument");
+    public string PromptSureToDeleteDocumentResource(string documentTitle) => string.Format(Resource.GetResource(RESOURCE_KEY, "PromptSureToDeleteDocument"), documentTitle);
 
-    public string SuccessDeleteResource => Resource.GetResource(RESOURCE_KEY, "SuccessDelete");
+    public string SuccessDeleteResource(string documentTitle) => string.Format(Resource.GetResource(RESOURCE_KEY, "SuccessDelete"), documentTitle);
 
     public string AddDocumentResource => Resource.GetResource(RESOURCE_KEY, "AddDocument");
 
@@ -30,5 +30,9 @@ namespace LoquatDocs.ViewModel {
     public string ListTitleResource => Resource.GetResource(RESOURCE_KEY, "ListTitle");
 
     public static string PayResource => Resource.GetResource(RESOURCE_KEY, "Pay");
+
+    public static string PayedResource => Resource.GetResource(RESOURCE_KEY, "Payed");
+
+    public static string DaysLeftToPayResource(int days) => string.Format(Resource.GetResource(RESOURCE_KEY, "DaysLeftToPay"), days);
   }
 }

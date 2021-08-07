@@ -18,7 +18,7 @@ namespace LoquatDocs.ViewModel {
 
     public string DocumentResource => Resource.GetResource(RESOURCE_KEY, "Document");
 
-    public string DocumentAlreadyExistsAtLocationResource => Resource.GetResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation");
+    public string DocumentAlreadyExistsAtLocationResource(string documentPath) => string.Format(Resource.GetResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation"), documentPath);
 
     public string ErrorCantSaveResource => Resource.GetResource(RESOURCE_KEY, "ErrorCantSave");
 

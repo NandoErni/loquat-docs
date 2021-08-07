@@ -94,7 +94,7 @@ namespace LoquatDocs.ViewModel {
 
     public async Task SaveDocumentAsync() {
       if (!IsDocumentValidToSave()) {
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource(RESOURCE_KEY, "ErrorCantSave"));
+        await InfoDialog.CreateAndShowErrorAsync(ErrorCantSaveResource);
         return;
       }
 
@@ -103,10 +103,10 @@ namespace LoquatDocs.ViewModel {
         ResetValues();
       } catch (DbUpdateException exception) {
         // todo: log
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource(RESOURCE_KEY, "ErrorSavingToDatabase"));
+        await InfoDialog.CreateAndShowErrorAsync(ErrorSavingToDatabaseResource);
         return;
       }
-      await Task.WhenAll(InfoDialog.CreateAndShowSuccessAsync(Resource.GetResource(RESOURCE_KEY, "SavedSuccessfully")), 
+      await Task.WhenAll(InfoDialog.CreateAndShowSuccessAsync(SavedSuccessfullyResource), 
         InitilizeSuggestionsAsync());
 
     }
@@ -128,8 +128,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task DiscardDocumentAsync() {
-      if (await DecisionDialog.CreateAndShowAsync(Resource.GetResource(RESOURCE_KEY, "DiscardDocument"),
-        Resource.GetResource(RESOURCE_KEY, "DiscardDocumentDecision"))) {
+      if (await DecisionDialog.CreateAndShowAsync(DiscardDocumentResource, DiscardDocumentDecisionResource)) {
         ResetValues();
       }
     }
@@ -142,7 +141,7 @@ namespace LoquatDocs.ViewModel {
       }
 
       if (await _repository.DocumentExist(document.Path)) {
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetFormattedResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation", document.Path));
+        await InfoDialog.CreateAndShowErrorAsync(DocumentAlreadyExistsAtLocationResource(document.Path));
       } else {
         DocumentPath = document.Path;
       }
