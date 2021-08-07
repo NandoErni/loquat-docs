@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackupSuccessful" xml:space="preserve">
+    <value>The database backup was successful.</value>
+  </data>
   <data name="ChooseFile" xml:space="preserve">
     <value>Choose File</value>
   </data>
   <data name="CreateNewDatabase" xml:space="preserve">
     <value>Create new Database</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
   </data>
   <data name="DatabaseAlreadyExists" xml:space="preserve">
     <value>A database already exists in this folder.</value>
@@ -134,6 +140,9 @@
   </data>
   <data name="NoFolderChosen" xml:space="preserve">
     <value>No Folder was chosen.</value>
+  </data>
+  <data name="SaveDatabaseBackup" xml:space="preserve">
+    <value>Create Database Backup</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>

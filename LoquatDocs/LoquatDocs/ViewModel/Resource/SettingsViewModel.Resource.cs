@@ -25,5 +25,11 @@ namespace LoquatDocs.ViewModel {
     public string SettingsResource => Resource.GetResource(RESOURCE_KEY, "Settings");
 
     public string UpdateDatabaseResource => Resource.GetResource(RESOURCE_KEY, "UpdateDatabase");
+
+    public string SaveDatabaseBackupResource => Resource.GetResource(RESOURCE_KEY, "SaveDatabaseBackup");
+
+    public string BackupSuccessfulResource => Resource.GetResource(RESOURCE_KEY, "BackupSuccessful");
+
+    public string DatabaseResource => Resource.GetResource(RESOURCE_KEY, "Database");
   }
 }

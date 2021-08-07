@@ -5,6 +5,7 @@ using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -15,6 +16,8 @@ namespace LoquatDocs.ViewModel {
     public const string DB_FILE_ENDING = ".loquatdb";
 
     public const string DEFAULT_DB_NAME = "database" + DB_FILE_ENDING;
+
+    public string DEFAULT_DB_BACKUP_NAME = "backup\\" + DateTime.Now.ToString("yyyyMMddTHHmmss") + DEFAULT_DB_NAME;
 
     private Config.Config _config = new Config.Config();
 
@@ -36,10 +39,13 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand UpdateDatabaseCommand { get; }
 
+    public IAsyncRelayCommand SaveDatabaseBackupCommand { get; }
+
     public SettingsViewModel() {
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
       ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
       UpdateDatabaseCommand = new AsyncRelayCommand(UpdateDatabase);
+      SaveDatabaseBackupCommand = new AsyncRelayCommand(SaveDatabaseBackup);
       DbPath = _config.DatabaseFilePath;
     }
 
@@ -81,6 +87,24 @@ namespace LoquatDocs.ViewModel {
       }
 
       await _repository.CreateOrUpdateDatabaseAsync(DbPath);
+    }
+
+    public async Task SaveDatabaseBackup() {
+      string savePath = Path.Combine(Path.GetDirectoryName(DbPath), DEFAULT_DB_BACKUP_NAME);
+      try {
+        if (!Directory.Exists(Path.GetDirectoryName(savePath))) {
+          Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+        }
+        File.Copy(DbPath, savePath);
+      } catch (Exception e) {
+
+        return;
+      }
+
+      var dialog = new InfoDialog(DatabaseResource, BackupSuccessfulResource);
+      await dialog.ShowAsync();
+
+      Process.Start("explorer.exe", "/select, \"" + savePath + "\"");
     }
 
     private bool DoesDbAlreadyExist(string pickedDbPath) {
