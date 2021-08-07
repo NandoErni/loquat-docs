@@ -97,5 +97,29 @@ namespace LoquatDocs.ViewModel.Repository {
         return await ctx.Documents.AnyAsync(d => d.DocumentPath.Equals(documentPath));
       }
     }
+
+    public List<IGrouping<string, Document>> GetDocuments(Func<Document, bool> predicate) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        return ctx.Documents.Include(d => d.Invoices).Include(d => d.Tags).AsEnumerable()
+         .Where(d => predicate(d))
+         .GroupBy(d => d.Groupname).ToList();
+      }
+    }
+
+    public async Task<Document> GetDocument(string documentPath) {
+
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        return await ctx.Documents.FirstOrDefaultAsync(d => d.DocumentPath.Equals(documentPath));
+      }
+    }
+
+    public async Task DeleteDocument(string documentPath) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        var document = await ctx.Documents.FirstAsync(doc => doc.DocumentPath.Equals(documentPath));
+        ctx.Documents.Remove(document);
+
+        await ctx.SaveChangesAsync();
+      }
+    }
   }
 }

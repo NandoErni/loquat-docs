@@ -42,8 +42,8 @@ namespace LoquatDocs.Pages {
       await ViewModel.SafeDeleteDocument(((Button)sender).Tag as string);
     }
 
-    private async void OnSearch(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-      await ViewModel.Search(args.QueryText.Trim(), GetSearchArguments());
+    private void OnSearch(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+      ViewModel.Search(args.QueryText.Trim(), GetSearchArguments());
     }
 
     private SearchArguments GetSearchArguments() {
@@ -63,8 +63,8 @@ namespace LoquatDocs.Pages {
       Filter.Visibility = ((ToggleButton)sender).IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
     }
 
-    private async void OnPageLoaded(object sender, RoutedEventArgs e) {
-      await ViewModel.InitilizeList();
+    private void OnPageLoaded(object sender, RoutedEventArgs e) {
+      ViewModel.InitilizeList();
       ProgressRing.Visibility = Visibility.Collapsed;
     }
   }
