@@ -60,7 +60,10 @@ namespace LoquatDocs.ViewModel {
 
     public bool IsInvoice {
       get => _document.IsInvoice;
-      set => SetProperty(ref _document.IsInvoice, value);
+      set { 
+        SetProperty(ref _document.IsInvoice, value);
+        InvoiceDueDate = DateOfDocument.AddDays(30);
+      }
     }
 
     public bool IsPayed {
@@ -97,12 +100,15 @@ namespace LoquatDocs.ViewModel {
 
       try {
         await SaveDocumentToDatabaseAsync();
+        ResetValues();
       } catch (DbUpdateException exception) {
         // todo: log
         await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource(RESOURCE_KEY, "ErrorSavingToDatabase"));
         return;
       }
-      await InfoDialog.CreateAndShowSuccessAsync(Resource.GetResource(RESOURCE_KEY, "SavedSuccessfully"));
+      await Task.WhenAll(InfoDialog.CreateAndShowSuccessAsync(Resource.GetResource(RESOURCE_KEY, "SavedSuccessfully")), 
+        InitilizeSuggestionsAsync());
+
     }
 
     private async Task SaveDocumentToDatabaseAsync() {
@@ -113,8 +119,6 @@ namespace LoquatDocs.ViewModel {
       if (IsInvoice) {
         await _repository.SaveInvoice(EFFactory.CreateInvoice(DocumentPath, InvoiceDueDate, IsPayed));
       }
-
-      ResetValues();
     }
 
     private async Task AddGroupIfNotExistentAsync() {
