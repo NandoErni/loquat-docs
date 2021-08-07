@@ -3,6 +3,7 @@ using LoquatDocs.EntityFramework.Model;
 using LoquatDocs.Model;
 using LoquatDocs.Model.Dialog;
 using LoquatDocs.Model.Resource;
+using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -14,32 +15,28 @@ using System.Threading.Tasks;
 namespace LoquatDocs.ViewModel {
   public partial class DocumentGroupViewModel : ObservableObject {
 
+    private LoquatDocsDbRepository _repository;
+
     private Config.Config _config = new Config.Config();
 
-    private ObservableCollection<string> _documentGroupNames;
+    private ObservableCollection<string> _documentGroupNames = new ObservableCollection<string>();
 
     public ObservableCollection<string> Groups {
       get => _documentGroupNames;
     }
 
     public DocumentGroupViewModel() {
-      InitilizeDocumentGroups();
+      _repository = new LoquatDocsDbRepository();
     }
 
-    private void InitilizeDocumentGroups() {
-      _documentGroupNames = new ObservableCollection<string>();
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        foreach (var Group in ctx.Groups) {
-          _documentGroupNames.Add(Group.Groupname);
-        }
+    public async Task InitilizeDocumentGroups() {
+      foreach (var groupname in await _repository.GetAllGroupnames()) {
+        _documentGroupNames.Add(groupname);
       }
     }
 
     public async Task SaveGroupAsync(string groupName) {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        ctx.Groups.Add(new EntityFramework.Model.Group() { Groupname = groupName });
-        await ctx.SaveChangesAsync();
-      }
+      await _repository.SaveGroup(groupName);
       _documentGroupNames.Add(groupName);
       SortGroupList();
     }
@@ -55,42 +52,40 @@ namespace LoquatDocs.ViewModel {
     }
 
     private async Task DeleteGroup(string groupName) {
-      Group groupToDelete = null;
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        groupToDelete = ctx.Groups.Where(group => group.Groupname.Equals(groupName)).FirstOrDefault();
-      }
-      if (groupToDelete is null) {
+      if (!await _repository.GroupExist(groupName)) {
         return;
       }
 
-      await PromptAndDeleteDocumentsOfGroup(groupToDelete.Groupname);
+      await PromptAndDeleteDocumentsOfGroup(groupName);
 
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        ctx.Groups.Remove(groupToDelete);
-        await ctx.SaveChangesAsync();
-        _documentGroupNames.Remove(groupName);
-      }
+      await _repository.DeleteGroup(groupName);
+      _documentGroupNames.Remove(groupName);
     }
 
     private async Task PromptAndDeleteDocumentsOfGroup(string groupName) {
 
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        var documentsOfGroupToDelete = ctx.Documents.Where(document => document.Groupname.Equals(groupName));
-        if (documentsOfGroupToDelete.Any()) {
-          StringBuilder builder = new StringBuilder();
-          builder.AppendLine();
-          foreach (var document in documentsOfGroupToDelete) {
-            builder.AppendLine(document.Title);
-          }
-          var dialog = new DecisionDialog(Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroupTitle", groupName),
-            Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteDocuments", builder.ToString()));
-          if (!await dialog.ShowAsync()) {
-            return;
-          }
-          ctx.Documents.RemoveRange(documentsOfGroupToDelete.ToList());
-          await ctx.SaveChangesAsync();
-        }
+      var documentsOfGroup = await _repository.GetAllDocumentsOfGroup(groupName);
+      if (!documentsOfGroup.Any()) {
+        return;
       }
+
+      var documentList = BuildListOfDocuments(documentsOfGroup);
+      var dialog = new DecisionDialog(Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteGroupTitle", groupName),
+            Resource.GetFormattedResource(RESOURCE_KEY, "PromptDeleteDocuments", documentList));
+      if (!await dialog.ShowAsync()) {
+        return;
+      }
+      await _repository.RemoveDocuments(documentsOfGroup);
+    }
+
+    private string BuildListOfDocuments(List<EntityFramework.Model.Document> documentsOfGroup) {
+      StringBuilder builder = new StringBuilder();
+      builder.AppendLine();
+      foreach (var document in documentsOfGroup) {
+        builder.AppendLine(document.Title);
+      }
+
+      return builder.ToString();
     }
 
     private void SortGroupList() {

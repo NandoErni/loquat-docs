@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    xmlns:vm="using:LoquatDocs.ViewModel" >
+    xmlns:vm="using:LoquatDocs.ViewModel" 
+  Loaded="OnPageLoaded">
   <Page.DataContext>
     <vm:DocumentGroupViewModel x:Name="ViewModel"/>
   </Page.DataContext>

@@ -18,5 +18,9 @@ namespace LoquatDocs.Pages.Forms {
     private async void OnItemDelete(object sender, RoutedEventArgs e) {
       await ViewModel.PromptAndDeleteGroupAsync(((Button)sender).Tag.ToString());
     }
+
+    private async void OnPageLoaded(object sender, RoutedEventArgs e) {
+      await ViewModel.InitilizeDocumentGroups();
+    }
   }
 }
