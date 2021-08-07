@@ -43,5 +43,9 @@ namespace LoquatDocs {
     }
 
     public static Window Window;
+
+    public static bool QueueOnUiThread(Action action) {
+      return Current.Resources.DispatcherQueue.TryEnqueue(Microsoft.System.DispatcherQueuePriority.High, action.Invoke);
+    }
   }
 }

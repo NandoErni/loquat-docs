@@ -13,6 +13,8 @@ namespace LoquatDocs.ViewModel {
   public class AliasViewModel : ObservableObject {
     private const string RESOURCE_KEY = "Alias";
 
+    private Config.Config _config = new Config.Config();
+
     private Alias _alias = new Alias();
 
     public string Synonym {
@@ -33,7 +35,7 @@ namespace LoquatDocs.ViewModel {
 
     private async Task SaveAsync() {
       if (await DoesWordExistAsGroup())
-      using(LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
+      using(LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
 
       }
     }
@@ -43,7 +45,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     private async Task<bool> DoesWordExistAsGroup() {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
+      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
         return await ctx.AliasGroups.AnyAsync(group => group.AliasGroupName.Equals(Word));
       }
     }

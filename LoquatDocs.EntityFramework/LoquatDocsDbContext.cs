@@ -16,7 +16,7 @@ namespace LoquatDocs.EntityFramework {
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    public LoquatDocsDbContext(string dbPath = DEFAULT_DATABASE_PATH) { // todo: delete default string
+    public LoquatDocsDbContext(string dbPath) { // todo: delete default string
       DbPath = dbPath;
     }
 

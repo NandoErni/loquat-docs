@@ -15,6 +15,7 @@ namespace LoquatDocs.Model {
 
     public static StandardFilePicker UniversalFilePicker => new StandardFilePicker(new List<string>() { "*" });
     public static StandardFilePicker DatabaseFilePicker => new StandardFilePicker(new List<string>() { ".loquatdb" });
+    public static StandardFilePicker ExcelFilePicker => new StandardFilePicker(new List<string>() { ".xlsx" });
 
     public StandardFilePicker(List<string> fileTypeFilter) {
       if (!fileTypeFilter.Any()) {

@@ -15,9 +15,9 @@ using EF = LoquatDocs.EntityFramework.Model;
 using EFFactory = LoquatDocs.Converter.EntityFrameworkModelFactory;
 
 namespace LoquatDocs.ViewModel {
-  public class DocumentViewModel : ObservableObject {
+  public partial class DocumentViewModel : ObservableObject {
 
-    private const string RESOURCE_KEY = "Document";
+    private Config.Config _config = new Config.Config();
 
     private Document _document = new Document();
 
@@ -104,7 +104,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     private async Task SaveDocumentToDatabaseAsync() {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
+      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
         await AddGroupIfNotExistentAsync(ctx);
         await ctx.Documents.AddAsync(EFFactory.CreateDocument(GroupName, Title, DocumentPath, DateOfDocument));
         await ctx.Tags.AddRangeAsync(EFFactory.CreateTag(Tags, DocumentPath));
@@ -152,7 +152,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     private async Task<bool> DoesDocumentAlreadyExistAsync(string documentPath) {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
+      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
         return await ctx.Documents.FindAsync(documentPath) is not null;
       }
     }
@@ -163,7 +163,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task InitilizeSuggestionsAsync() {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext()) {
+      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
         _groupNameSuggestionList.BaseList = await ctx.Groups.Select(x => x.Groupname).ToListAsync();
         _tagSuggestionList.BaseList = await ctx.Tags.Select(x => x.TagId).ToListAsync();
       }
@@ -181,7 +181,7 @@ namespace LoquatDocs.ViewModel {
 
     public void UpdateFilteredTagSuggestionList(string tag) {
       List<string> newList = _tagSuggestionList.BaseList
-        .Where(x => x.Contains(tag ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)).ToList();
+        .Where(x => x.Contains(tag ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)).Distinct().ToList();
 
       if (!newList.SequenceEqual(_tagSuggestionList.FilteredList)) {
         _tagSuggestionList.FilteredList = newList;

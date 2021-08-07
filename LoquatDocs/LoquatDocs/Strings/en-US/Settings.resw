@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChooseFile" xml:space="preserve">
+    <value>Choose File</value>
+  </data>
+  <data name="CreateNewDatabase" xml:space="preserve">
+    <value>Create new Database</value>
+  </data>
   <data name="DatabaseAlreadyExists" xml:space="preserve">
     <value>A database already exists in this folder.</value>
   </data>
+  <data name="DbPath" xml:space="preserve">
+    <value>Database Path</value>
+  </data>
+  <data name="ImportDatabase" xml:space="preserve">
+    <value>Import Database</value>
+  </data>
   <data name="NoFolderChosen" xml:space="preserve">
     <value>No Folder was chosen.</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="UpdateDatabase" xml:space="preserve">
+    <value>Update Database</value>
   </data>
 </root>

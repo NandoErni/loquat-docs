@@ -117,22 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddDocumentGroup" xml:space="preserve">
-    <value>Add Group</value>
+  <data name="ErrorFileNotExist" xml:space="preserve">
+    <value>The File at {0} does not exist.</value>
   </data>
-  <data name="AddGroup" xml:space="preserve">
-    <value>Group name</value>
+  <data name="ErrorWhileDelete" xml:space="preserve">
+    <value>An error occured while trying to delete {0} from the database.</value>
   </data>
-  <data name="Group" xml:space="preserve">
-    <value>Group</value>
+  <data name="ErrorWhileOpenFile" xml:space="preserve">
+    <value>An error occured while trying to open {0}. Its file location will be opened...</value>
   </data>
-  <data name="PromptDeleteDocuments" xml:space="preserve">
-    <value>The following Documents are still saved under this group:{0}Do you want to delete them aswell?</value>
+  <data name="FileDialogTitle" xml:space="preserve">
+    <value>File</value>
   </data>
-  <data name="PromptDeleteGroup" xml:space="preserve">
-    <value>Are you sure you want to delete '{0}'?</value>
+  <data name="ListTitle" xml:space="preserve">
+    <value>Documents</value>
   </data>
-  <data name="PromptDeleteGroupTitle" xml:space="preserve">
-    <value>Deleting {0}</value>
+  <data name="PromptSureToDeleteDocument" xml:space="preserve">
+    <value>Are you sure to delete {0}?</value>
+  </data>
+  <data name="SearchFilter" xml:space="preserve">
+    <value>Configure search filter</value>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>Search for Documents</value>
+  </data>
+  <data name="SuccessDelete" xml:space="preserve">
+    <value>Successfully deleted {0}.</value>
   </data>
 </root>

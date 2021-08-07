@@ -18,13 +18,14 @@
   </Page.Resources>
 
   <StackPanel HorizontalAlignment="Stretch" Padding="30">
-    <TextBlock Margin="0,0,0,10" x:Uid="AddDocument" Style="{StaticResource SubheaderTextBlockStyle}"/>
+    <TextBlock Margin="0,0,0,10" Text="{x:Bind ViewModel.AddDocumentResource}" Style="{StaticResource SubheaderTextBlockStyle}"/>
 
-    <TextBlock Margin="0,0,0,5" x:Uid="Group" Style="{StaticResource TitleTextBlockStyle}"/>
-    <AutoSuggestBox x:Uid="GroupName" TextChanged="GroupNameAutoSuggestBoxTextChanged" Text="{x:Bind ViewModel.GroupName, Mode=TwoWay}" 
+    <TextBlock Margin="0,0,0,5" Text="{x:Bind ViewModel.GroupResource}" Style="{StaticResource TitleTextBlockStyle}"/>
+    <AutoSuggestBox Header="{x:Bind ViewModel.GroupNameResource}" PlaceholderText="{x:Bind ViewModel.GroupNamePlaceholderResource}" 
+                    TextChanged="GroupNameAutoSuggestBoxTextChanged" Text="{x:Bind ViewModel.GroupName, Mode=TwoWay}" 
                     ItemsSource="{x:Bind ViewModel.GroupNameSuggestions, Mode=OneWay}"/>
 
-    <TextBlock Margin="0,30,0,5" x:Uid="Document" Style="{StaticResource TitleTextBlockStyle}"/>
+    <TextBlock Margin="0,30,0,5" Text="{x:Bind ViewModel.DocumentResource}" Style="{StaticResource TitleTextBlockStyle}"/>
     <Grid ColumnSpacing="20">
       <Grid.RowDefinitions>
         <RowDefinition Height="*"/>
@@ -38,8 +39,8 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <TextBox Grid.Column="0" Grid.Row="0" x:Uid="DocumentTitle" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
-      <DatePicker Grid.Column="1" Grid.Row="0" x:Uid="DocumentDate" HorizontalAlignment="Left" 
+      <TextBox Grid.Column="0" Grid.Row="0" Header="{x:Bind ViewModel.TitleResource}" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
+      <DatePicker Grid.Column="1" Grid.Row="0" Header="{x:Bind ViewModel.DateResource}" HorizontalAlignment="Left" 
                   Date="{x:Bind ViewModel.DateOfDocument, Mode=TwoWay, Converter={StaticResource DateTimeOffsetToDateTimeConverter}}"/>
 
       <Grid Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" ColumnSpacing="10">
@@ -47,10 +48,10 @@
           <ColumnDefinition/>
           <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="0" Grid.Row="0" IsReadOnly="True" x:Uid="DocumentPath" Text="{x:Bind ViewModel.DocumentPath, Mode=OneWay}"/>
-        <Button Grid.Column="1" Grid.Row="0" x:Uid="ChooseFile" VerticalAlignment="Bottom" Command="{x:Bind ViewModel.ChoosePathCommand}"/>
+        <TextBox Grid.Column="0" Grid.Row="0" IsReadOnly="True" Header="{x:Bind ViewModel.PathResource}" Text="{x:Bind ViewModel.DocumentPath, Mode=OneWay}"/>
+        <Button Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.ChooseFileResource}" VerticalAlignment="Bottom" Command="{x:Bind ViewModel.ChoosePathCommand}"/>
       </Grid>
-      <AutoSuggestBox Grid.Column="1" Grid.Row="1" Margin="0,20,0,0" x:Uid="DocumentAddTag" 
+      <AutoSuggestBox Grid.Column="1" Grid.Row="1" Margin="0,20,0,0" Header="{x:Bind ViewModel.AddTagResource}" 
                       AutomationProperties.Name="Basic AutoSuggestBox" QueryIcon="Add" 
                       TextChanged="TagAutoSuggestBoxTextChanged" QuerySubmitted="TagAutoSuggestionBoxQuerySubmitted"
                       ItemsSource="{x:Bind ViewModel.TagSuggestions, Mode=OneWay}"/>
@@ -75,14 +76,14 @@
       </ListView>
 
 
-      <CheckBox Grid.Column="0" Grid.Row="3" x:Uid="DocumentIsInvoice" VerticalAlignment="Bottom" IsChecked="{x:Bind ViewModel.IsInvoice, Mode=TwoWay}"/>
+      <CheckBox Grid.Column="0" Grid.Row="3" Content="{x:Bind ViewModel.IsInvoiceResource}" VerticalAlignment="Bottom" IsChecked="{x:Bind ViewModel.IsInvoice, Mode=TwoWay}"/>
       <Grid Grid.Column="1" Grid.Row="3" Margin="0,20,0,0" HorizontalAlignment="Left" ColumnSpacing="10">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="auto"/>
           <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <CheckBox Grid.Column="1" Grid.Row="0" x:Uid="DocumentIsPayed" VerticalAlignment="Bottom" IsEnabled="{x:Bind ViewModel.IsInvoice, Mode=OneWay}" IsChecked="{x:Bind ViewModel.IsPayed, Mode=TwoWay}"/>
-        <DatePicker Grid.Column="0" Grid.Row="0" x:Uid="DocumentDueDate" HorizontalAlignment="Left" IsEnabled="{x:Bind ViewModel.IsInvoice, Mode=OneWay}" 
+        <CheckBox Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.IsPayedResource}" VerticalAlignment="Bottom" IsEnabled="{x:Bind ViewModel.IsInvoice, Mode=OneWay}" IsChecked="{x:Bind ViewModel.IsPayed, Mode=TwoWay}"/>
+        <DatePicker Grid.Column="0" Grid.Row="0" Header="{x:Bind ViewModel.DueDateResource}" HorizontalAlignment="Left" IsEnabled="{x:Bind ViewModel.IsInvoice, Mode=OneWay}" 
                     Date="{x:Bind ViewModel.InvoiceDueDate, Mode=TwoWay, Converter={StaticResource DateTimeOffsetToDateTimeConverter}}"/>
       </Grid>
     </Grid>
@@ -92,8 +93,8 @@
         <ColumnDefinition Width="auto"/>
         <ColumnDefinition Width="auto"/>
       </Grid.ColumnDefinitions>
-      <Button Grid.Column="0" Grid.Row="0" x:Uid="Save" Command="{x:Bind ViewModel.SaveCommand}"/>
-      <Button Grid.Column="1" Grid.Row="0" x:Uid="Discard" Command="{x:Bind ViewModel.DiscardCommand}"/>
+      <Button Grid.Column="0" Grid.Row="0" Content="{x:Bind ViewModel.SaveResource}" Command="{x:Bind ViewModel.SaveCommand}"/>
+      <Button Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.DiscardResource}" Command="{x:Bind ViewModel.DiscardCommand}"/>
     </Grid>
   </StackPanel>
 </Page>

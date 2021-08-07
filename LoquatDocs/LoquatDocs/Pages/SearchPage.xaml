@@ -8,60 +8,82 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    xmlns:vm="using:LoquatDocs.ViewModel">
+    xmlns:vm="using:LoquatDocs.ViewModel"
+  Loaded="OnPageLoaded">
   <Page.DataContext>
     <vm:SearchDocumentsViewModel x:Name="ViewModel"/>
   </Page.DataContext>
 
   <ScrollViewer>
-  <StackPanel Orientation="Vertical" Padding="20">
-    <TextBlock Margin="0,0,0,20" x:Uid="SearchTitle" Style="{StaticResource SubheaderTextBlockStyle}"/>
+    <StackPanel Orientation="Vertical" Padding="20">
+      <TextBlock Margin="0,0,0,20" Text="{x:Bind ViewModel.SearchTitleResource}" Style="{StaticResource SubheaderTextBlockStyle}"/>
+      <Grid ColumnSpacing="10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <AutoSuggestBox QueryIcon="Find" QuerySubmitted="OnSearch" HorizontalAlignment="Stretch"/>
+        <ToggleButton Grid.Column="1" Content="{x:Bind ViewModel.SearchFilterResource}" Click="OnToggleSearchFilter" Background="Transparent" BorderBrush="LightGray"/>
+      </Grid>
 
-    <ListView HorizontalAlignment="Stretch" Margin="0,20,0,0" SelectionMode="None" 
+      <ProgressRing x:Name="ProgressRing" IsActive ="True" Margin="0,10,0,10" />
+      <StackPanel Orientation="Vertical" x:Name="Filter" Visibility="Collapsed" Margin="0,10,0,0">
+        <CheckBox Content="Title" x:Name="Title" IsChecked="True"/>
+        <CheckBox Content="Tags" x:Name="Tags" IsChecked="True"/>
+        <CheckBox Content="Group name" x:Name="GroupName" IsChecked="True"/>
+        <CheckBox Content="File path" x:Name="FilePath"/>
+        <CheckBox Content="Document Date" x:Name="DocumentDate"/>
+        <CheckBox Content="Document Due Date (if it's an invoice)" x:Name="DocumentDueDate"/>
+      </StackPanel>
+      <ListView HorizontalAlignment="Stretch" Margin="0,20,0,0" SelectionMode="None" 
               ItemsSource="{x:Bind ViewModel.DocumentListItems}">
-      <ListView.ItemContainerStyle>
-        <Style TargetType="ListViewItem">
-          <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        </Style>
-      </ListView.ItemContainerStyle>
-      <ListView.ItemTemplate>
-        <DataTemplate x:DataType="model:DocumentListItem">
-          <StackPanel>
-            <StackPanel Visibility="{x:Bind IsGroup}" >
-              <NavigationViewItemSeparator />
-              <TextBlock Text="{x:Bind Title}" Style="{StaticResource TitleTextBlockStyle}"/>
-            </StackPanel>
-            <Grid Visibility="{x:Bind IsDocument}">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="300"/>
-                <ColumnDefinition MaxWidth="150"/>
-                <ColumnDefinition MaxWidth="150"/>
+        <ListView.ItemContainerStyle>
+          <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+          </Style>
+        </ListView.ItemContainerStyle>
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="model:DocumentListItem">
+            <StackPanel>
+              <StackPanel Visibility="{x:Bind IsGroup}" >
+                <NavigationViewItemSeparator />
+                <TextBlock Text="{x:Bind Title}" Style="{StaticResource TitleTextBlockStyle}"/>
+              </StackPanel>
+              <Grid Visibility="{x:Bind IsDocument}">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition MinWidth="300"/>
+                  <ColumnDefinition MaxWidth="150"/>
+                  <ColumnDefinition MaxWidth="150"/>
                   <ColumnDefinition MaxWidth="100"/>
                   <ColumnDefinition MaxWidth="50"/>
                   <ColumnDefinition MaxWidth="70"/>
                   <ColumnDefinition MaxWidth="50"/>
                 </Grid.ColumnDefinitions>
-              <TextBlock Grid.Column="0" Text="{x:Bind Title}" Padding="0,10,0,0"/>
-              <TextBlock Grid.Column="1" Text="{x:Bind DateAsString}" />
+                <TextBlock Grid.Column="0" Text="{x:Bind Title}" Padding="0,10,0,0"/>
+                <TextBlock Grid.Column="1" Text="{x:Bind DateAsString}" />
                 <TextBlock Grid.Column="2" Text="{x:Bind PayedText}" Visibility="{x:Bind IsInvoice}"/>
-                <Button Grid.Column="3" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" Tag="{x:Bind PathToDocument}" Click="OnOpenFileLocation">
+                <Button Grid.Column="3" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" 
+                        Tag="{x:Bind PathToDocument}" Click="OnOpenFileLocation">
                   <SymbolIcon Symbol="OpenLocal" />
                 </Button>
-                <Button Grid.Column="4" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" Tag="{x:Bind PathToDocument}" Click="OnOpenFile">
+                <Button Grid.Column="4" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" 
+                        Tag="{x:Bind PathToDocument}" Click="OnOpenFile">
                   <SymbolIcon Symbol="OpenFile" />
                 </Button>
-                <Button Grid.Column="5" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" Tag="{x:Bind PathToDocument}">
+                <Button Grid.Column="5" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" 
+                        Tag="{x:Bind PathToDocument}" Click="OnEditDocument">
                   <SymbolIcon Symbol="Edit" />
                 </Button>
-                <Button Grid.Column="6" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" Tag="{x:Bind PathToDocument}">
+                <Button Grid.Column="6" HorizontalAlignment="Right" Background="Transparent" BorderBrush="LightGray" 
+                        Tag="{x:Bind PathToDocument}" Click="OnDeleteDocument">
                   <SymbolIcon Symbol="Delete" />
                 </Button>
               </Grid>
 
-          </StackPanel>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
+            </StackPanel>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
     </StackPanel>
 
   </ScrollViewer>

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using LoquatDocs.ViewModel;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -31,6 +32,40 @@ namespace LoquatDocs.Pages {
 
     private async void OnOpenFileLocation(object sender, RoutedEventArgs e) {
       await ViewModel.OpenFileLocation(((Button)sender).Tag as string);
+    }
+
+    private async void OnEditDocument(object sender, RoutedEventArgs e) {
+      await ViewModel.EditDocument(((Button)sender).Tag as string);
+    }
+
+    private async void OnDeleteDocument(object sender, RoutedEventArgs e) {
+      await ViewModel.SafeDeleteDocument(((Button)sender).Tag as string);
+    }
+
+    private async void OnSearch(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+      await ViewModel.Search(args.QueryText.Trim(), GetSearchArguments());
+    }
+
+    private SearchArguments GetSearchArguments() {
+      SearchArguments arguments = SearchArguments.None;
+
+      if (Title.IsChecked.Value) arguments |= SearchArguments.Title;
+      if (Tags.IsChecked.Value) arguments |= SearchArguments.Tags;
+      if (GroupName.IsChecked.Value) arguments |= SearchArguments.GroupName;
+      if (FilePath.IsChecked.Value) arguments |= SearchArguments.FilePath;
+      if (DocumentDate.IsChecked.Value) arguments |= SearchArguments.DocumentDate;
+      if (DocumentDueDate.IsChecked.Value) arguments |= SearchArguments.DocumentDueDate;
+
+      return arguments;
+    }
+
+    private void OnToggleSearchFilter(object sender, RoutedEventArgs e) {
+      Filter.Visibility = ((ToggleButton)sender).IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private async void OnPageLoaded(object sender, RoutedEventArgs e) {
+      await ViewModel.InitilizeList();
+      ProgressRing.Visibility = Visibility.Collapsed;
     }
   }
 }

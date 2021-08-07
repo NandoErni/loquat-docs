@@ -43,7 +43,7 @@ namespace LoquatDocs.Model {
 
     public TimeSpan TimeLeftToPay { get; set; }
 
-    public string PathToDocument { get; set; }
+    public string PathToDocument { get; set; } = string.Empty;
 
     public string PayedText => IsInvoicePayed ? "Payed" : $"Time left to pay: {TimeLeftToPay.Days}";
   }

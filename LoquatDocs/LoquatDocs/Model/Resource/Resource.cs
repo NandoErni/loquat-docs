@@ -16,5 +16,6 @@ namespace LoquatDocs.Model.Resource {
     private static ResourceMap GetSubTree(string resourceType) {
       return _resourceManager.MainResourceMap.GetSubtree(resourceType);
     }
+
   }
 }

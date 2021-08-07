@@ -13,19 +13,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using LoquatDocs.Model.Resource;
+using ExcelDataReader;
 
 namespace LoquatDocs.ViewModel {
-  public class SettingsViewModel : ObservableObject {
+  public partial class SettingsViewModel : ObservableObject {
 
     public const string DB_FILE_ENDING = ".loquatdb";
 
     public const string DEFAULT_DB_NAME = "database" + DB_FILE_ENDING;
 
+    private Config.Config _config = new Config.Config();
+
     private Settings _settings = new Settings();
 
     public string DbPath {
       get => _settings.DbPath;
-      set => SetProperty(ref _settings.DbPath, value);
+      set { 
+        SetProperty(ref _settings.DbPath, value);
+        _config.DatabaseFilePath = value;
+      }
     }
 
     public IAsyncRelayCommand CreateNewDatabaseCommand { get; }

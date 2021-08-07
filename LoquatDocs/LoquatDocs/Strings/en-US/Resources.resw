@@ -117,89 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChooseFile.Content" xml:space="preserve">
-    <value>Choose File</value>
-  </data>
-  <data name="ConfigAliases.Content" xml:space="preserve">
-    <value>Configure Aliases</value>
-  </data>
-  <data name="ConfigGroups.Content" xml:space="preserve">
-    <value>Configure Groups</value>
-  </data>
-  <data name="CreateNewDatabase.Content" xml:space="preserve">
-    <value>Create new Database</value>
-  </data>
-  <data name="DbPath.Header" xml:space="preserve">
-    <value>Database Path</value>
-  </data>
-  <data name="Home.Content" xml:space="preserve">
+  <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
-  <data name="ImportDatabase.Content" xml:space="preserve">
-    <value>Import Database</value>
-  </data>
-  <data name="List.Content" xml:space="preserve">
+  <data name="List" xml:space="preserve">
     <value>List Documents</value>
   </data>
-  <data name="LoquatDocs.Text" xml:space="preserve">
+  <data name="LoquatDocs" xml:space="preserve">
     <value>Loquat Docs</value>
   </data>
-  <data name="Search.Content" xml:space="preserve">
-    <value>Search Documents</value>
-  </data>
-  <data name="Settings.Content" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="UpdateDatabase.Content" xml:space="preserve">
-    <value>Update Database</value>
-  </data>
-  <data name="AddDocument.Text" xml:space="preserve">
-    <value>Add Document</value>
-  </data>
-  <data name="Document.Text" xml:space="preserve">
-    <value>Document</value>
-  </data>
-  <data name="DocumentAddTag.Header" xml:space="preserve">
-    <value>Add a Tag</value>
-  </data>
-  <data name="DocumentDate.Header" xml:space="preserve">
-    <value>Date of Document</value>
-  </data>
-  <data name="Discard.Content" xml:space="preserve">
+  <data name="Discard" xml:space="preserve">
     <value>Discard</value>
   </data>
-  <data name="DocumentDueDate.Header" xml:space="preserve">
-    <value>Due Date</value>
-  </data>
-  <data name="DocumentIsInvoice.Content" xml:space="preserve">
-    <value>This is an invoice</value>
-  </data>
-  <data name="DocumentIsPayed.Content" xml:space="preserve">
-    <value>This invoice is already payed</value>
-  </data>
-  <data name="DocumentPath.Header" xml:space="preserve">
-    <value>Path of Document</value>
-  </data>
-  <data name="Save.Content" xml:space="preserve">
+  <data name="Save" xml:space="preserve">
     <value>Save</value>
-  </data>
-  <data name="DocumentTitle.Header" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="Group.Text" xml:space="preserve">
-    <value>Group</value>
-  </data>
-  <data name="GroupName.Header" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="GroupName.PlaceholderText" xml:space="preserve">
-    <value>Type a group name</value>
-  </data>
-  <data name="AddGroup.Header" xml:space="preserve">
-    <value>Group name</value>
-  </data>
-  <data name="DocumentGroup.Text" xml:space="preserve">
-    <value>Add Document Group</value>
   </data>
   <data name="Alias.Text" xml:space="preserve">
     <value>Add Synonyms</value>
@@ -207,16 +138,10 @@
   <data name="AliasForWord.Header" xml:space="preserve">
     <value>Synonym</value>
   </data>
-  <data name="ListTitle.Text" xml:space="preserve">
-    <value>Documents</value>
-  </data>
-  <data name="SearchTitle.Text" xml:space="preserve">
-    <value>Search for Documents</value>
-  </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
-    <value>Settings</value>
-  </data>
   <data name="Word.Header" xml:space="preserve">
     <value>Word</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search Documents</value>
   </data>
 </root>

@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddDocument" xml:space="preserve">
+    <value>Add Document</value>
+  </data>
+  <data name="AddTag" xml:space="preserve">
+    <value>Add a Tag</value>
+  </data>
+  <data name="ChooseFile" xml:space="preserve">
+    <value>Choose File</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date of document</value>
+  </data>
   <data name="DiscardDocument" xml:space="preserve">
-    <value>Discard Document</value>
+    <value>Discard document</value>
   </data>
   <data name="DiscardDocumentDecision" xml:space="preserve">
     <value>Do you really want to discard this document?</value>
@@ -129,13 +141,34 @@
   <data name="DocumentAlreadyExistsAtLocation" xml:space="preserve">
     <value>The document located at {0} already exists in the database.</value>
   </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due Date</value>
+  </data>
   <data name="ErrorCantSave" xml:space="preserve">
     <value>You can't save the document in the current state.</value>
   </data>
   <data name="ErrorSavingToDatabase" xml:space="preserve">
     <value>An error occured while trying to save the document to the database.</value>
   </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="GroupNamePlaceholder" xml:space="preserve">
+    <value>Type a group name</value>
+  </data>
+  <data name="IsInvoice" xml:space="preserve">
+    <value>This is an invoice</value>
+  </data>
+  <data name="IsPayed" xml:space="preserve">
+    <value>This invoice is already payed</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path of document</value>
+  </data>
   <data name="SavedSuccessfully" xml:space="preserve">
     <value>Document saved successfully.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
   </data>
 </root>
