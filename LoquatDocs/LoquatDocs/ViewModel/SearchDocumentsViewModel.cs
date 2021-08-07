@@ -1,19 +1,15 @@
-﻿using LoquatDocs.EntityFramework;
-using LoquatDocs.EntityFramework.Model;
+﻿using LoquatDocs.EntityFramework.Model;
 using LoquatDocs.Model;
 using LoquatDocs.Model.Dialog;
 using LoquatDocs.Model.Resource;
 using LoquatDocs.ViewModel.Repository;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Document = LoquatDocs.EntityFramework.Model.Document;
 

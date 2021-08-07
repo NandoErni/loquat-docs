@@ -20,10 +20,6 @@ namespace LoquatDocs.EntityFramework {
       DbPath = dbPath;
     }
 
-    public async Task CreateOrUpdateDatabaseAsync() {
-      await Database.MigrateAsync();
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
       optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }

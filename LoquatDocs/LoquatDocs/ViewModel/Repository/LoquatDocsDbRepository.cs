@@ -121,5 +121,12 @@ namespace LoquatDocs.ViewModel.Repository {
         await ctx.SaveChangesAsync();
       }
     }
+
+    public async Task CreateOrUpdateDatabaseAsync(string dbPath) {
+      using (var ctx = new LoquatDocsDbContext(dbPath)) {
+
+        await ctx.Database.MigrateAsync();
+      }
+    }
   }
 }

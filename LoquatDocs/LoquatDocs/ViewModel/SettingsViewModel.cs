@@ -1,19 +1,13 @@
-﻿using LoquatDocs.EntityFramework;
-using LoquatDocs.Model;
+﻿using LoquatDocs.Model;
 using LoquatDocs.Model.Dialog;
+using LoquatDocs.Model.Resource;
+using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
-using LoquatDocs.Model.Resource;
-using ExcelDataReader;
 
 namespace LoquatDocs.ViewModel {
   public partial class SettingsViewModel : ObservableObject {
@@ -23,6 +17,8 @@ namespace LoquatDocs.ViewModel {
     public const string DEFAULT_DB_NAME = "database" + DB_FILE_ENDING;
 
     private Config.Config _config = new Config.Config();
+
+    private LoquatDocsDbRepository _repository = new LoquatDocsDbRepository();
 
     private Settings _settings = new Settings();
 
@@ -44,6 +40,7 @@ namespace LoquatDocs.ViewModel {
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
       ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
       UpdateDatabaseCommand = new AsyncRelayCommand(UpdateDatabase);
+      DbPath = _config.DatabaseFilePath;
     }
 
     public async Task PickDbFile() {
@@ -69,9 +66,7 @@ namespace LoquatDocs.ViewModel {
         return;
       }
 
-      using (LoquatDocsDbContext context = new LoquatDocsDbContext(databaseFilePath)) {
-        await context.CreateOrUpdateDatabaseAsync();
-      }
+      await _repository.CreateOrUpdateDatabaseAsync(databaseFilePath);
 
       StorageFile db = await databaseFolder.GetFileAsync(DEFAULT_DB_NAME);
       DbPath = db != null ? db.Path : string.Empty;
@@ -85,9 +80,7 @@ namespace LoquatDocs.ViewModel {
         }
       }
 
-      using (LoquatDocsDbContext context = new LoquatDocsDbContext(DbPath)) {
-        await context.CreateOrUpdateDatabaseAsync();
-      }
+      await _repository.CreateOrUpdateDatabaseAsync(DbPath);
     }
 
     private bool DoesDbAlreadyExist(string pickedDbPath) {
