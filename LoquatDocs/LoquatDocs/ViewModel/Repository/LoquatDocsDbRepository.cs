@@ -128,5 +128,12 @@ namespace LoquatDocs.ViewModel.Repository {
         await ctx.Database.MigrateAsync();
       }
     }
+
+    public async Task PayInvoice(string documentPath) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        (await ctx.Invoices.FirstOrDefaultAsync(i => i.DocumentPath.Equals(documentPath))).IsPayed = true;
+        await ctx.SaveChangesAsync();
+      }
+    }
   }
 }

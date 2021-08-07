@@ -28,5 +28,7 @@ namespace LoquatDocs.ViewModel {
     public string SearchTitleResource => Resource.GetResource(RESOURCE_KEY, "SearchTitle");
 
     public string ListTitleResource => Resource.GetResource(RESOURCE_KEY, "ListTitle");
+
+    public static string PayResource => Resource.GetResource(RESOURCE_KEY, "Pay");
   }
 }

@@ -122,5 +122,10 @@ namespace LoquatDocs.ViewModel {
         _documentListItems.Add(new DocumentListItem(document, invoice));
       }
     }
+
+    public async Task PayInvoice(string documentPath) {
+      await _repository.PayInvoice(documentPath);
+      _documentListItems.FirstOrDefault(doc => doc.PathToDocument.Equals(documentPath)).IsInvoicePayed = true;
+    }
   }
 }

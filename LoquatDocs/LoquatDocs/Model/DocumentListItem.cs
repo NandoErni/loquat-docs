@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using EFModel = LoquatDocs.EntityFramework.Model;
 
 namespace LoquatDocs.Model {
-  public class DocumentListItem {
+  public class DocumentListItem : INotifyPropertyChanged {
 
     public DocumentListItem(EFModel.Document document, EFModel.Invoice invoice = null) {
       IsGroup = false;
@@ -20,31 +22,91 @@ namespace LoquatDocs.Model {
       }
     }
 
-    public DocumentListItem(EFModel.Group group) : this(group.Groupname) {}
-
     public DocumentListItem(string groupName) {
       IsGroup = true;
       Title = groupName;
     }
 
-    public bool IsGroup { get; set; }
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private bool _isGroup;
+    public bool IsGroup {
+      get => _isGroup;
+      set {
+        _isGroup = value;
+        NotifyPropertyChanged();
+        NotifyPropertyChanged(nameof(IsDocument));
+      } 
+    }
 
     public bool IsDocument => !IsGroup;
 
-    public string Title { get; set; }
+    private string _title = string.Empty;
+    public string Title {
+      get => _title;
+      set {
+        _title = value;
+        NotifyPropertyChanged();
+      }
+    }
 
-    public DateTime Date { get; set; }
+    private DateTime _date;
+    public DateTime Date {
+      get => _date;
+      set {
+        _date = value;
+        NotifyPropertyChanged();
+        NotifyPropertyChanged(nameof(DateAsString));
+      }
+    }
 
     public string DateAsString => Date.ToShortDateString();
 
-    public bool IsInvoice { get; set; } = false;
+    private bool _isInvoice;
+    public bool IsInvoice {
+      get => _isInvoice;
+      set {
+        _isInvoice = value;
+        NotifyPropertyChanged();
+        NotifyPropertyChanged(nameof(IsInvoiceAndNotPayed));
+      }
+    }
 
-    public bool IsInvoicePayed { get; set; }
+    private bool _isInvoicePayed;
+    public bool IsInvoicePayed {
+      get => _isInvoicePayed;
+      set {
+        _isInvoicePayed = value;
+        NotifyPropertyChanged();
+        NotifyPropertyChanged(nameof(PayedText));
+        NotifyPropertyChanged(nameof(IsInvoiceAndNotPayed));
+      }
+    }
 
-    public TimeSpan TimeLeftToPay { get; set; }
+    public bool IsInvoiceAndNotPayed => IsInvoice && !IsInvoicePayed;
 
-    public string PathToDocument { get; set; } = string.Empty;
+    private TimeSpan _timeLeftToPay;
+    public TimeSpan TimeLeftToPay {
+      get => _timeLeftToPay;
+      set {
+        _timeLeftToPay = value;
+        NotifyPropertyChanged();
+      }
+    }
 
-    public string PayedText => IsInvoicePayed ? "Payed" : $"Time left to pay: {TimeLeftToPay.Days}";
+    private string _pathToDocument = string.Empty;
+    public string PathToDocument {
+      get => _pathToDocument;
+      set {
+        _pathToDocument = value;
+        NotifyPropertyChanged();
+      }
+    }
+
+    public string PayedText => IsInvoicePayed ? "Payed" : $"Days left to pay: {TimeLeftToPay.Days}"; // todo: resource
+
+    private void NotifyPropertyChanged([CallerMemberName] string propertyName = "") {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
   }
 }

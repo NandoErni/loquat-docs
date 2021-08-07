@@ -67,5 +67,9 @@ namespace LoquatDocs.Pages {
       ViewModel.InitilizeList();
       ProgressRing.Visibility = Visibility.Collapsed;
     }
+
+    private async void OnInvoicePayed(object sender, RoutedEventArgs e) {
+      await ViewModel.PayInvoice(((Button)sender).Tag as string);
+    }
   }
 }

@@ -132,6 +132,9 @@
   <data name="ListTitle" xml:space="preserve">
     <value>Documents</value>
   </data>
+  <data name="Pay" xml:space="preserve">
+    <value>Pay</value>
+  </data>
   <data name="PromptSureToDeleteDocument" xml:space="preserve">
     <value>Are you sure to delete {0}?</value>
   </data>
