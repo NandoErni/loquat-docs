@@ -2,6 +2,7 @@
 using LoquatDocs.Model;
 using LoquatDocs.Model.Dialog;
 using LoquatDocs.Model.Resource;
+using LoquatDocs.ViewModel.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -17,7 +18,7 @@ using EFFactory = LoquatDocs.Converter.EntityFrameworkModelFactory;
 namespace LoquatDocs.ViewModel {
   public partial class DocumentViewModel : ObservableObject {
 
-    private Config.Config _config = new Config.Config();
+    LoquatDocsDbRepository _repository;
 
     private Document _document = new Document();
 
@@ -79,6 +80,7 @@ namespace LoquatDocs.ViewModel {
     public IAsyncRelayCommand ChoosePathCommand { get; }
 
     public DocumentViewModel() {
+      _repository = new LoquatDocsDbRepository();
       SaveCommand = new AsyncRelayCommand(SaveDocumentAsync);
       DiscardCommand = new AsyncRelayCommand(DiscardDocumentAsync);
       ChoosePathCommand = new AsyncRelayCommand(ChoosePathAndValidateAsync);
@@ -104,28 +106,25 @@ namespace LoquatDocs.ViewModel {
     }
 
     private async Task SaveDocumentToDatabaseAsync() {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        await AddGroupIfNotExistentAsync(ctx);
-        await ctx.Documents.AddAsync(EFFactory.CreateDocument(GroupName, Title, DocumentPath, DateOfDocument));
-        await ctx.Tags.AddRangeAsync(EFFactory.CreateTag(Tags, DocumentPath));
+      await AddGroupIfNotExistentAsync();
+      await _repository.SaveDocument(EFFactory.CreateDocument(GroupName, Title, DocumentPath, DateOfDocument));
+      await _repository.SaveTags(EFFactory.CreateTag(Tags, DocumentPath));
 
-        if (IsInvoice) {
-          await ctx.Invoices.AddAsync(EFFactory.CreateInvoice(DocumentPath, InvoiceDueDate, IsPayed));
-        }
-
-        await ctx.SaveChangesAsync();
+      if (IsInvoice) {
+        await _repository.SaveInvoice(EFFactory.CreateInvoice(DocumentPath, InvoiceDueDate, IsPayed));
       }
+
       ResetValues();
     }
 
-    private async Task AddGroupIfNotExistentAsync(LoquatDocsDbContext ctx) {
-      if (await ctx.Groups.FindAsync(GroupName) is null) {
-        await ctx.Groups.AddAsync(new EF.Group() { Groupname = GroupName });
+    private async Task AddGroupIfNotExistentAsync() {
+      if (!await _repository.GroupExist(GroupName)) {
+        await _repository.SaveGroup(GroupName);
       }
     }
 
     public async Task DiscardDocumentAsync() {
-      if (await DecisionDialog.CreateAndShowAsync(Resource.GetResource(RESOURCE_KEY, "DiscardDocument"), 
+      if (await DecisionDialog.CreateAndShowAsync(Resource.GetResource(RESOURCE_KEY, "DiscardDocument"),
         Resource.GetResource(RESOURCE_KEY, "DiscardDocumentDecision"))) {
         ResetValues();
       }
@@ -138,7 +137,7 @@ namespace LoquatDocs.ViewModel {
         return;
       }
 
-      if (await DoesDocumentAlreadyExistAsync(document.Path)) {
+      if (await _repository.DocumentExist(document.Path)) {
         await InfoDialog.CreateAndShowErrorAsync(Resource.GetFormattedResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation", document.Path));
       } else {
         DocumentPath = document.Path;
@@ -151,22 +150,14 @@ namespace LoquatDocs.ViewModel {
         && !string.IsNullOrWhiteSpace(DocumentPath);
     }
 
-    private async Task<bool> DoesDocumentAlreadyExistAsync(string documentPath) {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        return await ctx.Documents.FindAsync(documentPath) is not null;
-      }
-    }
-
     private void ResetValues() {
       _document = new Document();
       OnPropertyChanged(string.Empty);
     }
 
     public async Task InitilizeSuggestionsAsync() {
-      using (LoquatDocsDbContext ctx = new LoquatDocsDbContext(_config.DatabaseFilePath)) {
-        _groupNameSuggestionList.BaseList = await ctx.Groups.Select(x => x.Groupname).ToListAsync();
-        _tagSuggestionList.BaseList = await ctx.Tags.Select(x => x.TagId).ToListAsync();
-      }
+      _groupNameSuggestionList.BaseList = await _repository.GetAllGroupnames();
+      _tagSuggestionList.BaseList = await _repository.GetAllTagIds();
     }
 
     public void UpdateFilteredGroupNameSuggestions() {

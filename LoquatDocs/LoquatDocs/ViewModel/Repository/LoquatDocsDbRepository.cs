@@ -22,6 +22,12 @@ namespace LoquatDocs.ViewModel.Repository {
       }
     }
 
+    public async Task<List<string>> GetAllTagIds() {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        return await ctx.Tags.Select(g => g.TagId).ToListAsync();
+      }
+    }
+
     public async Task SaveGroup(string groupName) {
       if (string.IsNullOrWhiteSpace(groupName)) {
         return;
@@ -62,6 +68,33 @@ namespace LoquatDocs.ViewModel.Repository {
       using(LoquatDocsDbContext ctx = GetNewDbContext()) {
         ctx.Documents.RemoveRange(documentsOfGroup);
         await ctx.SaveChangesAsync();
+      }
+    }
+
+    public async Task SaveDocument(Document document) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        await ctx.Documents.AddAsync(document);
+        await ctx.SaveChangesAsync();
+      }
+    }
+
+    public async Task SaveTags(List<Tag> tags) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        await ctx.Tags.AddRangeAsync(tags);
+        await ctx.SaveChangesAsync();
+      }
+    }
+
+    public async Task SaveInvoice(Invoice invoice) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        await ctx.Invoices.AddAsync(invoice);
+        await ctx.SaveChangesAsync();
+      }
+    }
+
+    public async Task<bool> DocumentExist(string documentPath) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        return await ctx.Documents.AnyAsync(d => d.DocumentPath.Equals(documentPath));
       }
     }
   }

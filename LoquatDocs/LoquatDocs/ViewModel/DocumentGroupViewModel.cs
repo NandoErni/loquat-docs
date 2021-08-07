@@ -1,7 +1,4 @@
-﻿using LoquatDocs.EntityFramework;
-using LoquatDocs.EntityFramework.Model;
-using LoquatDocs.Model;
-using LoquatDocs.Model.Dialog;
+﻿using LoquatDocs.Model.Dialog;
 using LoquatDocs.Model.Resource;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
