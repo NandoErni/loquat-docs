@@ -56,13 +56,13 @@ namespace LoquatDocs.ViewModel {
       StorageFolder databaseFolder = await picker.PickSingleFolderAsync();
 
       if (databaseFolder is null) {
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource("Settings", "NoFolderChosen"));
+        await InfoDialog.CreateAndShowErrorAsync(NoFolderChosenResource);
         return;
       }
       string databaseFilePath = Path.Combine(databaseFolder.Path, DEFAULT_DB_NAME);
 
       if (DoesDbAlreadyExist(databaseFilePath)) {
-        await InfoDialog.CreateAndShowErrorAsync(Resource.GetResource("Settings", "DatabaseAlreadyExists"));
+        await InfoDialog.CreateAndShowErrorAsync(DatabaseAlreadyExistsResource);
         return;
       }
 
