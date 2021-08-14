@@ -1,7 +1,9 @@
 ﻿using LoquatDocs.Services;
 using LoquatDocs.ViewModel;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +17,17 @@ namespace LoquatDocs {
 
     private UnityContainer _container;
 
+    private string _logPath = 
+      Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "logs", "loquatDocs.log");
+
     private ServiceProvider() {
-      _container = new UnityContainer();
+      _container = new UnityContainer(); 
+
+      Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Debug()
+        .WriteTo.Console()
+        .WriteTo.File(_logPath, rollingInterval: RollingInterval.Month)
+        .CreateLogger();
 
       RegisterServices();
       RegisterViewModels();
@@ -36,6 +47,7 @@ namespace LoquatDocs {
     private void RegisterServices() {
       _container.RegisterType<IConfigService, Config>();
       _container.RegisterType<INotificationService, DialogNotifications>();
+      _container.RegisterInstance(Log.Logger);
     }
 
     private void RegisterViewModels() {

@@ -4,6 +4,7 @@ using LoquatDocs.Model.Resource;
 using LoquatDocs.Services;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,11 +23,14 @@ namespace LoquatDocs.ViewModel {
 
     private INotificationService _notification;
 
+    private ILogger _logger;
+
     public ObservableCollection<DocumentListItem> DocumentListItems {
       get => _documentListItems;
     }
 
-    public SearchDocumentsViewModel(INotificationService notificationService) {
+    public SearchDocumentsViewModel(INotificationService notificationService, ILogger logger) {
+      _logger = logger;
       _notification = notificationService;
       _repository = new LoquatDocsDbRepository();
       _documentListItems = new ObservableCollection<DocumentListItem>();
@@ -44,8 +48,9 @@ namespace LoquatDocs.ViewModel {
       try {
         _documentListItems.Remove(_documentListItems.FirstOrDefault(d => d.PathToDocument.Equals(documentPath)));
         await _repository.DeleteDocument(documentPath);
-      } catch {
+      } catch (Exception e) {
         await _notification.NotifyInfo(FileDialogTitleResource, ErrorWhileDeleteResource(documentTitle));
+        _logger.Error(e.ToString());
         return;
       }
       await _notification.NotifyInfo(FileDialogTitleResource, SuccessDeleteResource(documentTitle));
@@ -81,9 +86,10 @@ namespace LoquatDocs.ViewModel {
       }
       try {
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
-      } catch {
+      } catch (Exception e) {
         await _notification.NotifyInfo(FileDialogTitleResource, ErrorWhileOpenFileResource(filePath));
         await OpenFileLocation(filePath);
+        _logger.Error(e.ToString());
       }
     }
 

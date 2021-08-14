@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Serilog;
 
 namespace LoquatDocs.ViewModel {
   public partial class SettingsViewModel : ObservableObject {
@@ -23,6 +24,8 @@ namespace LoquatDocs.ViewModel {
     private IConfigService _config;
 
     private INotificationService _notification;
+
+    private ILogger _logger;
 
     private LoquatDocsDbRepository _repository = new LoquatDocsDbRepository();
 
@@ -44,7 +47,8 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand SaveDatabaseBackupCommand { get; }
 
-    public SettingsViewModel(IConfigService config, INotificationService notificationService) {
+    public SettingsViewModel(IConfigService config, INotificationService notificationService, ILogger logger) {
+      _logger = logger;
       _config = config;
       _notification = notificationService;
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
@@ -80,7 +84,7 @@ namespace LoquatDocs.ViewModel {
       await _repository.CreateOrUpdateDatabaseAsync(databaseFilePath);
 
       StorageFile db = await databaseFolder.GetFileAsync(DEFAULT_DB_NAME);
-      DbPath = db != null ? db.Path : string.Empty;
+      DbPath = db != null ? db.Path : (DbPath ?? string.Empty);
     }
 
     public async Task CheckUpdateDatabase() {
@@ -121,8 +125,9 @@ namespace LoquatDocs.ViewModel {
         }
         File.Copy(DbPath, savePath);
       } catch (Exception e) {
-
-        return;//log
+        await _notification.NotifyError("Error while trying to save the database backup.");
+        _logger.Error(e.ToString());
+        return;
       }
 
       await _notification.NotifyInfo(DatabaseResource, BackupSuccessfulResource);

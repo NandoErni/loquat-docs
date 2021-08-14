@@ -6,6 +6,7 @@ using LoquatDocs.ViewModel.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,8 @@ namespace LoquatDocs.ViewModel {
     private SuggestionList<string> _tagSuggestionList;
 
     private INotificationService _notification;
+
+    private ILogger _logger;
 
     public string GroupName {
       get => _document.GroupName;
@@ -84,7 +87,8 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand ChoosePathCommand { get; }
 
-    public DocumentViewModel(INotificationService notificationService) {
+    public DocumentViewModel(INotificationService notificationService, ILogger logger) {
+      _logger = logger;
       _notification = notificationService;
       _repository = new LoquatDocsDbRepository();
       SaveCommand = new AsyncRelayCommand(SaveDocumentAsync);
@@ -104,9 +108,9 @@ namespace LoquatDocs.ViewModel {
       try {
         await SaveDocumentToDatabaseAsync();
         ResetValues();
-      } catch (DbUpdateException exception) {
-        // todo: log
+      } catch (DbUpdateException e) {
         await _notification.NotifyError(ErrorSavingToDatabaseResource);
+        _logger.Error(e.ToString());
         return;
       }
       await Task.WhenAll(_notification.NotifySuccess(SavedSuccessfullyResource), 
