@@ -1,10 +1,10 @@
-﻿using LoquatDocs.Pages.Forms;
+﻿using LoquatDocs.View.Forms;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LoquatDocs.Pages {
+namespace LoquatDocs.View {
 
   public sealed partial class HomePage : Page {
 

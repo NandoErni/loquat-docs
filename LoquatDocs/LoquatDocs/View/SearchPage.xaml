@@ -1,8 +1,8 @@
 ﻿<Page
-    x:Class="LoquatDocs.Pages.SearchPage"
+    x:Class="LoquatDocs.View.SearchPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LoquatDocs.Pages"
+    xmlns:local="using:LoquatDocs.View"
     xmlns:model="using:LoquatDocs.Model"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,19 +19,35 @@
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <AutoSuggestBox QueryIcon="Find" QuerySubmitted="OnSearch" HorizontalAlignment="Stretch"/>
+        <AutoSuggestBox QueryIcon="Find" QuerySubmitted="OnSearch" HorizontalAlignment="Stretch" 
+                        Text="{x:Bind ViewModel.QueryText, Mode=TwoWay}" TextChanged="OnSearch"/>
         <ToggleButton Grid.Column="1" Content="{x:Bind ViewModel.SearchFilterResource}" Click="OnToggleSearchFilter" Background="Transparent" BorderBrush="LightGray"/>
       </Grid>
 
-      <ProgressRing x:Name="ProgressRing" IsActive ="True" Margin="0,10,0,10" />
-      <StackPanel Orientation="Vertical" x:Name="Filter" Visibility="Collapsed" Margin="0,10,0,0">
-        <CheckBox Content="Title" x:Name="Title" IsChecked="True"/>
-        <CheckBox Content="Tags" x:Name="Tags" IsChecked="True"/>
-        <CheckBox Content="Group name" x:Name="GroupName" IsChecked="True"/>
-        <CheckBox Content="File path" x:Name="FilePath"/>
-        <CheckBox Content="Document Date" x:Name="DocumentDate"/>
-        <CheckBox Content="Document Due Date (if it's an invoice)" x:Name="DocumentDueDate"/>
-      </StackPanel>
+      <ProgressRing x:Name="ProgressRing" IsActive="True" Margin="0,10,0,10" />
+      <Grid x:Name="Filter" Visibility="Collapsed" Margin="0,10,0,0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <CheckBox Grid.Row="0" Grid.Column="0" Content="{x:Bind ViewModel.FilterTitleResource}" x:Name="Title" IsChecked="True" Click="OnSearch"/>
+        <CheckBox Grid.Row="1" Grid.Column="0" Content="{x:Bind ViewModel.FilterTagsResource}" x:Name="Tags" IsChecked="True" Click="OnSearch"/>
+        <CheckBox Grid.Row="2" Grid.Column="0" Content="{x:Bind ViewModel.FilterGroupNameResource}" x:Name="GroupName" IsChecked="True" Click="OnSearch"/>
+        <CheckBox Grid.Row="3" Grid.Column="0" Content="{x:Bind ViewModel.FilterFilePathResource}" x:Name="FilePath" Click="OnSearch"/>
+        <CheckBox Grid.Row="4" Grid.Column="0" Content="{x:Bind ViewModel.FilterDocumentDateResource}" x:Name="DocumentDate" Click="OnSearch"/>
+        <CheckBox Grid.Row="5" Grid.Column="0" Content="{x:Bind ViewModel.FilterDocumentDueDateResource}" x:Name="DocumentDueDate" Click="OnSearch"/>
+        <CheckBox Grid.Row="0" Grid.Column="1" Content="{x:Bind ViewModel.FilterOnlyInvoicesLeftToPayResource}" x:Name="OnlyInvoicesLeftToPay" Click="OnSearch"/>
+      </Grid>
       <ListView HorizontalAlignment="Stretch" Margin="0,20,0,0" SelectionMode="None" 
               ItemsSource="{x:Bind ViewModel.DocumentListItems}">
         <ListView.ItemContainerStyle>

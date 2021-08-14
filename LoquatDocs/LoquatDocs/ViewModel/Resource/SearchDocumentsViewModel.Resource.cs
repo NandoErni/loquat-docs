@@ -34,5 +34,19 @@ namespace LoquatDocs.ViewModel {
     public static string PayedResource => Resource.GetResource(RESOURCE_KEY, "Payed");
 
     public static string DaysLeftToPayResource(int days) => string.Format(Resource.GetResource(RESOURCE_KEY, "DaysLeftToPay"), days);
+
+    public string FilterTitleResource => Resource.GetResource(RESOURCE_KEY, "FilterTitle");
+
+    public string FilterTagsResource => Resource.GetResource(RESOURCE_KEY, "FilterTags");
+
+    public string FilterGroupNameResource => Resource.GetResource(RESOURCE_KEY, "FilterGroupName");
+
+    public string FilterFilePathResource => Resource.GetResource(RESOURCE_KEY, "FilterFilePath");
+
+    public string FilterDocumentDateResource => Resource.GetResource(RESOURCE_KEY, "FilterDocumentDate");
+
+    public string FilterDocumentDueDateResource => Resource.GetResource(RESOURCE_KEY, "FilterDocumentDueDate");
+
+    public string FilterOnlyInvoicesLeftToPayResource => Resource.GetResource(RESOURCE_KEY, "FilterOnlyInvoicesLeftToPay");
   }
 }

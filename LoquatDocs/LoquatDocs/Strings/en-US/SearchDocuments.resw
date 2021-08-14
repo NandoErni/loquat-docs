@@ -132,6 +132,27 @@
   <data name="FileDialogTitle" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="FilterDocumentDate" xml:space="preserve">
+    <value>Document date</value>
+  </data>
+  <data name="FilterDocumentDueDate" xml:space="preserve">
+    <value>Document due date (if it's an invoice)</value>
+  </data>
+  <data name="FilterFilePath" xml:space="preserve">
+    <value>File path</value>
+  </data>
+  <data name="FilterGroupName" xml:space="preserve">
+    <value>Group name</value>
+  </data>
+  <data name="FilterOnlyInvoicesLeftToPay" xml:space="preserve">
+    <value>Only invoices left to pay</value>
+  </data>
+  <data name="FilterTags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="FilterTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Documents</value>
   </data>

@@ -2,7 +2,7 @@
 using Microsoft.UI.Xaml.Controls;
 using System;
 
-namespace LoquatDocs.Pages {
+namespace LoquatDocs.View {
   public sealed partial class DocumentListItem : UserControl {
 
     public bool IsGroup { get; set; } = false;

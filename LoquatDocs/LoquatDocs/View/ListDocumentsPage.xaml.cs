@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace LoquatDocs.Pages {
+namespace LoquatDocs.View {
 
   public sealed partial class ListDocumentsPage : Page {
     public ListDocumentsPage() {

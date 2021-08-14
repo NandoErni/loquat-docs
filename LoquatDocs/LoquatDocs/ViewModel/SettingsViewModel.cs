@@ -27,6 +27,8 @@ namespace LoquatDocs.ViewModel {
 
     private ILogger _logger;
 
+    private IProcessHelperService _processHelper;
+
     private LoquatDocsDbRepository _repository = new LoquatDocsDbRepository();
 
     private Settings _settings = new Settings();
@@ -47,14 +49,19 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand SaveDatabaseBackupCommand { get; }
 
-    public SettingsViewModel(IConfigService config, INotificationService notificationService, ILogger logger) {
+    public IAsyncRelayCommand OpenLogPathCommand { get; }
+
+    public SettingsViewModel(IConfigService config, INotificationService notificationService, ILogger logger, 
+      IProcessHelperService processHelper) {
       _logger = logger;
       _config = config;
       _notification = notificationService;
+      _processHelper = processHelper;
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
       ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
       CheckUpdateDatabaseCommand = new AsyncRelayCommand(CheckUpdateDatabase);
       SaveDatabaseBackupCommand = new AsyncRelayCommand(SaveDatabaseBackup);
+      OpenLogPathCommand = new AsyncRelayCommand(OpenLogPath);
       DbPath = _config.DatabaseFilePath;
     }
 
@@ -132,7 +139,11 @@ namespace LoquatDocs.ViewModel {
 
       await _notification.NotifyInfo(DatabaseResource, BackupSuccessfulResource);
 
-      Process.Start("explorer.exe", "/select, \"" + savePath + "\"");
+      _processHelper.OpenFileLocationInExplorer(savePath);
+    }
+
+    public async Task OpenLogPath() {
+      _processHelper.OpenFolderInExplorer(Path.GetDirectoryName(ServiceProvider.LogPath));
     }
 
     private bool DoesDbAlreadyExist(string pickedDbPath) {

@@ -17,13 +17,19 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Pages\Forms\AliasPage.xaml" />
-    <None Remove="Pages\Forms\DocumentGroupPage.xaml" />
-    <None Remove="Pages\Forms\DocumentListItem.xaml" />
-    <None Remove="Pages\Forms\DocumentPage.xaml" />
-    <None Remove="Pages\HomePage.xaml" />
-    <None Remove="Pages\ListDocumentsPage.xaml" />
-    <None Remove="Pages\SearchPage.xaml" />
+    <Compile Remove="Model\Dialog\**" />
+    <EmbeddedResource Remove="Model\Dialog\**" />
+    <None Remove="Model\Dialog\**" />
+    <Page Remove="Model\Dialog\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="View\Forms\AliasPage.xaml" />
+    <None Remove="View\Forms\DocumentGroupPage.xaml" />
+    <None Remove="View\Forms\DocumentListItem.xaml" />
+    <None Remove="View\Forms\DocumentPage.xaml" />
+    <None Remove="View\HomePage.xaml" />
+    <None Remove="View\ListDocumentsPage.xaml" />
+    <None Remove="View\SearchPage.xaml" />
     <None Remove="Settings.xaml" />
     <None Remove="Strings\en-US\Document.resw" />
     <None Remove="Strings\en-US\DocumentGroup.resw" />
@@ -103,9 +109,5 @@
     <Page Update="Pages\Forms\DocumentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\Dialog\" />
   </ItemGroup>
 </Project>

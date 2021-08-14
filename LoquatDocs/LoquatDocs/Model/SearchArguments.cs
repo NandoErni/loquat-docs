@@ -13,5 +13,6 @@ namespace LoquatDocs.Model {
     FilePath = 8,
     DocumentDate = 16,
     DocumentDueDate = 32,
+    OnlyInvoicesLeftToPay = 64,
   }
 }

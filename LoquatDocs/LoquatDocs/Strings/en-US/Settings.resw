@@ -153,6 +153,9 @@
   <data name="NoFolderChosen" xml:space="preserve">
     <value>No folder was chosen.</value>
   </data>
+  <data name="OpenLogPath" xml:space="preserve">
+    <value>Open the path to the log files</value>
+  </data>
   <data name="SaveDatabaseBackup" xml:space="preserve">
     <value>Create database backup</value>
   </data>

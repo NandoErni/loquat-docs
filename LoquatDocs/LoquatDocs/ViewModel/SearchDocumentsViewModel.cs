@@ -1,6 +1,5 @@
 ﻿using LoquatDocs.EntityFramework.Model;
 using LoquatDocs.Model;
-using LoquatDocs.Model.Resource;
 using LoquatDocs.Services;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -8,7 +7,6 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,21 +17,30 @@ namespace LoquatDocs.ViewModel {
 
     private LoquatDocsDbRepository _repository;
 
-    private ObservableCollection<DocumentListItem> _documentListItems;
+    private Search _search = new Search();
 
     private INotificationService _notification;
 
     private ILogger _logger;
 
+    private IProcessHelperService _processHelper;
+
     public ObservableCollection<DocumentListItem> DocumentListItems {
-      get => _documentListItems;
+      get => _search.DocumentListItems;
     }
 
-    public SearchDocumentsViewModel(INotificationService notificationService, ILogger logger) {
+    public string QueryText {
+      get => _search.QueryText;
+      set => SetProperty(ref _search.QueryText, value);
+    }
+
+    public SearchDocumentsViewModel(INotificationService notificationService, ILogger logger, 
+      IProcessHelperService processHelper) {
       _logger = logger;
       _notification = notificationService;
+      _processHelper = processHelper;
       _repository = new LoquatDocsDbRepository();
-      _documentListItems = new ObservableCollection<DocumentListItem>();
+      _search.DocumentListItems = new ObservableCollection<DocumentListItem>();
     }
 
     public async Task EditDocument(string documentPath) {
@@ -46,7 +53,7 @@ namespace LoquatDocs.ViewModel {
         return;
       }
       try {
-        _documentListItems.Remove(_documentListItems.FirstOrDefault(d => d.PathToDocument.Equals(documentPath)));
+        _search.DocumentListItems.Remove(_search.DocumentListItems.FirstOrDefault(d => d.PathToDocument.Equals(documentPath)));
         await _repository.DeleteDocument(documentPath);
       } catch (Exception e) {
         await _notification.NotifyInfo(FileDialogTitleResource, ErrorWhileDeleteResource(documentTitle));
@@ -56,8 +63,8 @@ namespace LoquatDocs.ViewModel {
       await _notification.NotifyInfo(FileDialogTitleResource, SuccessDeleteResource(documentTitle));
     }
 
-    public void Search(string queryText, SearchArguments searchArguments) {
-      UpdateDocumentList(_repository.GetDocuments((d) => DoesQueryTextMatch(queryText, d, searchArguments)));
+    public void Search(SearchArguments searchArguments) {
+      UpdateDocumentList(_repository.GetDocuments((d) => DoesQueryTextMatch(_search.QueryText, d, searchArguments)));
     }
 
     private async Task<string> GetTitleOfPath(string documentPath) {
@@ -65,19 +72,20 @@ namespace LoquatDocs.ViewModel {
     }
 
     private bool DoesQueryTextMatch(string queryText, Document document, SearchArguments searchArguments) {
-      return (document.Title.IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.Title))
+      return (!document.Invoices.FirstOrDefault()?.IsPayed == true || !searchArguments.HasFlag(SearchArguments.OnlyInvoicesLeftToPay)) && 
+        ((document.Title.IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.Title))
         || (document.Tags.Any(t => t.TagId.IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0) && searchArguments.HasFlag(SearchArguments.Tags))
         || (document.Groupname.IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.GroupName))
         || (document.DocumentPath.IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.FilePath))
         || (document.DocumentDate.ToLongDateString().IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.DocumentDate))
-        || (document.Invoices.FirstOrDefault()?.DueDate.ToLongDateString().IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.DocumentDueDate));
+        || (document.Invoices.FirstOrDefault()?.DueDate.ToLongDateString().IndexOf(queryText, StringComparison.OrdinalIgnoreCase) >= 0 && searchArguments.HasFlag(SearchArguments.DocumentDueDate)));
     }
 
     public async Task OpenFileLocation(string filePath) {
       if (!await FileExist(filePath)) {
         return;
       }
-      Process.Start("explorer.exe", "/select, \"" + filePath + "\"");
+      _processHelper.OpenFileLocationInExplorer(filePath);
     }
 
     public async Task OpenFile(string filePath) {
@@ -85,7 +93,7 @@ namespace LoquatDocs.ViewModel {
         return;
       }
       try {
-        Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+        _processHelper.OpenFileInExplorer(filePath);
       } catch (Exception e) {
         await _notification.NotifyInfo(FileDialogTitleResource, ErrorWhileOpenFileResource(filePath));
         await OpenFileLocation(filePath);
@@ -106,9 +114,9 @@ namespace LoquatDocs.ViewModel {
     }
 
     private void UpdateDocumentList(IEnumerable<IGrouping<string, Document>> source) {
-      _documentListItems.Clear();
+      _search.DocumentListItems.Clear();
       foreach (var groupItem in source) {
-        _documentListItems.Add(new DocumentListItem(groupItem.Key));
+        _search.DocumentListItems.Add(new DocumentListItem(groupItem.Key));
         AddDocuments(groupItem);
       }
     }
@@ -119,13 +127,13 @@ namespace LoquatDocs.ViewModel {
         if (document.Invoices != null && document.Invoices.Any()) {
           invoice = document.Invoices.FirstOrDefault();
         }
-        _documentListItems.Add(new DocumentListItem(document, invoice));
+        _search.DocumentListItems.Add(new DocumentListItem(document, invoice));
       }
     }
 
     public async Task PayInvoice(string documentPath) {
       await _repository.PayInvoice(documentPath);
-      _documentListItems.FirstOrDefault(doc => doc.PathToDocument.Equals(documentPath)).IsInvoicePayed = true;
+      _search.DocumentListItems.FirstOrDefault(doc => doc.PathToDocument.Equals(documentPath)).IsInvoicePayed = true;
     }
   }
 }

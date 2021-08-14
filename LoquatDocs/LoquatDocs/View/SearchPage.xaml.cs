@@ -3,7 +3,7 @@ using LoquatDocs.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-namespace LoquatDocs.Pages {
+namespace LoquatDocs.View {
 
   public sealed partial class SearchPage : Page {
 
@@ -30,10 +30,6 @@ namespace LoquatDocs.Pages {
       await ViewModel.SafeDeleteDocument(((Button)sender).Tag as string);
     }
 
-    private void OnSearch(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-      ViewModel.Search(args.QueryText.Trim(), GetSearchArguments());
-    }
-
     private SearchArguments GetSearchArguments() {
       SearchArguments arguments = SearchArguments.None;
 
@@ -43,6 +39,7 @@ namespace LoquatDocs.Pages {
       if (FilePath.IsChecked.Value) arguments |= SearchArguments.FilePath;
       if (DocumentDate.IsChecked.Value) arguments |= SearchArguments.DocumentDate;
       if (DocumentDueDate.IsChecked.Value) arguments |= SearchArguments.DocumentDueDate;
+      if (OnlyInvoicesLeftToPay.IsChecked.Value) arguments |= SearchArguments.OnlyInvoicesLeftToPay;
 
       return arguments;
     }
@@ -58,6 +55,22 @@ namespace LoquatDocs.Pages {
 
     private async void OnInvoicePayed(object sender, RoutedEventArgs e) {
       await ViewModel.PayInvoice(((Button)sender).Tag as string);
+    }
+
+    private void OnSearch() {
+      ViewModel.Search(GetSearchArguments());
+    }
+
+    private void OnSearch(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+      OnSearch();
+    }
+
+    private void OnSearch(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+      OnSearch();
+    }
+
+    private void OnSearch(object sender, RoutedEventArgs e) {
+      OnSearch();
     }
   }
 }

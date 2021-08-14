@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace LoquatDocs.Pages.Forms {
+namespace LoquatDocs.View.Forms {
   public sealed partial class AliasPage : Page {
     public AliasPage() {
       this.InitializeComponent();

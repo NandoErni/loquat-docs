@@ -17,8 +17,8 @@ namespace LoquatDocs {
 
     private UnityContainer _container;
 
-    private string _logPath = 
-      Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "logs", "loquatDocs.log");
+    public static readonly string LogPath = 
+      Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "logs", "loquat.log");
 
     private ServiceProvider() {
       _container = new UnityContainer(); 
@@ -26,7 +26,7 @@ namespace LoquatDocs {
       Log.Logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
         .WriteTo.Console()
-        .WriteTo.File(_logPath, rollingInterval: RollingInterval.Month)
+        .WriteTo.File(LogPath, rollingInterval: RollingInterval.Month)
         .CreateLogger();
 
       RegisterServices();
@@ -48,6 +48,7 @@ namespace LoquatDocs {
       _container.RegisterType<IConfigService, Config>();
       _container.RegisterType<INotificationService, DialogNotifications>();
       _container.RegisterInstance(Log.Logger);
+      _container.RegisterType<IProcessHelperService, ProcessHelper>();
     }
 
     private void RegisterViewModels() {
