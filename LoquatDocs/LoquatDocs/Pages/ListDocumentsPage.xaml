@@ -10,6 +10,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <StackPanel Orientation="Vertical"  Padding="20">
-    <TextBlock Margin="0,0,0,20" Text="{x:Bind resource:General.List}" Style="{StaticResource SubheaderTextBlockStyle}"/>
+    <TextBlock Margin="0,0,0,20" Text="{x:Bind resource:GeneralResources.List}" Style="{StaticResource SubheaderTextBlockStyle}"/>
   </StackPanel>
 </Page>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LoquatDocs.Config {
+namespace LoquatDocs.Services {
   public class LocalAppSettings : ILocalAppSettings {
     public const string DATABASE_FILE_PATH_ID = "database.path";
 

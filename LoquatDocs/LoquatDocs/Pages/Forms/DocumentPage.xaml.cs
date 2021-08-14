@@ -1,9 +1,14 @@
-﻿using Microsoft.UI.Xaml;
+﻿using LoquatDocs.ViewModel;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace LoquatDocs.Pages.Forms {
   public sealed partial class DocumentPage : Page {
+
+    private DocumentViewModel ViewModel;
+
     public DocumentPage() {
+      ViewModel = ServiceProvider.GetService<DocumentViewModel>();
       this.InitializeComponent();
     }
 

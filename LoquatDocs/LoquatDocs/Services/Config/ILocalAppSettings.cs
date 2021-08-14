@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoquatDocs.Config {
+namespace LoquatDocs.Services {
   public interface ILocalAppSettings {
     string DatabaseFilePath { get; set; }
   }

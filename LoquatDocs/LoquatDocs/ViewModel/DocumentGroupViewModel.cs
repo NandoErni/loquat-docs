@@ -1,5 +1,5 @@
-﻿using LoquatDocs.Model.Dialog;
-using LoquatDocs.Model.Resource;
+﻿using LoquatDocs.Model.Resource;
+using LoquatDocs.Services;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
@@ -14,7 +14,7 @@ namespace LoquatDocs.ViewModel {
 
     private LoquatDocsDbRepository _repository;
 
-    private Config.Config _config = new Config.Config();
+    private INotificationService _notification;
 
     private ObservableCollection<string> _documentGroupNames = new ObservableCollection<string>();
 
@@ -22,7 +22,8 @@ namespace LoquatDocs.ViewModel {
       get => _documentGroupNames;
     }
 
-    public DocumentGroupViewModel() {
+    public DocumentGroupViewModel(INotificationService notificationService) {
+      _notification = notificationService;
       _repository = new LoquatDocsDbRepository();
     }
 
@@ -39,8 +40,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task PromptAndDeleteGroupAsync(string groupName) {
-      DecisionDialog decisionDialog = new DecisionDialog(PromptDeleteGroupTitleResource(groupName), PromptDeleteGroupResource(groupName));
-      if (!await decisionDialog.ShowAsync()) {
+      if (!await _notification.NotifyDecision(PromptDeleteGroupTitleResource(groupName), PromptDeleteGroupResource(groupName))) {
         return;
       }
 
@@ -66,8 +66,7 @@ namespace LoquatDocs.ViewModel {
       }
 
       var documentList = BuildListOfDocuments(documentsOfGroup);
-      var dialog = new DecisionDialog(PromptDeleteGroupTitleResource(groupName), PromptDeleteDocumentsResource(documentList));
-      if (!await dialog.ShowAsync()) {
+      if (!await _notification.NotifyDecision(PromptDeleteGroupTitleResource(groupName), PromptDeleteDocumentsResource(documentList))) {
         return;
       }
       await _repository.RemoveDocuments(documentsOfGroup);

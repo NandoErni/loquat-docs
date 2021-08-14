@@ -1,12 +1,14 @@
-﻿using Microsoft.UI.Xaml;
+﻿using LoquatDocs.ViewModel;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace LoquatDocs.Pages.Forms {
-  /// <summary>
-  /// An empty page that can be used on its own or navigated to within a Frame.
-  /// </summary>
   public sealed partial class DocumentGroupPage : Page {
+
+    private DocumentGroupViewModel ViewModel;
+
     public DocumentGroupPage() {
+      ViewModel = ServiceProvider.GetService<DocumentGroupViewModel>();
       this.InitializeComponent();
     }
 

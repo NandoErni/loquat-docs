@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace LoquatDocs.Config {
-  public class Config {
+namespace LoquatDocs.Services {
+  public class Config : IConfigService {
 
     private ILocalAppSettings _localAppSettings = new LocalAppSettings();
 

@@ -1,7 +1,7 @@
 ﻿using LoquatDocs.EntityFramework.Model;
 using LoquatDocs.Model;
-using LoquatDocs.Model.Dialog;
 using LoquatDocs.Model.Resource;
+using LoquatDocs.Services;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
@@ -20,11 +20,14 @@ namespace LoquatDocs.ViewModel {
 
     private ObservableCollection<DocumentListItem> _documentListItems;
 
+    private INotificationService _notification;
+
     public ObservableCollection<DocumentListItem> DocumentListItems {
       get => _documentListItems;
     }
 
-    public SearchDocumentsViewModel() {
+    public SearchDocumentsViewModel(INotificationService notificationService) {
+      _notification = notificationService;
       _repository = new LoquatDocsDbRepository();
       _documentListItems = new ObservableCollection<DocumentListItem>();
     }
@@ -35,20 +38,17 @@ namespace LoquatDocs.ViewModel {
 
     public async Task SafeDeleteDocument(string documentPath) {
       string documentTitle = await GetTitleOfPath(documentPath);
-      var dialog = new DecisionDialog(FileDialogTitleResource, PromptSureToDeleteDocumentResource(documentTitle));
-      if (!await dialog.ShowAsync()) {
+      if (!await _notification.NotifyDecision(FileDialogTitleResource, PromptSureToDeleteDocumentResource(documentTitle))) {
         return;
       }
       try {
         _documentListItems.Remove(_documentListItems.FirstOrDefault(d => d.PathToDocument.Equals(documentPath)));
         await _repository.DeleteDocument(documentPath);
       } catch {
-        var dialogError = new InfoDialog(FileDialogTitleResource, ErrorWhileDeleteResource(documentTitle));
-        await dialogError.ShowAsync();
+        await _notification.NotifyInfo(FileDialogTitleResource, ErrorWhileDeleteResource(documentTitle));
         return;
       }
-      var dialogSuccess = new InfoDialog(FileDialogTitleResource, SuccessDeleteResource(documentTitle));
-      await dialogSuccess.ShowAsync();
+      await _notification.NotifyInfo(FileDialogTitleResource, SuccessDeleteResource(documentTitle));
     }
 
     public void Search(string queryText, SearchArguments searchArguments) {
@@ -82,16 +82,14 @@ namespace LoquatDocs.ViewModel {
       try {
         Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
       } catch {
-        var dialog = new InfoDialog(FileDialogTitleResource, ErrorWhileOpenFileResource(filePath));
-        await dialog.ShowAsync();
+        await _notification.NotifyInfo(FileDialogTitleResource, ErrorWhileOpenFileResource(filePath));
         await OpenFileLocation(filePath);
       }
     }
 
     private async Task<bool> FileExist(string filePath) {
       if (!File.Exists(filePath)) {
-        var dialog = new InfoDialog(FileDialogTitleResource, ErrorFileNotExistResource(filePath));
-        await dialog.ShowAsync();
+        await _notification.NotifyInfo(FileDialogTitleResource, ErrorFileNotExistResource(filePath));
         return false;
       }
       return true;

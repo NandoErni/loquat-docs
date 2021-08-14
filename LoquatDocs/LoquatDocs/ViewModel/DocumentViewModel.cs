@@ -1,7 +1,7 @@
 ﻿using LoquatDocs.EntityFramework;
 using LoquatDocs.Model;
-using LoquatDocs.Model.Dialog;
 using LoquatDocs.Model.Resource;
+using LoquatDocs.Services;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -25,6 +25,8 @@ namespace LoquatDocs.ViewModel {
     private SuggestionList<string> _groupNameSuggestionList;
 
     private SuggestionList<string> _tagSuggestionList;
+
+    private INotificationService _notification;
 
     public string GroupName {
       get => _document.GroupName;
@@ -82,7 +84,8 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand ChoosePathCommand { get; }
 
-    public DocumentViewModel() {
+    public DocumentViewModel(INotificationService notificationService) {
+      _notification = notificationService;
       _repository = new LoquatDocsDbRepository();
       SaveCommand = new AsyncRelayCommand(SaveDocumentAsync);
       DiscardCommand = new AsyncRelayCommand(DiscardDocumentAsync);
@@ -94,7 +97,7 @@ namespace LoquatDocs.ViewModel {
 
     public async Task SaveDocumentAsync() {
       if (!IsDocumentValidToSave()) {
-        await InfoDialog.CreateAndShowErrorAsync(ErrorCantSaveResource);
+        await _notification.NotifyError(ErrorCantSaveResource);
         return;
       }
 
@@ -103,10 +106,10 @@ namespace LoquatDocs.ViewModel {
         ResetValues();
       } catch (DbUpdateException exception) {
         // todo: log
-        await InfoDialog.CreateAndShowErrorAsync(ErrorSavingToDatabaseResource);
+        await _notification.NotifyError(ErrorSavingToDatabaseResource);
         return;
       }
-      await Task.WhenAll(InfoDialog.CreateAndShowSuccessAsync(SavedSuccessfullyResource), 
+      await Task.WhenAll(_notification.NotifySuccess(SavedSuccessfullyResource), 
         InitilizeSuggestionsAsync());
 
     }
@@ -128,7 +131,7 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task DiscardDocumentAsync() {
-      if (await DecisionDialog.CreateAndShowAsync(DiscardDocumentResource, DiscardDocumentDecisionResource)) {
+      if (await _notification.NotifyDecision(DiscardDocumentResource, DiscardDocumentDecisionResource)) {
         ResetValues();
       }
     }
@@ -141,7 +144,7 @@ namespace LoquatDocs.ViewModel {
       }
 
       if (await _repository.DocumentExist(document.Path)) {
-        await InfoDialog.CreateAndShowErrorAsync(DocumentAlreadyExistsAtLocationResource(document.Path));
+        await _notification.NotifyError(DocumentAlreadyExistsAtLocationResource(document.Path));
       } else {
         DocumentPath = document.Path;
       }

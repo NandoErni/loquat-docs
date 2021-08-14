@@ -38,6 +38,7 @@
     <PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.5.7" />
     <PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.5.7" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.2" />
+    <PackageReference Include="Unity" Version="5.11.10" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -99,5 +100,9 @@
     <Page Update="Pages\Forms\DocumentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\Dialog\" />
   </ItemGroup>
 </Project>

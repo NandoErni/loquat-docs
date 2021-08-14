@@ -1,9 +1,10 @@
-﻿using LoquatDocs.Model;
-using LoquatDocs.Model.Dialog;
+﻿using LoquatDocs.Services;
+using LoquatDocs.Model;
 using LoquatDocs.Model.Resource;
 using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,7 +20,9 @@ namespace LoquatDocs.ViewModel {
 
     public string DEFAULT_DB_BACKUP_NAME = "backup\\" + DateTime.Now.ToString("yyyyMMddTHHmmss") + DEFAULT_DB_NAME;
 
-    private Config.Config _config = new Config.Config();
+    private IConfigService _config;
+
+    private INotificationService _notification;
 
     private LoquatDocsDbRepository _repository = new LoquatDocsDbRepository();
 
@@ -37,14 +40,16 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand ImportDatabaseCommand { get; }
 
-    public IAsyncRelayCommand UpdateDatabaseCommand { get; }
+    public IAsyncRelayCommand CheckUpdateDatabaseCommand { get; }
 
     public IAsyncRelayCommand SaveDatabaseBackupCommand { get; }
 
-    public SettingsViewModel() {
+    public SettingsViewModel(IConfigService config, INotificationService notificationService) {
+      _config = config;
+      _notification = notificationService;
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
       ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
-      UpdateDatabaseCommand = new AsyncRelayCommand(UpdateDatabase);
+      CheckUpdateDatabaseCommand = new AsyncRelayCommand(CheckUpdateDatabase);
       SaveDatabaseBackupCommand = new AsyncRelayCommand(SaveDatabaseBackup);
       DbPath = _config.DatabaseFilePath;
     }
@@ -62,13 +67,13 @@ namespace LoquatDocs.ViewModel {
       StorageFolder databaseFolder = await picker.PickSingleFolderAsync();
 
       if (databaseFolder is null) {
-        await InfoDialog.CreateAndShowErrorAsync(NoFolderChosenResource);
+        await _notification.NotifyError(NoFolderChosenResource);
         return;
       }
       string databaseFilePath = Path.Combine(databaseFolder.Path, DEFAULT_DB_NAME);
 
       if (DoesDbAlreadyExist(databaseFilePath)) {
-        await InfoDialog.CreateAndShowErrorAsync(DatabaseAlreadyExistsResource);
+        await _notification.NotifyError(DatabaseAlreadyExistsResource);
         return;
       }
 
@@ -76,6 +81,24 @@ namespace LoquatDocs.ViewModel {
 
       StorageFile db = await databaseFolder.GetFileAsync(DEFAULT_DB_NAME);
       DbPath = db != null ? db.Path : string.Empty;
+    }
+
+    public async Task CheckUpdateDatabase() {
+      bool hasUpdates = await _repository.AnyDatabaseUpdates() || true;
+
+      var dialog = new ContentDialog() {
+        Title = UpdateDatabaseResource,
+        Content = hasUpdates ? DatabaseUpdatesResource : NoDatabaseUpdatesResource,
+        CloseButtonText = GeneralResources.Close,
+        XamlRoot = App.MainWindow.Content.XamlRoot
+      };
+
+      if (hasUpdates) {
+        dialog.PrimaryButtonText = UpdateDatabaseResource;
+        dialog.PrimaryButtonClick += async (s, a) => await UpdateDatabase();
+      }
+
+      await dialog.ShowAsync();
     }
 
     public async Task UpdateDatabase() {
@@ -87,6 +110,7 @@ namespace LoquatDocs.ViewModel {
       }
 
       await _repository.CreateOrUpdateDatabaseAsync(DbPath);
+      App.QueueOnUiThread(async () => await _notification.NotifyInfo(UpdateDatabaseResource, DatabaseUpdateSuccessfulResource));
     }
 
     public async Task SaveDatabaseBackup() {
@@ -98,11 +122,10 @@ namespace LoquatDocs.ViewModel {
         File.Copy(DbPath, savePath);
       } catch (Exception e) {
 
-        return;
+        return;//log
       }
 
-      var dialog = new InfoDialog(DatabaseResource, BackupSuccessfulResource);
-      await dialog.ShowAsync();
+      await _notification.NotifyInfo(DatabaseResource, BackupSuccessfulResource);
 
       Process.Start("explorer.exe", "/select, \"" + savePath + "\"");
     }

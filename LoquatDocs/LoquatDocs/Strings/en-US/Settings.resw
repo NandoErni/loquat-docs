@@ -120,11 +120,14 @@
   <data name="BackupSuccessful" xml:space="preserve">
     <value>The database backup was successful.</value>
   </data>
+  <data name="CheckDatabaseUpdates" xml:space="preserve">
+    <value>Check for database updates</value>
+  </data>
   <data name="ChooseFile" xml:space="preserve">
-    <value>Choose File</value>
+    <value>Choose file</value>
   </data>
   <data name="CreateNewDatabase" xml:space="preserve">
-    <value>Create new Database</value>
+    <value>Create new database</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>Database</value>
@@ -132,22 +135,31 @@
   <data name="DatabaseAlreadyExists" xml:space="preserve">
     <value>A database already exists in this folder.</value>
   </data>
+  <data name="DatabaseUpdates" xml:space="preserve">
+    <value>There are database updates available.</value>
+  </data>
+  <data name="DatabaseUpdateSuccessful" xml:space="preserve">
+    <value>Database update was successful.</value>
+  </data>
   <data name="DbPath" xml:space="preserve">
-    <value>Database Path</value>
+    <value>Database path</value>
   </data>
   <data name="ImportDatabase" xml:space="preserve">
-    <value>Import Database</value>
+    <value>Import database</value>
+  </data>
+  <data name="NoDatabaseUpdates" xml:space="preserve">
+    <value>There are no database updates available.</value>
   </data>
   <data name="NoFolderChosen" xml:space="preserve">
-    <value>No Folder was chosen.</value>
+    <value>No folder was chosen.</value>
   </data>
   <data name="SaveDatabaseBackup" xml:space="preserve">
-    <value>Create Database Backup</value>
+    <value>Create database backup</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="UpdateDatabase" xml:space="preserve">
-    <value>Update Database</value>
+    <value>Update database</value>
   </data>
 </root>

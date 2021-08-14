@@ -1,9 +1,10 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using LoquatDocs.Model.Resource;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
-namespace LoquatDocs.Model.Dialog {
-  public class InfoDialog {
+namespace LoquatDocs.Services {
+  internal class InfoDialog {
 
     private ContentDialog _controlDialog;
 
@@ -11,8 +12,8 @@ namespace LoquatDocs.Model.Dialog {
       _controlDialog = new ContentDialog() {
         Title = title,
         Content = message,
-        CloseButtonText = "Close",
-        XamlRoot = App.Window.Content.XamlRoot
+        CloseButtonText = GeneralResources.Close,
+        XamlRoot = App.MainWindow.Content.XamlRoot
       };
     }
 
@@ -26,11 +27,11 @@ namespace LoquatDocs.Model.Dialog {
     }
 
     public static async Task CreateAndShowSuccessAsync(string message) {
-      await CreateAndShowAsync("Success", message);
+      await CreateAndShowAsync(GeneralResources.Success, message);
     }
 
     public static async Task CreateAndShowErrorAsync(string message) {
-      await CreateAndShowAsync("Error", message);
+      await CreateAndShowAsync(GeneralResources.Error, message);
     }
   }
 }

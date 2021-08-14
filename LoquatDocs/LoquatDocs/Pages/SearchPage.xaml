@@ -10,9 +10,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:vm="using:LoquatDocs.ViewModel"
     Loaded="OnPageLoaded">
-  <Page.DataContext>
-    <vm:SearchDocumentsViewModel x:Name="ViewModel"/>
-  </Page.DataContext>
 
   <ScrollViewer>
     <StackPanel Orientation="Vertical" Padding="20">

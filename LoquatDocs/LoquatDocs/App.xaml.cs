@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using LoquatDocs.Services;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -24,6 +25,8 @@ namespace LoquatDocs {
   /// Provides application-specific behavior to supplement the default Application class.
   /// </summary>
   public partial class App : Application {
+
+    public static Window MainWindow;
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -38,11 +41,9 @@ namespace LoquatDocs {
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args) {
-      Window = new MainWindow();
-      Window.Activate();
+      MainWindow = new MainWindow();
+      MainWindow.Activate();
     }
-
-    public static Window Window;
 
     public static bool QueueOnUiThread(Action action) {
       return Current.Resources.DispatcherQueue.TryEnqueue(Microsoft.System.DispatcherQueuePriority.High, action.Invoke);

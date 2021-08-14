@@ -1,4 +1,4 @@
-﻿using LoquatDocs.Config;
+﻿using LoquatDocs.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

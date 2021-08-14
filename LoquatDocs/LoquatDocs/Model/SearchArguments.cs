@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoquatDocs.ViewModel {
+namespace LoquatDocs.Model {
   public enum SearchArguments {
     None = 0,
     Title = 1,

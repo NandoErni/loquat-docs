@@ -2,8 +2,8 @@
 using System;
 using System.Threading.Tasks;
 
-namespace LoquatDocs.Model.Dialog {
-  public class DecisionDialog {
+namespace LoquatDocs.Services {
+  internal class DecisionDialog {
 
     private ContentDialog _controlDialog;
 
@@ -13,11 +13,11 @@ namespace LoquatDocs.Model.Dialog {
         Content = message,
         CloseButtonText = "Close",
         PrimaryButtonText = "Yes",
-        XamlRoot = App.Window.Content.XamlRoot
+        XamlRoot = App.MainWindow.Content.XamlRoot
       };
     }
 
-    public async Task<bool> ShowAsync() {
+    private async Task<bool> ShowAsync() {
       ContentDialogResult result = await _controlDialog.ShowAsync();
       return result == ContentDialogResult.Primary;
     }

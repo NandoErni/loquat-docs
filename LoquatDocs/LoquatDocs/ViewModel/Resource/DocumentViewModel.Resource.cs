@@ -48,9 +48,9 @@ namespace LoquatDocs.ViewModel {
 
     public string GroupResource => Resource.GetResource(DocumentGroupViewModel.RESOURCE_KEY, "Group");
 
-    public string SaveResource => General.Save;
+    public string SaveResource => GeneralResources.Save;
 
-    public string DiscardResource => General.Discard;
+    public string DiscardResource => GeneralResources.Discard;
 
   }
 }

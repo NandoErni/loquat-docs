@@ -9,9 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:vm="using:LoquatDocs.ViewModel" 
   Loaded="OnPageLoaded">
-  <Page.DataContext>
-    <vm:DocumentGroupViewModel x:Name="ViewModel"/>
-  </Page.DataContext>
 
   <StackPanel HorizontalAlignment="Stretch" Padding="30">
     <TextBlock Margin="0,0,0,10" Text="{x:Bind ViewModel.AddDocumentGroupResource}" Style="{StaticResource SubheaderTextBlockStyle}"/>

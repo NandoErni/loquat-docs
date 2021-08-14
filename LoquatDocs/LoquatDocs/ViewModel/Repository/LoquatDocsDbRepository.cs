@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LoquatDocs.ViewModel.Repository {
   public class LoquatDocsDbRepository {
 
-    private Config.Config _config = new Config.Config();
+    private Services.Config _config = new Services.Config();
 
     private LoquatDocsDbContext GetNewDbContext() {
       return new LoquatDocsDbContext(_config.DatabaseFilePath);
@@ -133,6 +133,13 @@ namespace LoquatDocs.ViewModel.Repository {
       using (LoquatDocsDbContext ctx = GetNewDbContext()) {
         (await ctx.Invoices.FirstOrDefaultAsync(i => i.DocumentPath.Equals(documentPath))).IsPayed = true;
         await ctx.SaveChangesAsync();
+      }
+    }
+
+    public async Task<bool> AnyDatabaseUpdates() {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
+        var migrations = await ctx.Database.GetPendingMigrationsAsync();
+        return migrations.Any();
       }
     }
   }
