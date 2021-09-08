@@ -150,9 +150,6 @@
   <data name="NoDatabaseUpdates" xml:space="preserve">
     <value>There are no database updates available.</value>
   </data>
-  <data name="NoFolderChosen" xml:space="preserve">
-    <value>No folder was chosen.</value>
-  </data>
   <data name="OpenLogPath" xml:space="preserve">
     <value>Open the path to the log files</value>
   </data>

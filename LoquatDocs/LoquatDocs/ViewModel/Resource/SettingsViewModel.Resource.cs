@@ -12,8 +12,6 @@ namespace LoquatDocs.ViewModel {
 
     public string DatabaseAlreadyExistsResource => Resource.GetResource(RESOURCE_KEY, "DatabaseAlreadyExists");
 
-    public string NoFolderChosenResource => Resource.GetResource(RESOURCE_KEY, "NoFolderChosen");
-
     public string ChooseFileResource => Resource.GetResource(RESOURCE_KEY, "ChooseFile");
 
     public string CreateNewDatabaseResource => Resource.GetResource(RESOURCE_KEY, "CreateNewDatabase");

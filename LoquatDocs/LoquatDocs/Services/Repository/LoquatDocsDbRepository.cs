@@ -10,7 +10,11 @@ using System.Threading.Tasks;
 namespace LoquatDocs.Services {
   public class LoquatDocsDbRepository : ILoquatDocsDbRepository {
 
-    private Services.Config _config = new Services.Config();
+    private IConfigService _config;
+
+    public LoquatDocsDbRepository(IConfigService configService) {
+      _config = configService;
+    }
 
     private LoquatDocsDbContext GetNewDbContext() {
       return new LoquatDocsDbContext(_config.DatabaseFilePath);

@@ -1,4 +1,5 @@
 ﻿using LoquatDocs.EntityFramework;
+using LoquatDocs.Services;
 using LoquatDocs.View;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -33,6 +34,12 @@ namespace LoquatDocs {
 
     public MainWindow() {
       this.InitializeComponent();
+
+      IConfigService configService = ServiceProvider.GetService<IConfigService>();
+      if (String.IsNullOrWhiteSpace(configService.DatabaseFilePath)) {
+        NavigateToSettings();
+        return;
+      }
       Navigate(nameof(Home));
     }
 
@@ -49,9 +56,7 @@ namespace LoquatDocs {
     }
 
     private void OnSettingsButtonClicked() {
-      if (ContentFrame.CurrentSourcePageType != typeof(SettingsPage)) {
-        ContentFrame.Navigate(typeof(SettingsPage));
-      }
+      NavigateToSettings();
     }
 
     private void Navigate(string navItemName) {
@@ -64,6 +69,12 @@ namespace LoquatDocs {
 
     private Type GetPageType(string name) {
       return _pages.FirstOrDefault(p => p.Name.Equals(name)).PageType;
+    }
+
+    private void NavigateToSettings() {
+      if (ContentFrame.CurrentSourcePageType != typeof(SettingsPage)) {
+        ContentFrame.Navigate(typeof(SettingsPage));
+      }
     }
   }
 }

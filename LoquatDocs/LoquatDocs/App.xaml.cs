@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using LoquatDocs.Services;
+using Microsoft.UI.Xaml;
 using System;
 
 // To learn more about WinUI, the WinUI project structure,

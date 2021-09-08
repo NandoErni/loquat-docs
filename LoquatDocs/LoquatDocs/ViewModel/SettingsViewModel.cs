@@ -77,7 +77,6 @@ namespace LoquatDocs.ViewModel {
       StorageFolder databaseFolder = await picker.PickSingleFolderAsync();
 
       if (databaseFolder is null) {
-        await _notification.NotifyError(NoFolderChosenResource);
         return;
       }
       string databaseFilePath = Path.Combine(databaseFolder.Path, DEFAULT_DB_NAME);
@@ -148,6 +147,13 @@ namespace LoquatDocs.ViewModel {
     private bool DoesDbAlreadyExist(string pickedDbPath) {
       FileInfo pickedDbInfo = new FileInfo(pickedDbPath);
       return pickedDbInfo.Exists;
+    }
+
+    public bool IsGettingStartedHelpNecessary() {
+      if (String.IsNullOrWhiteSpace(_config.DatabaseFilePath)) {
+        return true;
+      }
+      return false;
     }
   }
 }

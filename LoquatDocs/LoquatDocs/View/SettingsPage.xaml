@@ -22,10 +22,10 @@
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Grid.Row="0" Content="{x:Bind ViewModel.ImportDatabaseResource}" Command="{x:Bind ViewModel.ImportDatabaseCommand}" HorizontalAlignment="Stretch" Margin="0,0,5,0" />
-        <Button Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.CreateNewDatabaseResource}" Command="{x:Bind ViewModel.CreateNewDatabaseCommand}" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
-        <Button Grid.Column="2" Grid.Row="0" Content="{x:Bind ViewModel.SaveDatabaseBackupResource}" Command="{x:Bind ViewModel.SaveDatabaseBackupCommand}" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
-        <Button Grid.Column="3" Grid.Row="0" Content="{x:Bind ViewModel.CheckDatabaseUpdatesResource}" Command="{x:Bind ViewModel.CheckUpdateDatabaseCommand}" HorizontalAlignment="Stretch"/>
+        <Button Grid.Column="0" Grid.Row="0" Content="{x:Bind ViewModel.ImportDatabaseResource}" Command="{x:Bind ViewModel.ImportDatabaseCommand}" x:Name="ImportDatabase" HorizontalAlignment="Stretch" Margin="0,0,5,0" />
+        <Button Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.CreateNewDatabaseResource}" Command="{x:Bind ViewModel.CreateNewDatabaseCommand}" x:Name="CreateDatabase" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
+        <Button Grid.Column="2" Grid.Row="0" Content="{x:Bind ViewModel.SaveDatabaseBackupResource}" Command="{x:Bind ViewModel.SaveDatabaseBackupCommand}" IsEnabled="{Binding }" x:Name="SaveBackUp" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
+        <Button Grid.Column="3" Grid.Row="0" Content="{x:Bind ViewModel.CheckDatabaseUpdatesResource}" Command="{x:Bind ViewModel.CheckUpdateDatabaseCommand}" x:Name="CheckForUpdates" HorizontalAlignment="Stretch"/>
       </Grid>
       <NavigationViewItemSeparator />
       <Grid Padding="0,5,0,0" HorizontalAlignment="Stretch">
@@ -40,6 +40,41 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Content="{x:Bind ViewModel.OpenLogPathResource}" Command="{x:Bind ViewModel.OpenLogPathCommand}" HorizontalAlignment="Stretch"/>
       </Grid>
+
+      <TeachingTip x:Name="GettingStartedTeachingTip"                   
+	      Title="Getting Started"
+	      Subtitle="It looks like you don't have a database yet! In order to use LoquatDocs you have to create a new database or import an existing one."
+	      PreferredPlacement="Center"                                              
+	      PlacementMargin="20"
+	      CloseButtonContent="Got it!">
+
+        <TeachingTip.HeroContent>
+          <StackPanel Background="Orange" >
+            <Image Margin="15" HorizontalAlignment="Center" Source="../Assets/loquat_title.png" MaxHeight="150"/>
+          </StackPanel>
+        </TeachingTip.HeroContent>
+      </TeachingTip>
+
+      <TeachingTip x:Name="CreateDatabaseTeachingTip"                   
+          Target="{x:Bind CreateDatabase}"
+          Title="Create new database"                                        
+          Subtitle="Create a database by clicking on this button and choosing the folder to save the database in."
+          PreferredPlacement="TopRight">
+        <TeachingTip.IconSource>
+          <SymbolIconSource Symbol="Add" />
+        </TeachingTip.IconSource>
+      </TeachingTip>
+
+      <TeachingTip x:Name="ImportDatabaseTeachingTip"                   
+          Target="{x:Bind ImportDatabase}"
+          Title="Import existing database"                                        
+          Subtitle="Import a database by clicking on this button and choosing the database file."
+          PreferredPlacement="Top">
+        <TeachingTip.IconSource>
+          <SymbolIconSource Symbol="Download" />
+        </TeachingTip.IconSource>
+      </TeachingTip>
+
     </StackPanel>
   </ScrollViewer>
 </Page>
