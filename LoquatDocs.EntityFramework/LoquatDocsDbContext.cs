@@ -1,11 +1,10 @@
 ﻿using LoquatDocs.EntityFramework.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace LoquatDocs.EntityFramework {
   public class LoquatDocsDbContext : DbContext {
-
-    private const string DEFAULT_DATABASE_PATH = @"D:\Projects\Visual Studio\LoquatDocs\LoquatDocs.EntityFramework\mydata.db";
 
     public string DbPath { get; private set; }
 
@@ -16,7 +15,10 @@ namespace LoquatDocs.EntityFramework {
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Tag> Tags { get; set; }
 
-    public LoquatDocsDbContext(string dbPath) : base() { // todo: delete default string
+    public LoquatDocsDbContext(string dbPath) : base() {
+      if (string.IsNullOrWhiteSpace(dbPath)) {
+        throw new InvalidDatabasePathException("The database path cannot be null.");
+      }
       DbPath = dbPath;
     }
 

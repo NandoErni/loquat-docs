@@ -18,15 +18,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Model\Dialog\**" />
+    <Compile Remove="View\Pages\**" />
     <EmbeddedResource Remove="Model\Dialog\**" />
+    <EmbeddedResource Remove="View\Pages\**" />
     <None Remove="Model\Dialog\**" />
+    <None Remove="View\Pages\**" />
     <Page Remove="Model\Dialog\**" />
+    <Page Remove="View\Pages\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="View\Pages\Forms\AliasPage.xaml" />
-    <None Remove="View\Pages\Forms\DocumentGroupPage.xaml" />
-    <None Remove="View\Pages\Forms\DocumentListItem.xaml" />
-    <None Remove="View\Pages\Forms\DocumentPage.xaml" />
     <None Remove="View\HomePage.xaml" />
     <None Remove="View\ListDocumentsPage.xaml" />
     <None Remove="View\SearchPage.xaml" />
@@ -109,9 +109,5 @@
     <Page Update="Pages\Forms\DocumentPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="View\Pages\" />
   </ItemGroup>
 </Project>

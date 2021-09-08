@@ -1,6 +1,9 @@
-﻿using LoquatDocs.Services;
+﻿using LoquatDocs.EntityFramework;
+using LoquatDocs.Services;
 using Microsoft.UI.Xaml;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -18,6 +21,13 @@ namespace LoquatDocs {
     /// </summary>
     public App() {
       this.InitializeComponent();
+      this.UnhandledException += HandleUncaughtExceptions;
+    }
+
+    private async void HandleUncaughtExceptions(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e) {
+      if (e.Exception is InvalidDatabasePathException invalidDatabasePath) {
+        await InfoDialog.CreateAndShowErrorAsync(invalidDatabasePath.Message);
+      }
     }
 
     /// <summary>

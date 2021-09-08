@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Content="{x:Bind ViewModel.ImportDatabaseResource}" Command="{x:Bind ViewModel.ImportDatabaseCommand}" x:Name="ImportDatabase" HorizontalAlignment="Stretch" Margin="0,0,5,0" />
         <Button Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.CreateNewDatabaseResource}" Command="{x:Bind ViewModel.CreateNewDatabaseCommand}" x:Name="CreateDatabase" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
-        <Button Grid.Column="2" Grid.Row="0" Content="{x:Bind ViewModel.SaveDatabaseBackupResource}" Command="{x:Bind ViewModel.SaveDatabaseBackupCommand}" IsEnabled="{Binding }" x:Name="SaveBackUp" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
+        <Button Grid.Column="2" Grid.Row="0" Content="{x:Bind ViewModel.SaveDatabaseBackupResource}" Command="{x:Bind ViewModel.SaveDatabaseBackupCommand}" x:Name="SaveBackUp" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
         <Button Grid.Column="3" Grid.Row="0" Content="{x:Bind ViewModel.CheckDatabaseUpdatesResource}" Command="{x:Bind ViewModel.CheckUpdateDatabaseCommand}" x:Name="CheckForUpdates" HorizontalAlignment="Stretch"/>
       </Grid>
       <NavigationViewItemSeparator />

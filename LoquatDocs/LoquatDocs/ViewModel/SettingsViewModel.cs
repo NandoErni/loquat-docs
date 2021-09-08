@@ -61,6 +61,7 @@ namespace LoquatDocs.ViewModel {
       CheckUpdateDatabaseCommand = new AsyncRelayCommand(CheckUpdateDatabase);
       SaveDatabaseBackupCommand = new AsyncRelayCommand(SaveDatabaseBackup);
       OpenLogPathCommand = new AsyncRelayCommand(OpenLogPath);
+      _config.DatabaseFilePath = string.Empty;
       DbPath = _config.DatabaseFilePath;
     }
 

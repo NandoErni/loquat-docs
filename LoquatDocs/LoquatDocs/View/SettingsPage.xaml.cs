@@ -18,8 +18,6 @@ namespace LoquatDocs {
 
     private void ShowGettingStartedTips() {
       GettingStartedTeachingTip.IsOpen = true;
-      SaveBackUp.IsEnabled = false;
-      CheckForUpdates.IsEnabled = false;
       GettingStartedTeachingTip.CloseButtonClick += OnGettingStartedClosed;
     }
 
