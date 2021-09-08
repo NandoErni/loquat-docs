@@ -2,7 +2,6 @@
 using LoquatDocs.Model;
 using LoquatDocs.Model.Resource;
 using LoquatDocs.Services;
-using LoquatDocs.ViewModel.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -19,7 +18,7 @@ using EFFactory = LoquatDocs.Converter.EntityFrameworkModelFactory;
 namespace LoquatDocs.ViewModel {
   public partial class DocumentViewModel : ObservableObject {
 
-    LoquatDocsDbRepository _repository;
+    ILoquatDocsDbRepository _repository;
 
     private Document _document = new Document();
 
@@ -87,10 +86,10 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand ChoosePathCommand { get; }
 
-    public DocumentViewModel(INotificationService notificationService, ILogger logger) {
+    public DocumentViewModel(INotificationService notificationService, ILogger logger, ILoquatDocsDbRepository repository) {
       _logger = logger;
       _notification = notificationService;
-      _repository = new LoquatDocsDbRepository();
+      _repository = repository;
       SaveCommand = new AsyncRelayCommand(SaveDocumentAsync);
       DiscardCommand = new AsyncRelayCommand(DiscardDocumentAsync);
       ChoosePathCommand = new AsyncRelayCommand(ChoosePathAndValidateAsync);

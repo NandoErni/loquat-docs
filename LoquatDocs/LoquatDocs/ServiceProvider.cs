@@ -46,6 +46,7 @@ namespace LoquatDocs {
 
     private void RegisterServices() {
       _container.RegisterType<IConfigService, Config>();
+      _container.RegisterType<ILoquatDocsDbRepository, LoquatDocsDbRepository>();
       _container.RegisterType<INotificationService, DialogNotifications>();
       _container.RegisterInstance(Log.Logger);
       _container.RegisterType<IProcessHelperService, ProcessHelper>();

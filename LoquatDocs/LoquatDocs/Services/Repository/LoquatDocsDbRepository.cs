@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LoquatDocs.ViewModel.Repository {
-  public class LoquatDocsDbRepository {
+namespace LoquatDocs.Services {
+  public class LoquatDocsDbRepository : ILoquatDocsDbRepository {
 
     private Services.Config _config = new Services.Config();
 
@@ -42,7 +42,7 @@ namespace LoquatDocs.ViewModel.Repository {
     public async Task DeleteGroup(string groupName) {
       using (LoquatDocsDbContext ctx = GetNewDbContext()) {
         var groupToDelete = await ctx.Groups.FirstOrDefaultAsync(g => g.Groupname.Equals(groupName));
-        
+
         if (groupToDelete is null) {
           return;
         }
@@ -65,7 +65,7 @@ namespace LoquatDocs.ViewModel.Repository {
     }
 
     public async Task RemoveDocuments(List<Document> documentsOfGroup) {
-      using(LoquatDocsDbContext ctx = GetNewDbContext()) {
+      using (LoquatDocsDbContext ctx = GetNewDbContext()) {
         ctx.Documents.RemoveRange(documentsOfGroup);
         await ctx.SaveChangesAsync();
       }

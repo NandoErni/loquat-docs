@@ -1,6 +1,5 @@
 ﻿using LoquatDocs.Model.Resource;
 using LoquatDocs.Services;
-using LoquatDocs.ViewModel.Repository;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 namespace LoquatDocs.ViewModel {
   public partial class DocumentGroupViewModel : ObservableObject {
 
-    private LoquatDocsDbRepository _repository;
+    private ILoquatDocsDbRepository _repository;
 
     private INotificationService _notification;
 
@@ -22,9 +21,9 @@ namespace LoquatDocs.ViewModel {
       get => _documentGroupNames;
     }
 
-    public DocumentGroupViewModel(INotificationService notificationService) {
+    public DocumentGroupViewModel(INotificationService notificationService, ILoquatDocsDbRepository repository) {
       _notification = notificationService;
-      _repository = new LoquatDocsDbRepository();
+      _repository = repository;
     }
 
     public async Task InitilizeDocumentGroups() {

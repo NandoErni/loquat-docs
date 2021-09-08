@@ -1,16 +1,14 @@
-﻿using LoquatDocs.Services;
-using LoquatDocs.Model;
+﻿using LoquatDocs.Model;
 using LoquatDocs.Model.Resource;
-using LoquatDocs.ViewModel.Repository;
+using LoquatDocs.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
+using Serilog;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Serilog;
 
 namespace LoquatDocs.ViewModel {
   public partial class SettingsViewModel : ObservableObject {
@@ -29,7 +27,7 @@ namespace LoquatDocs.ViewModel {
 
     private IProcessHelperService _processHelper;
 
-    private LoquatDocsDbRepository _repository = new LoquatDocsDbRepository();
+    private ILoquatDocsDbRepository _repository;
 
     private Settings _settings = new Settings();
 
@@ -52,11 +50,12 @@ namespace LoquatDocs.ViewModel {
     public IAsyncRelayCommand OpenLogPathCommand { get; }
 
     public SettingsViewModel(IConfigService config, INotificationService notificationService, ILogger logger, 
-      IProcessHelperService processHelper) {
+      IProcessHelperService processHelper, ILoquatDocsDbRepository repository) {
       _logger = logger;
       _config = config;
       _notification = notificationService;
       _processHelper = processHelper;
+      _repository = repository;
       CreateNewDatabaseCommand = new AsyncRelayCommand(CreateNewDatabase);
       ImportDatabaseCommand = new AsyncRelayCommand(PickDbFile);
       CheckUpdateDatabaseCommand = new AsyncRelayCommand(CheckUpdateDatabase);

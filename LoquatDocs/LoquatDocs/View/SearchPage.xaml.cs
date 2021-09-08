@@ -3,6 +3,7 @@ using LoquatDocs.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
+
 namespace LoquatDocs.View {
 
   public sealed partial class SearchPage : Page {
