@@ -71,7 +71,7 @@ namespace LoquatDocs {
       return _pages.FirstOrDefault(p => p.Name.Equals(name)).PageType;
     }
 
-    private void NavigateToSettings() {
+    public void NavigateToSettings() {
       if (ContentFrame.CurrentSourcePageType != typeof(SettingsPage)) {
         ContentFrame.Navigate(typeof(SettingsPage));
       }

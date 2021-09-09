@@ -129,6 +129,9 @@
   <data name="CreateNewDatabase" xml:space="preserve">
     <value>Create new database</value>
   </data>
+  <data name="CreateNewDatabaseTeachingTipHint" xml:space="preserve">
+    <value>Create a database by clicking on this button and choosing the folder to save the database in.</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>Database</value>
   </data>
@@ -144,8 +147,23 @@
   <data name="DbPath" xml:space="preserve">
     <value>Database path</value>
   </data>
+  <data name="ErrorDatabaseBackup" xml:space="preserve">
+    <value>Error while trying to save the database backup.</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>Getting Started</value>
+  </data>
+  <data name="GettingStartedTeachingTipHint" xml:space="preserve">
+    <value>It looks like you don't have a database yet! In order to use LoquatDocs you have to create a new database or import an existing one.</value>
+  </data>
   <data name="ImportDatabase" xml:space="preserve">
     <value>Import database</value>
+  </data>
+  <data name="ImportExistingDatabase" xml:space="preserve">
+    <value>Import existing database</value>
+  </data>
+  <data name="ImportExistingDatabaseTeachingTipHint" xml:space="preserve">
+    <value>Import a database by clicking on this button and choosing the database file.</value>
   </data>
   <data name="NoDatabaseUpdates" xml:space="preserve">
     <value>There are no database updates available.</value>

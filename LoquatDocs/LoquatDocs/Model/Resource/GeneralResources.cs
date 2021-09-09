@@ -28,5 +28,9 @@ namespace LoquatDocs.Model.Resource {
     public static string Success => Resource.GetResource(RESOURCE_KEY, nameof(Success));
 
     public static string Yes => Resource.GetResource(RESOURCE_KEY, nameof(Yes));
+
+    public static string GotIt => Resource.GetResource(RESOURCE_KEY, nameof(GotIt));
+
+    public static string DatabasePathInvalid => Resource.GetResource(RESOURCE_KEY, nameof(DatabasePathInvalid));
   }
 }

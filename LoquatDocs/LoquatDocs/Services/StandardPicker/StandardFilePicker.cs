@@ -9,7 +9,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT;
 
-namespace LoquatDocs.Model {
+namespace LoquatDocs.Services {
   public class StandardFilePicker : StandardFileSystemPicker {
     private FileOpenPicker _filePicker;
 

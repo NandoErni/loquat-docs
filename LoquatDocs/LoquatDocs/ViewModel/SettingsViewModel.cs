@@ -61,7 +61,6 @@ namespace LoquatDocs.ViewModel {
       CheckUpdateDatabaseCommand = new AsyncRelayCommand(CheckUpdateDatabase);
       SaveDatabaseBackupCommand = new AsyncRelayCommand(SaveDatabaseBackup);
       OpenLogPathCommand = new AsyncRelayCommand(OpenLogPath);
-      _config.DatabaseFilePath = string.Empty;
       DbPath = _config.DatabaseFilePath;
     }
 
@@ -131,7 +130,7 @@ namespace LoquatDocs.ViewModel {
         }
         File.Copy(DbPath, savePath);
       } catch (Exception e) {
-        await _notification.NotifyError("Error while trying to save the database backup.");
+        await _notification.NotifyError(ErrorDatabaseBackupResource);
         _logger.Error(e.ToString());
         return;
       }

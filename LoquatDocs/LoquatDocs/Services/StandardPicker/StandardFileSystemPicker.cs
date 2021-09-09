@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using WinRT;
 
-namespace LoquatDocs.Model {
+namespace LoquatDocs.Services {
   public abstract class StandardFileSystemPicker {
 
     protected void SetWindowHandler(IWinRTObject winRTObject) {

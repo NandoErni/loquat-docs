@@ -3,6 +3,7 @@ using LoquatDocs.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using System;
 
 namespace LoquatDocs.View {
 
@@ -49,8 +50,12 @@ namespace LoquatDocs.View {
       Filter.Visibility = ((ToggleButton)sender).IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
     }
 
-    private void OnPageLoaded(object sender, RoutedEventArgs e) {
-      ViewModel.InitilizeList();
+    private async void OnPageLoaded(object sender, RoutedEventArgs e) {
+      try {
+        await ViewModel.InitilizeList();
+      } catch (EntityFramework.InvalidDatabasePathException) {
+        
+      }
       ProgressRing.Visibility = Visibility.Collapsed;
     }
 
@@ -58,8 +63,8 @@ namespace LoquatDocs.View {
       await ViewModel.PayInvoice(((Button)sender).Tag as string);
     }
 
-    private void OnSearch() {
-      ViewModel.Search(GetSearchArguments());
+    private async void OnSearch() {
+      await ViewModel.Search(GetSearchArguments());
     }
 
     private void OnSearch(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {

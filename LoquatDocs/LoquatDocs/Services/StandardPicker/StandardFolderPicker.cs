@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace LoquatDocs.Model {
+namespace LoquatDocs.Services {
   public class StandardFolderPicker : StandardFileSystemPicker {
     private FolderPicker _folderPicker;
 

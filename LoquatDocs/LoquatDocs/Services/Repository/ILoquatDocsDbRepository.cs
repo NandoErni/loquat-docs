@@ -15,7 +15,7 @@ namespace LoquatDocs.Services {
     Task<List<string>> GetAllGroupnames();
     Task<List<string>> GetAllTagIds();
     Task<Document> GetDocument(string documentPath);
-    List<IGrouping<string, Document>> GetDocuments(Func<Document, bool> predicate);
+    Task<List<IGrouping<string, Document>>> GetDocuments(Func<Document, bool> predicate);
     Task<bool> GroupExist(string groupName);
     Task PayInvoice(string documentPath);
     Task RemoveDocuments(List<Document> documentsOfGroup);

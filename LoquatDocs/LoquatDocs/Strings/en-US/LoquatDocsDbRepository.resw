@@ -117,49 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="DatabaseNotFound" xml:space="preserve">
+    <value>Database not found</value>
   </data>
-  <data name="List" xml:space="preserve">
-    <value>List Documents</value>
+  <data name="DatabaseNotFoundMessage" xml:space="preserve">
+    <value>The database located at {0} does not exist.</value>
   </data>
-  <data name="LoquatDocs" xml:space="preserve">
-    <value>Loquat Docs</value>
+  <data name="TemporaryDatabase" xml:space="preserve">
+    <value>Temporary database</value>
   </data>
-  <data name="Discard" xml:space="preserve">
-    <value>Discard</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="Alias.Text" xml:space="preserve">
-    <value>Add Synonyms</value>
-  </data>
-  <data name="AliasForWord.Header" xml:space="preserve">
-    <value>Synonym</value>
-  </data>
-  <data name="Word.Header" xml:space="preserve">
-    <value>Word</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search Documents</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="Success" xml:space="preserve">
-    <value>Success</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="DatabasePathInvalid" xml:space="preserve">
-    <value>The path to the database is not set or the database does not exist anymore. Please change it in the settings.</value>
-  </data>
-  <data name="GotIt" xml:space="preserve">
-    <value>Got it!</value>
+  <data name="TemporaryDatabaseMessage" xml:space="preserve">
+    <value>You are currently using a temporary database. Please create a new database or import an existing one in the settings.</value>
   </data>
 </root>

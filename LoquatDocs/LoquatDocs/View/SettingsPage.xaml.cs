@@ -25,5 +25,9 @@ namespace LoquatDocs {
       CreateDatabaseTeachingTip.IsOpen = true;
       ImportDatabaseTeachingTip.IsOpen = true;
     }
+
+    private void OnHelpClicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+      OnGettingStartedClosed(null, null);
+    }
   }
 }

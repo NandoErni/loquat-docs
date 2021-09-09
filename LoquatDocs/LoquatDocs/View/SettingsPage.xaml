@@ -5,6 +5,7 @@
   xmlns:local="using:LoquatDocs"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:resource="using:LoquatDocs.Model.Resource"
   mc:Ignorable="d"
   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -21,11 +22,15 @@
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Content="{x:Bind ViewModel.ImportDatabaseResource}" Command="{x:Bind ViewModel.ImportDatabaseCommand}" x:Name="ImportDatabase" HorizontalAlignment="Stretch" Margin="0,0,5,0" />
         <Button Grid.Column="1" Grid.Row="0" Content="{x:Bind ViewModel.CreateNewDatabaseResource}" Command="{x:Bind ViewModel.CreateNewDatabaseCommand}" x:Name="CreateDatabase" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
         <Button Grid.Column="2" Grid.Row="0" Content="{x:Bind ViewModel.SaveDatabaseBackupResource}" Command="{x:Bind ViewModel.SaveDatabaseBackupCommand}" x:Name="SaveBackUp" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
-        <Button Grid.Column="3" Grid.Row="0" Content="{x:Bind ViewModel.CheckDatabaseUpdatesResource}" Command="{x:Bind ViewModel.CheckUpdateDatabaseCommand}" x:Name="CheckForUpdates" HorizontalAlignment="Stretch"/>
+        <Button Grid.Column="3" Grid.Row="0" Content="{x:Bind ViewModel.CheckDatabaseUpdatesResource}" Command="{x:Bind ViewModel.CheckUpdateDatabaseCommand}" x:Name="CheckForUpdates" HorizontalAlignment="Stretch" Margin="0,0,5,0"/>
+        <Button Grid.Column="4" Click="OnHelpClicked">
+          <SymbolIcon Symbol="Help" />
+        </Button>
       </Grid>
       <NavigationViewItemSeparator />
       <Grid Padding="0,5,0,0" HorizontalAlignment="Stretch">
@@ -42,11 +47,11 @@
       </Grid>
 
       <TeachingTip x:Name="GettingStartedTeachingTip"                   
-	      Title="Getting Started"
-	      Subtitle="It looks like you don't have a database yet! In order to use LoquatDocs you have to create a new database or import an existing one."
+	      Title="{x:Bind ViewModel.GettingStartedResource}"
+	      Subtitle="{x:Bind ViewModel.GettingStartedTeachingTipHintResource}"
 	      PreferredPlacement="Center"                                              
 	      PlacementMargin="20"
-	      CloseButtonContent="Got it!">
+	      CloseButtonContent="{x:Bind resource:GeneralResources.GotIt}">
 
         <TeachingTip.HeroContent>
           <StackPanel Background="Orange" >
@@ -57,9 +62,10 @@
 
       <TeachingTip x:Name="CreateDatabaseTeachingTip"                   
           Target="{x:Bind CreateDatabase}"
-          Title="Create new database"                                        
-          Subtitle="Create a database by clicking on this button and choosing the folder to save the database in."
-          PreferredPlacement="TopRight">
+          Title="{x:Bind ViewModel.CreateNewDatabaseResource}"                                        
+          Subtitle="{x:Bind ViewModel.CreateNewDatabaseTeachingTipHintResource}"
+          PreferredPlacement="TopRight"
+          IsLightDismissEnabled="True">
         <TeachingTip.IconSource>
           <SymbolIconSource Symbol="Add" />
         </TeachingTip.IconSource>
@@ -67,9 +73,10 @@
 
       <TeachingTip x:Name="ImportDatabaseTeachingTip"                   
           Target="{x:Bind ImportDatabase}"
-          Title="Import existing database"                                        
-          Subtitle="Import a database by clicking on this button and choosing the database file."
-          PreferredPlacement="Top">
+          Title="{x:Bind ViewModel.ImportExistingDatabaseResource}"                                        
+          Subtitle="{x:Bind ViewModel.ImportExistingDatabaseTeachingTipHintResource}"
+          PreferredPlacement="Top"
+          IsLightDismissEnabled="True">
         <TeachingTip.IconSource>
           <SymbolIconSource Symbol="Download" />
         </TeachingTip.IconSource>

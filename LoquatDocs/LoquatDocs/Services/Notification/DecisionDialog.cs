@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using LoquatDocs.Model.Resource;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
@@ -11,8 +12,8 @@ namespace LoquatDocs.Services {
       _controlDialog = new ContentDialog() {
         Title = title,
         Content = message,
-        CloseButtonText = "Close",
-        PrimaryButtonText = "Yes",
+        CloseButtonText = GeneralResources.Close,
+        PrimaryButtonText = GeneralResources.Yes,
         XamlRoot = App.MainWindow.Content.XamlRoot
       };
     }

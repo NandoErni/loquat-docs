@@ -39,6 +39,18 @@ namespace LoquatDocs.ViewModel {
     public string DatabaseUpdateSuccessfulResource => Resource.GetResource(RESOURCE_KEY, "DatabaseUpdateSuccessful");
 
     public string OpenLogPathResource => Resource.GetResource(RESOURCE_KEY, "OpenLogPath");
+
+    public string GettingStartedResource => Resource.GetResource(RESOURCE_KEY, "GettingStarted");
+
+    public string GettingStartedTeachingTipHintResource => Resource.GetResource(RESOURCE_KEY, "GettingStartedTeachingTipHint");
+
+    public string CreateNewDatabaseTeachingTipHintResource => Resource.GetResource(RESOURCE_KEY, "CreateNewDatabaseTeachingTipHint");
+
+    public string ImportExistingDatabaseResource => Resource.GetResource(RESOURCE_KEY, "ImportExistingDatabase");
+
+    public string ImportExistingDatabaseTeachingTipHintResource => Resource.GetResource(RESOURCE_KEY, "ImportExistingDatabaseTeachingTipHint");
+
+    public string ErrorDatabaseBackupResource => Resource.GetResource(RESOURCE_KEY, "ErrorDatabaseBackup");
   }
 }
 

@@ -27,6 +27,7 @@
     <Page Remove="View\Pages\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Strings\en-US\LoquatDocsDbRepository.resw" />
     <None Remove="View\HomePage.xaml" />
     <None Remove="View\ListDocumentsPage.xaml" />
     <None Remove="View\SearchPage.xaml" />
@@ -54,6 +55,7 @@
   <ItemGroup>
     <PRIResource Include="Strings\en-US\Document.resw" />
     <PRIResource Include="Strings\en-US\DocumentGroup.resw" />
+    <PRIResource Include="Strings\en-US\LoquatDocsDbRepository.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
     <PRIResource Include="Strings\en-US\SearchDocuments.resw" />
     <PRIResource Include="Strings\en-US\Settings.resw" />

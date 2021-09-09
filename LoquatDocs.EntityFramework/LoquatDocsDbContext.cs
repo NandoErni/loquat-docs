@@ -16,9 +16,6 @@ namespace LoquatDocs.EntityFramework {
     public DbSet<Tag> Tags { get; set; }
 
     public LoquatDocsDbContext(string dbPath) : base() {
-      if (string.IsNullOrWhiteSpace(dbPath)) {
-        throw new InvalidDatabasePathException("The database path cannot be null.");
-      }
       DbPath = dbPath;
     }
 

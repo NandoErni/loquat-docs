@@ -62,8 +62,8 @@ namespace LoquatDocs.ViewModel {
       await _notification.NotifyInfo(FileDialogTitleResource, SuccessDeleteResource(documentTitle));
     }
 
-    public void Search(SearchArguments searchArguments) {
-      UpdateDocumentList(_repository.GetDocuments((d) => DoesQueryTextMatch(_search.QueryText, d, searchArguments)));
+    public async Task Search(SearchArguments searchArguments) {
+      UpdateDocumentList(await _repository.GetDocuments((d) => DoesQueryTextMatch(_search.QueryText, d, searchArguments)));
     }
 
     private async Task<string> GetTitleOfPath(string documentPath) {
@@ -108,8 +108,9 @@ namespace LoquatDocs.ViewModel {
       return true;
     }
 
-    public void InitilizeList() {
-      App.QueueOnUiThread(() => UpdateDocumentList(_repository.GetDocuments((d) => true)));
+    public async Task InitilizeList() {
+      var documents = await _repository.GetDocuments((d) => true);
+      App.QueueOnUiThread(() => UpdateDocumentList(documents));
     }
 
     private void UpdateDocumentList(IEnumerable<IGrouping<string, Document>> source) {
