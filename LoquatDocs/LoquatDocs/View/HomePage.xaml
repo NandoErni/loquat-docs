@@ -5,8 +5,7 @@
     xmlns:local="using:LoquatDocs.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
   <ScrollViewer>
 
@@ -23,8 +22,8 @@
         <NavigationView.MenuItems>
           <NavigationViewItem Content="Document" x:Name="Document"/>
           <NavigationViewItem Content="Document Group" x:Name="DocumentGroup"/>
-          <NavigationViewItem Content="Alias" x:Name="Alias"/>
-          <NavigationViewItem Content="Alias Group" x:Name="AliasGroup"/>
+          <!--<NavigationViewItem Content="Alias" x:Name="Alias"/>-->
+          <!--<NavigationViewItem Content="Alias Group" x:Name="AliasGroup"/>-->
         </NavigationView.MenuItems>
         <Frame HorizontalAlignment="Stretch" Margin="0" x:Name="ContentFrame"/>
       </NavigationView>
