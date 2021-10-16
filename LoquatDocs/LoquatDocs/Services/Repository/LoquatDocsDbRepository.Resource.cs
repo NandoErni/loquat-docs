@@ -1,9 +1,4 @@
 ﻿using LoquatDocs.Model.Resource;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LoquatDocs.Services {
   public partial class LoquatDocsDbRepository {

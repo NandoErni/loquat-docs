@@ -12,7 +12,7 @@ namespace LoquatDocs.View {
     {
         (nameof(Document), typeof(DocumentPage)),
         (nameof(DocumentGroup), typeof(DocumentGroupPage)),
-        (nameof(Alias), typeof(AliasPage)),
+        //(nameof(Alias), typeof(AliasPage)),
         //(nameof(AliasGroup), typeof(AliasGroupPage)),
     };
 
