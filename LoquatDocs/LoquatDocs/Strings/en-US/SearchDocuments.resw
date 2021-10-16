@@ -153,6 +153,12 @@
   <data name="FilterTitle" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="InvoicePayment" xml:space="preserve">
+    <value>Invoice payment</value>
+  </data>
+  <data name="InvoicePaymentConfirmed" xml:space="preserve">
+    <value>Invoice is payed</value>
+  </data>
   <data name="ListTitle" xml:space="preserve">
     <value>Documents</value>
   </data>
@@ -161,6 +167,9 @@
   </data>
   <data name="Payed" xml:space="preserve">
     <value>Payed</value>
+  </data>
+  <data name="PromptPayInvoice" xml:space="preserve">
+    <value>Please pay the invoice now. After that you can confirm the action.</value>
   </data>
   <data name="PromptSureToDeleteDocument" xml:space="preserve">
     <value>Are you sure to delete {0}?</value>

@@ -17,7 +17,7 @@ namespace LoquatDocs.ViewModel {
 
     public const string DEFAULT_DB_NAME = "database" + DB_FILE_ENDING;
 
-    public string DEFAULT_DB_BACKUP_NAME = "backup\\" + DateTime.Now.ToString("yyyyMMddTHHmmss") + DEFAULT_DB_NAME;
+    public string DEFAULT_DB_BACKUP_NAME => "backup\\" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + DEFAULT_DB_NAME;
 
     private IConfigService _config;
 

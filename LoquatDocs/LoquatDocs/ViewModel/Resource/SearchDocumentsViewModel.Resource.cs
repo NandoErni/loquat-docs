@@ -48,5 +48,11 @@ namespace LoquatDocs.ViewModel {
     public string FilterDocumentDueDateResource => Resource.GetResource(RESOURCE_KEY, "FilterDocumentDueDate");
 
     public string FilterOnlyInvoicesLeftToPayResource => Resource.GetResource(RESOURCE_KEY, "FilterOnlyInvoicesLeftToPay");
+
+    public string InvoicePaymentResource => Resource.GetResource(RESOURCE_KEY, "InvoicePayment");
+
+    public string PromptPayInvoiceResource => Resource.GetResource(RESOURCE_KEY, "PromptPayInvoice");
+
+    public string InvoicePaymentConfirmedResource => Resource.GetResource(RESOURCE_KEY, "InvoicePaymentConfirmed");
   }
 }
