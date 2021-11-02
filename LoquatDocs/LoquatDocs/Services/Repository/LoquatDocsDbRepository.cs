@@ -29,13 +29,16 @@ namespace LoquatDocs.Services {
 
     private async Task CheckDatabaseFilePath() {
       if (String.IsNullOrWhiteSpace(_config.DatabaseFilePath)) {
-        _config.DatabaseFilePath = Path.Combine(Path.GetTempPath(), SettingsViewModel.DEFAULT_DB_NAME);
+        _config.DatabaseFilePath = _config.GetTemporaryDatabasePath();
         await CreateOrUpdateDatabaseAsync(_config.DatabaseFilePath);
-      } else if (!await _config.IsDatabaseAvailable()) {
+      } 
+      
+      if (!await _config.IsDatabaseAvailable()) {
         await _notificationService.NotifyInfo(DatabaseNotFoundResource, DatabaseNotFoundMessageResource(_config.DatabaseFilePath));
+        return;
       }
 
-      if (Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) == Directory.GetParent(_config.DatabaseFilePath).FullName) {
+      if (_config.IsDatabasePathTemporary()) {
         await _notificationService.NotifyInfo(TemporaryDatabaseResource, TemporaryDatabaseMessageResource);
       }
     }

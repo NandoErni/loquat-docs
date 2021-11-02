@@ -12,6 +12,6 @@ namespace LoquatDocs.Services {
 
     public Task NotifyError(string message);
 
-    public Task<bool> NotifyDecision(string title, string message);
+    public Task<bool> NotifyDecision(string title, string message, string confirmText = "");
   }
 }

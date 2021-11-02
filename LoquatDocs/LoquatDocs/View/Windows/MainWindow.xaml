@@ -12,7 +12,8 @@
     <NavigationView.MenuItems>
       <NavigationViewItem Icon="Home" Content="{x:Bind resource:GeneralResources.Home}" x:Name="Home"/>
       <NavigationViewItem Icon="Find" Content="{x:Bind resource:GeneralResources.Search}" x:Name="Search"/>
-      <NavigationViewItem Icon="List" Content="{x:Bind resource:GeneralResources.List}" x:Name="List"/>
+      <NavigationViewItem Icon="List" Content="{x:Bind resource:GeneralResources.List}" x:Name="List" Visibility="Collapsed"/>
+      <!-- temporarly collapsed above nav item-->
     </NavigationView.MenuItems>
     <Frame Margin="0,0,0,0" x:Name="ContentFrame"/>
   </NavigationView>

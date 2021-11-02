@@ -132,6 +132,10 @@ namespace LoquatDocs.ViewModel {
     }
 
     public async Task PayInvoice(string documentPath) {
+      await OpenFile(documentPath);
+      if (!await _notification.NotifyDecision(InvoicePaymentResource, PromptPayInvoiceResource, InvoicePaymentConfirmedResource)) {
+        return;
+      }
       await _repository.PayInvoice(documentPath);
       _search.DocumentListItems.FirstOrDefault(doc => doc.PathToDocument.Equals(documentPath)).IsInvoicePayed = true;
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoquatDocs.ViewModel;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -18,11 +19,25 @@ namespace LoquatDocs.Services {
     }
 
     public async Task<StorageFile> GetDatabaseFileAsync() {
-      return await StorageFile.GetFileFromPathAsync(DatabaseFilePath);
+      try {
+        return await StorageFile.GetFileFromPathAsync(DatabaseFilePath);
+      } catch (FileNotFoundException) {
+        return null;
+      }
     }
 
     public async Task<bool> IsDatabaseAvailable() {
-      return (await GetDatabaseFileAsync()).IsAvailable;
+      StorageFile db = await GetDatabaseFileAsync();
+      return db is not null && db.IsAvailable;
+    }
+
+    public string GetTemporaryDatabasePath() {
+      return Path.Combine(Path.GetTempPath(), SettingsViewModel.DEFAULT_DB_NAME);
+    }
+
+    public bool IsDatabasePathTemporary() {
+      return Path.GetTempPath()
+        .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) == Directory.GetParent(DatabaseFilePath).FullName;
     }
   }
 }

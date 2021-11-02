@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LoquatDocs.Services {
   public class DialogNotifications : INotificationService {
-    public async Task<bool> NotifyDecision(string title, string message) {
-      return await DecisionDialog.CreateAndShowAsync(title, message);
+    public async Task<bool> NotifyDecision(string title, string message, string confirmMessage = "") {
+      return await DecisionDialog.CreateAndShowAsync(title, message, confirmMessage);
     }
 
     public async Task NotifyError(string message) {

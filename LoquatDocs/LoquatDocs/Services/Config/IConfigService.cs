@@ -12,5 +12,9 @@ namespace LoquatDocs.Services {
     Task<StorageFile> GetDatabaseFileAsync();
 
     Task<bool> IsDatabaseAvailable();
+
+    string GetTemporaryDatabasePath();
+
+    bool IsDatabasePathTemporary();
   }
 }
