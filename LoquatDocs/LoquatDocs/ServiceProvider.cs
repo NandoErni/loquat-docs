@@ -45,6 +45,7 @@ namespace LoquatDocs {
     }
 
     private void RegisterServices() {
+      _container.RegisterType<ILocalAppSettings, LocalAppSettings>();
       _container.RegisterType<IConfigService, Config>();
       _container.RegisterType<ILoquatDocsDbRepository, LoquatDocsDbRepository>();
       _container.RegisterType<INotificationService, DialogNotifications>();

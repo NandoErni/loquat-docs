@@ -12,8 +12,6 @@ namespace LoquatDocs.Services {
       _localAppSettings = localAppSettings;
     }
 
-    public Config() : this(new LocalAppSettings()) { }
-
     public string DatabaseFilePath { 
       get => _localAppSettings.DatabaseFilePath; 
       set => _localAppSettings.DatabaseFilePath = value; 
