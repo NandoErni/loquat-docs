@@ -11,18 +11,30 @@ using System.Threading.Tasks;
 namespace LoquatDocs.Test {
   public class UnitTestHelper {
 
-    public static List<Group> DefaultGroups;
+    public List<Group> DefaultGroups;
 
-    static UnitTestHelper() {
+   public UnitTestHelper(bool seedData = true) {
       DefaultGroups = new List<Group>();
+
+      if (seedData) {
+        SeedData();
+      }
+    }
+
+    public void ResetData() {
+      DefaultGroups.Clear();
+    }
+
+    private void SeedData() {
       DefaultGroups.Add(new Group() {
         Groupname = "Yobama"
       });
     }
 
-    public static Mock<ILoquatDocsDbRepository> GetRepositoryMock(List<Group> groups) {
+    public Mock<ILoquatDocsDbRepository> GetRepositoryMock() {
       var repositoryMock = new Mock<ILoquatDocsDbRepository>();
-      repositoryMock.Setup(m => m.GetAllGroupnames()).Returns(Task.Run(() => groups.Select(g => g.Groupname).ToList()));
+      repositoryMock.Setup(m => m.GetAllGroupnames()).Returns(() => Task.Run(() => DefaultGroups.Select(g => g.Groupname).ToList()));
+      repositoryMock.Setup(m => m.SaveGroup(It.IsAny<string>())).Returns<string>(str => Task.Run(() => DefaultGroups.Add(new Group() { Groupname = str})));
 
       return repositoryMock;
     }
