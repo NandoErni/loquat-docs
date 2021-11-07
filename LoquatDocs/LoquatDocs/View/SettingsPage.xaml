@@ -51,7 +51,7 @@
 	      Subtitle="{x:Bind ViewModel.GettingStartedTeachingTipHintResource}"
 	      PreferredPlacement="Center"                                              
 	      PlacementMargin="20"
-	      CloseButtonContent="{x:Bind resource:GeneralResources.GotIt}">
+	      CloseButtonContent="{x:Bind ViewModel.GotItResource}">
 
         <TeachingTip.HeroContent>
           <StackPanel Background="Orange" >

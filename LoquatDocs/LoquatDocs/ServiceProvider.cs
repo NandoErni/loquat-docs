@@ -1,4 +1,5 @@
-﻿using LoquatDocs.Services;
+﻿using LoquatDocs.Model.Resource;
+using LoquatDocs.Services;
 using LoquatDocs.ViewModel;
 using Serilog;
 using System;
@@ -45,6 +46,7 @@ namespace LoquatDocs {
     }
 
     private void RegisterServices() {
+      _container.RegisterType<IResourceProvider, Resource>();
       _container.RegisterType<ILocalAppSettings, LocalAppSettings>();
       _container.RegisterType<IConfigService, Config>();
       _container.RegisterType<ILoquatDocsDbRepository, LoquatDocsDbRepository>();

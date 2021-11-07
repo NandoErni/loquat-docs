@@ -9,16 +9,16 @@ namespace LoquatDocs.ViewModel {
   public partial class DocumentGroupViewModel {
     public const string RESOURCE_KEY = "DocumentGroup";
 
-    public string AddDocumentGroupResource => Resource.GetResource(RESOURCE_KEY, "AddDocumentGroup");
+    public string AddDocumentGroupResource => _resourceProvider.GetResource(RESOURCE_KEY, "AddDocumentGroup");
 
-    public string PromptDeleteDocumentsResource(string documentList) => string.Format(Resource.GetResource(RESOURCE_KEY, "PromptDeleteDocuments"), documentList);
+    public string PromptDeleteDocumentsResource(string documentList) => string.Format(_resourceProvider.GetResource(RESOURCE_KEY, "PromptDeleteDocuments"), documentList);
 
-    public string PromptDeleteGroupResource(string groupName) => string.Format(Resource.GetResource(RESOURCE_KEY, "PromptDeleteGroup"), groupName);
+    public string PromptDeleteGroupResource(string groupName) => string.Format(_resourceProvider.GetResource(RESOURCE_KEY, "PromptDeleteGroup"), groupName);
 
-    public string AddGroupResource => Resource.GetResource(RESOURCE_KEY, "AddGroup");
+    public string AddGroupResource => _resourceProvider.GetResource(RESOURCE_KEY, "AddGroup");
 
-    public string GroupResource => Resource.GetResource(RESOURCE_KEY, "Group");
+    public string GroupResource => _resourceProvider.GetResource(RESOURCE_KEY, "Group");
 
-    public string PromptDeleteGroupTitleResource(string groupName) => string.Format(Resource.GetResource(RESOURCE_KEY, "PromptDeleteGroupTitle"), groupName);
+    public string PromptDeleteGroupTitleResource(string groupName) => string.Format(_resourceProvider.GetResource(RESOURCE_KEY, "PromptDeleteGroupTitle"), groupName);
   }
 }

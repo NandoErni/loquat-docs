@@ -5,32 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LoquatDocs.Model.Resource {
-  public static class GeneralResources {
+  public class GeneralResources {
 
     private const string RESOURCE_KEY = "Resources";
+    private IResourceProvider _resourceProvider;
 
-    public static string LoquatDocs => Resource.GetResource(RESOURCE_KEY, nameof(LoquatDocs));
+    public GeneralResources(IResourceProvider resourceProvider) {
+      _resourceProvider = resourceProvider;
+    }
 
-    public static string Discard => Resource.GetResource(RESOURCE_KEY, nameof(Discard));
+    public string LoquatDocs => _resourceProvider.GetResource(RESOURCE_KEY, nameof(LoquatDocs));
 
-    public static string Save => Resource.GetResource(RESOURCE_KEY, nameof(Save));
+    public string Discard => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Discard));
 
-    public static string Home => Resource.GetResource(RESOURCE_KEY, nameof(Home));
+    public string Save => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Save));
 
-    public static string Search => Resource.GetResource(RESOURCE_KEY, nameof(Search));
+    public string Home => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Home));
 
-    public static string List => Resource.GetResource(RESOURCE_KEY, nameof(List));
+    public string Search => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Search));
 
-    public static string Error => Resource.GetResource(RESOURCE_KEY, nameof(Error));
+    public string List => _resourceProvider.GetResource(RESOURCE_KEY, nameof(List));
 
-    public static string Close => Resource.GetResource(RESOURCE_KEY, nameof(Close));
+    public string Error => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Error));
 
-    public static string Success => Resource.GetResource(RESOURCE_KEY, nameof(Success));
+    public string Close => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Close));
 
-    public static string Yes => Resource.GetResource(RESOURCE_KEY, nameof(Yes));
+    public string Success => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Success));
 
-    public static string GotIt => Resource.GetResource(RESOURCE_KEY, nameof(GotIt));
+    public string Yes => _resourceProvider.GetResource(RESOURCE_KEY, nameof(Yes));
 
-    public static string DatabasePathInvalid => Resource.GetResource(RESOURCE_KEY, nameof(DatabasePathInvalid));
+    public string GotIt => _resourceProvider.GetResource(RESOURCE_KEY, nameof(GotIt));
+
+    public string DatabasePathInvalid => _resourceProvider.GetResource(RESOURCE_KEY, nameof(DatabasePathInvalid));
   }
 }

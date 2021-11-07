@@ -15,13 +15,17 @@ namespace LoquatDocs.ViewModel {
 
     private INotificationService _notification;
 
+    private IResourceProvider _resourceProvider;
+
     private ObservableCollection<string> _documentGroupNames = new ObservableCollection<string>();
 
     public ObservableCollection<string> Groups {
       get => _documentGroupNames;
     }
 
-    public DocumentGroupViewModel(INotificationService notificationService, ILoquatDocsDbRepository repository) {
+    public DocumentGroupViewModel(INotificationService notificationService, ILoquatDocsDbRepository repository,
+      IResourceProvider resourceProvider) {
+      _resourceProvider = resourceProvider;
       _notification = notificationService;
       _repository = repository;
     }

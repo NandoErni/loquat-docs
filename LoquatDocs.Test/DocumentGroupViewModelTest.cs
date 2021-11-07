@@ -21,7 +21,7 @@ namespace LoquatDocs.Test {
       Mock<INotificationService> notificationServiceMock = new Mock<INotificationService>();
       notificationServiceMock.Setup(x => x.NotifyDecision(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.Run(() => true));
       _repository = _unitTestHelper.GetRepositoryMock();
-      _viewModel = new DocumentGroupViewModel(notificationServiceMock.Object, _repository.Object);
+      _viewModel = new DocumentGroupViewModel(notificationServiceMock.Object, _repository.Object, _unitTestHelper.GetResourceProviderMock().Object);
     }
 
     [TestMethod]

@@ -1,5 +1,6 @@
 ﻿using LoquatDocs.EntityFramework.Model;
 using LoquatDocs.Model;
+using LoquatDocs.Model.Resource;
 using LoquatDocs.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Serilog;
@@ -24,6 +25,8 @@ namespace LoquatDocs.ViewModel {
 
     private IProcessHelperService _processHelper;
 
+    private IResourceProvider _resourceProvider;
+
     public ObservableCollection<DocumentListItem> DocumentListItems {
       get => _search.DocumentListItems;
     }
@@ -34,8 +37,10 @@ namespace LoquatDocs.ViewModel {
     }
 
     public SearchDocumentsViewModel(INotificationService notificationService, ILogger logger, 
-      IProcessHelperService processHelper, ILoquatDocsDbRepository repository) {
+      IProcessHelperService processHelper, ILoquatDocsDbRepository repository,
+      IResourceProvider resourceProvider) {
       _logger = logger;
+      _resourceProvider = resourceProvider;
       _notification = notificationService;
       _processHelper = processHelper;
       _repository = repository;

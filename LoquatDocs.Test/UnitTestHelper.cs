@@ -1,4 +1,5 @@
 ﻿using LoquatDocs.EntityFramework.Model;
+using LoquatDocs.Model.Resource;
 using LoquatDocs.Services;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -37,6 +38,16 @@ namespace LoquatDocs.Test {
       repositoryMock.Setup(m => m.SaveGroup(It.IsAny<string>())).Returns<string>(str => Task.Run(() => DefaultGroups.Add(new Group() { Groupname = str})));
 
       return repositoryMock;
+    }
+
+    public Mock<IResourceProvider> GetResourceProviderMock() {
+      var mock = new Mock<IResourceProvider>();
+
+      mock.Setup(x => x.GetResource(It.IsAny<string>(), It.IsAny<string>())).Returns(string.Empty);
+      mock.Setup(x => x.GetFormattedResource(It.IsAny<string>(), It.IsAny<string>())).Returns(string.Empty);
+      mock.Setup(x => x.GeneralResources).Returns(new GeneralResources(mock.Object));
+
+      return mock;
     }
   }
 }

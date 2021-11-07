@@ -30,6 +30,8 @@ namespace LoquatDocs.ViewModel {
 
     private ILogger _logger;
 
+    private IResourceProvider _resourceProvider;
+
     public string GroupName {
       get => _document.GroupName;
       set => SetProperty(ref _document.GroupName, value);
@@ -86,7 +88,9 @@ namespace LoquatDocs.ViewModel {
 
     public IAsyncRelayCommand ChoosePathCommand { get; }
 
-    public DocumentViewModel(INotificationService notificationService, ILogger logger, ILoquatDocsDbRepository repository) {
+    public DocumentViewModel(INotificationService notificationService, ILogger logger, ILoquatDocsDbRepository repository,
+      IResourceProvider resourceProvider) {
+      _resourceProvider = resourceProvider;
       _logger = logger;
       _notification = notificationService;
       _repository = repository;

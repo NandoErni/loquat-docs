@@ -29,6 +29,8 @@ namespace LoquatDocs.ViewModel {
 
     private ILoquatDocsDbRepository _repository;
 
+    private IResourceProvider _resourceProvider;
+
     private Settings _settings = new Settings();
 
     public string DbPath {
@@ -50,8 +52,9 @@ namespace LoquatDocs.ViewModel {
     public IAsyncRelayCommand OpenLogPathCommand { get; }
 
     public SettingsViewModel(IConfigService config, INotificationService notificationService, ILogger logger, 
-      IProcessHelperService processHelper, ILoquatDocsDbRepository repository) {
+      IProcessHelperService processHelper, ILoquatDocsDbRepository repository, IResourceProvider resourceProvider) {
       _logger = logger;
+      _resourceProvider = resourceProvider;
       _config = config;
       _notification = notificationService;
       _processHelper = processHelper;
@@ -98,7 +101,7 @@ namespace LoquatDocs.ViewModel {
       var dialog = new ContentDialog() {
         Title = UpdateDatabaseResource,
         Content = hasUpdates ? DatabaseUpdatesResource : NoDatabaseUpdatesResource,
-        CloseButtonText = GeneralResources.Close,
+        CloseButtonText = _resourceProvider.GeneralResources.Close,
         XamlRoot = App.MainWindow.Content.XamlRoot
       };
 

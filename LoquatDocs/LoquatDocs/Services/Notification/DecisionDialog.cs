@@ -8,12 +8,12 @@ namespace LoquatDocs.Services {
 
     private ContentDialog _controlDialog;
 
-    public DecisionDialog(string title, string message, string confirmMessage = "") {
+    public DecisionDialog(IResourceProvider resourceProvider, string title, string message, string confirmMessage = "") {
       _controlDialog = new ContentDialog() {
         Title = title,
         Content = message,
-        CloseButtonText = GeneralResources.Close,
-        PrimaryButtonText = string.IsNullOrWhiteSpace(confirmMessage) ? GeneralResources.Yes : confirmMessage,
+        CloseButtonText = resourceProvider.GeneralResources.Close,
+        PrimaryButtonText = string.IsNullOrWhiteSpace(confirmMessage) ? resourceProvider.GeneralResources.Yes : confirmMessage,
         XamlRoot = App.MainWindow.Content.XamlRoot
       };
     }
@@ -23,8 +23,8 @@ namespace LoquatDocs.Services {
       return result == ContentDialogResult.Primary;
     }
 
-    public static async Task<bool> CreateAndShowAsync(string title, string errorMessage, string confirmMessage = "") {
-      DecisionDialog dialog = new DecisionDialog(title, errorMessage, confirmMessage);
+    public static async Task<bool> CreateAndShowAsync(IResourceProvider resourceProvider, string title, string errorMessage, string confirmMessage = "") {
+      DecisionDialog dialog = new DecisionDialog(resourceProvider, title, errorMessage, confirmMessage);
       return await dialog.ShowAsync();
     }
   }

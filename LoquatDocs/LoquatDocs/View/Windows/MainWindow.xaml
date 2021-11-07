@@ -3,17 +3,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LoquatDocs"
-    xmlns:resource="using:LoquatDocs.Model.Resource"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
   <NavigationView x:Name="MainNavigationView" IsBackEnabled="False" IsBackButtonVisible="Collapsed" ItemInvoked="OnNavigationViewItemInvoked">
     <NavigationView.MenuItems>
-      <NavigationViewItem Icon="Home" Content="{x:Bind resource:GeneralResources.Home}" x:Name="Home"/>
-      <NavigationViewItem Icon="Find" Content="{x:Bind resource:GeneralResources.Search}" x:Name="Search"/>
-      <NavigationViewItem Icon="List" Content="{x:Bind resource:GeneralResources.List}" x:Name="List" Visibility="Collapsed"/>
-      <!-- temporarly collapsed above nav item-->
+      <NavigationViewItem Icon="Home" Content="{x:Bind local:MainWindow.ResourceProvider.GeneralResources.Home}" x:Name="Home"/>
+      <NavigationViewItem Icon="Find" Content="{x:Bind local:MainWindow.ResourceProvider.GeneralResources.Search}" x:Name="Search"/>
+      <NavigationViewItem Icon="List" Content="{x:Bind local:MainWindow.ResourceProvider.GeneralResources.List}" x:Name="List" Visibility="Collapsed"/>
     </NavigationView.MenuItems>
     <Frame Margin="0,0,0,0" x:Name="ContentFrame"/>
   </NavigationView>

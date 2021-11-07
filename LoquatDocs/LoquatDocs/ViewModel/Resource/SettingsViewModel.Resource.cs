@@ -10,47 +10,49 @@ namespace LoquatDocs.ViewModel {
 
     private const string RESOURCE_KEY = "Settings";
 
-    public string DatabaseAlreadyExistsResource => Resource.GetResource(RESOURCE_KEY, "DatabaseAlreadyExists");
+    public string DatabaseAlreadyExistsResource => _resourceProvider.GetResource(RESOURCE_KEY, "DatabaseAlreadyExists");
 
-    public string ChooseFileResource => Resource.GetResource(RESOURCE_KEY, "ChooseFile");
+    public string ChooseFileResource => _resourceProvider.GetResource(RESOURCE_KEY, "ChooseFile");
 
-    public string CreateNewDatabaseResource => Resource.GetResource(RESOURCE_KEY, "CreateNewDatabase");
+    public string CreateNewDatabaseResource => _resourceProvider.GetResource(RESOURCE_KEY, "CreateNewDatabase");
 
-    public string DbPathResource => Resource.GetResource(RESOURCE_KEY, "DbPath");
+    public string DbPathResource => _resourceProvider.GetResource(RESOURCE_KEY, "DbPath");
 
-    public string ImportDatabaseResource => Resource.GetResource(RESOURCE_KEY, "ImportDatabase");
+    public string ImportDatabaseResource => _resourceProvider.GetResource(RESOURCE_KEY, "ImportDatabase");
 
-    public string SettingsResource => Resource.GetResource(RESOURCE_KEY, "Settings");
+    public string SettingsResource => _resourceProvider.GetResource(RESOURCE_KEY, "Settings");
 
-    public string UpdateDatabaseResource => Resource.GetResource(RESOURCE_KEY, "UpdateDatabase");
+    public string UpdateDatabaseResource => _resourceProvider.GetResource(RESOURCE_KEY, "UpdateDatabase");
 
-    public string SaveDatabaseBackupResource => Resource.GetResource(RESOURCE_KEY, "SaveDatabaseBackup");
+    public string SaveDatabaseBackupResource => _resourceProvider.GetResource(RESOURCE_KEY, "SaveDatabaseBackup");
 
-    public string BackupSuccessfulResource => Resource.GetResource(RESOURCE_KEY, "BackupSuccessful");
+    public string BackupSuccessfulResource => _resourceProvider.GetResource(RESOURCE_KEY, "BackupSuccessful");
 
-    public string DatabaseResource => Resource.GetResource(RESOURCE_KEY, "Database");
+    public string DatabaseResource => _resourceProvider.GetResource(RESOURCE_KEY, "Database");
 
-    public string CheckDatabaseUpdatesResource => Resource.GetResource(RESOURCE_KEY, "CheckDatabaseUpdates");
+    public string CheckDatabaseUpdatesResource => _resourceProvider.GetResource(RESOURCE_KEY, "CheckDatabaseUpdates");
 
-    public string NoDatabaseUpdatesResource => Resource.GetResource(RESOURCE_KEY, "NoDatabaseUpdates");
+    public string NoDatabaseUpdatesResource => _resourceProvider.GetResource(RESOURCE_KEY, "NoDatabaseUpdates");
 
-    public string DatabaseUpdatesResource => Resource.GetResource(RESOURCE_KEY, "DatabaseUpdates");
+    public string DatabaseUpdatesResource => _resourceProvider.GetResource(RESOURCE_KEY, "DatabaseUpdates");
 
-    public string DatabaseUpdateSuccessfulResource => Resource.GetResource(RESOURCE_KEY, "DatabaseUpdateSuccessful");
+    public string DatabaseUpdateSuccessfulResource => _resourceProvider.GetResource(RESOURCE_KEY, "DatabaseUpdateSuccessful");
 
-    public string OpenLogPathResource => Resource.GetResource(RESOURCE_KEY, "OpenLogPath");
+    public string OpenLogPathResource => _resourceProvider.GetResource(RESOURCE_KEY, "OpenLogPath");
 
-    public string GettingStartedResource => Resource.GetResource(RESOURCE_KEY, "GettingStarted");
+    public string GettingStartedResource => _resourceProvider.GetResource(RESOURCE_KEY, "GettingStarted");
 
-    public string GettingStartedTeachingTipHintResource => Resource.GetResource(RESOURCE_KEY, "GettingStartedTeachingTipHint");
+    public string GettingStartedTeachingTipHintResource => _resourceProvider.GetResource(RESOURCE_KEY, "GettingStartedTeachingTipHint");
 
-    public string CreateNewDatabaseTeachingTipHintResource => Resource.GetResource(RESOURCE_KEY, "CreateNewDatabaseTeachingTipHint");
+    public string CreateNewDatabaseTeachingTipHintResource => _resourceProvider.GetResource(RESOURCE_KEY, "CreateNewDatabaseTeachingTipHint");
 
-    public string ImportExistingDatabaseResource => Resource.GetResource(RESOURCE_KEY, "ImportExistingDatabase");
+    public string ImportExistingDatabaseResource => _resourceProvider.GetResource(RESOURCE_KEY, "ImportExistingDatabase");
 
-    public string ImportExistingDatabaseTeachingTipHintResource => Resource.GetResource(RESOURCE_KEY, "ImportExistingDatabaseTeachingTipHint");
+    public string ImportExistingDatabaseTeachingTipHintResource => _resourceProvider.GetResource(RESOURCE_KEY, "ImportExistingDatabaseTeachingTipHint");
 
-    public string ErrorDatabaseBackupResource => Resource.GetResource(RESOURCE_KEY, "ErrorDatabaseBackup");
+    public string ErrorDatabaseBackupResource => _resourceProvider.GetResource(RESOURCE_KEY, "ErrorDatabaseBackup");
+
+    public string GotItResource => _resourceProvider.GeneralResources.GotIt;
   }
 }
 

@@ -17,9 +17,13 @@ namespace LoquatDocs.Services {
 
     private INotificationService _notificationService;
 
-    public LoquatDocsDbRepository(IConfigService configService, INotificationService notificationService) {
+    private IResourceProvider _resourceProvider;
+
+    public LoquatDocsDbRepository(IConfigService configService, INotificationService notificationService, 
+      IResourceProvider resourceProvider) {
       _config = configService;
       _notificationService = notificationService;
+      _resourceProvider = resourceProvider;
     }
 
     private async Task<LoquatDocsDbContext> GetNewDbContext() {

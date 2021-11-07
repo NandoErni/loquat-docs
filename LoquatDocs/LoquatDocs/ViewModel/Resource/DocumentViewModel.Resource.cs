@@ -10,47 +10,47 @@ namespace LoquatDocs.ViewModel {
 
     public const string RESOURCE_KEY = "Document";
 
-    public string AddDocumentResource => Resource.GetResource(RESOURCE_KEY, "AddDocument");
+    public string AddDocumentResource => _resourceProvider.GetResource(RESOURCE_KEY, "AddDocument");
 
-    public string DiscardDocumentResource => Resource.GetResource(RESOURCE_KEY, "DiscardDocument");
+    public string DiscardDocumentResource => _resourceProvider.GetResource(RESOURCE_KEY, "DiscardDocument");
 
-    public string DiscardDocumentDecisionResource => Resource.GetResource(RESOURCE_KEY, "DiscardDocumentDecision");
+    public string DiscardDocumentDecisionResource => _resourceProvider.GetResource(RESOURCE_KEY, "DiscardDocumentDecision");
 
-    public string DocumentResource => Resource.GetResource(RESOURCE_KEY, "Document");
+    public string DocumentResource => _resourceProvider.GetResource(RESOURCE_KEY, "Document");
 
-    public string DocumentAlreadyExistsAtLocationResource(string documentPath) => string.Format(Resource.GetResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation"), documentPath);
+    public string DocumentAlreadyExistsAtLocationResource(string documentPath) => string.Format(_resourceProvider.GetResource(RESOURCE_KEY, "DocumentAlreadyExistsAtLocation"), documentPath);
 
-    public string ErrorCantSaveResource => Resource.GetResource(RESOURCE_KEY, "ErrorCantSave");
+    public string ErrorCantSaveResource => _resourceProvider.GetResource(RESOURCE_KEY, "ErrorCantSave");
 
-    public string ErrorSavingToDatabaseResource => Resource.GetResource(RESOURCE_KEY, "ErrorSavingToDatabase");
+    public string ErrorSavingToDatabaseResource => _resourceProvider.GetResource(RESOURCE_KEY, "ErrorSavingToDatabase");
 
-    public string SavedSuccessfullyResource => Resource.GetResource(RESOURCE_KEY, "SavedSuccessfully");
+    public string SavedSuccessfullyResource => _resourceProvider.GetResource(RESOURCE_KEY, "SavedSuccessfully");
 
-    public string AddTagResource => Resource.GetResource(RESOURCE_KEY, "AddTag");
+    public string AddTagResource => _resourceProvider.GetResource(RESOURCE_KEY, "AddTag");
 
-    public string DueDateResource => Resource.GetResource(RESOURCE_KEY, "DueDate");
+    public string DueDateResource => _resourceProvider.GetResource(RESOURCE_KEY, "DueDate");
 
-    public string DateResource => Resource.GetResource(RESOURCE_KEY, "Date");
+    public string DateResource => _resourceProvider.GetResource(RESOURCE_KEY, "Date");
 
-    public string IsInvoiceResource => Resource.GetResource(RESOURCE_KEY, "IsInvoice");
+    public string IsInvoiceResource => _resourceProvider.GetResource(RESOURCE_KEY, "IsInvoice");
 
-    public string IsPayedResource => Resource.GetResource(RESOURCE_KEY, "IsPayed");
+    public string IsPayedResource => _resourceProvider.GetResource(RESOURCE_KEY, "IsPayed");
 
-    public string PathResource => Resource.GetResource(RESOURCE_KEY, "Path");
+    public string PathResource => _resourceProvider.GetResource(RESOURCE_KEY, "Path");
 
-    public string GroupNameResource => Resource.GetResource(RESOURCE_KEY, "GroupName");
+    public string GroupNameResource => _resourceProvider.GetResource(RESOURCE_KEY, "GroupName");
 
-    public string GroupNamePlaceholderResource => Resource.GetResource(RESOURCE_KEY, "GroupNamePlaceholder");
+    public string GroupNamePlaceholderResource => _resourceProvider.GetResource(RESOURCE_KEY, "GroupNamePlaceholder");
 
-    public string TitleResource => Resource.GetResource(RESOURCE_KEY, "Title");
+    public string TitleResource => _resourceProvider.GetResource(RESOURCE_KEY, "Title");
 
-    public string ChooseFileResource => Resource.GetResource(RESOURCE_KEY, "ChooseFile");
+    public string ChooseFileResource => _resourceProvider.GetResource(RESOURCE_KEY, "ChooseFile");
 
-    public string GroupResource => Resource.GetResource(DocumentGroupViewModel.RESOURCE_KEY, "Group");
+    public string GroupResource => _resourceProvider.GetResource(DocumentGroupViewModel.RESOURCE_KEY, "Group");
 
-    public string SaveResource => GeneralResources.Save;
+    public string SaveResource => _resourceProvider.GeneralResources.Save;
 
-    public string DiscardResource => GeneralResources.Discard;
+    public string DiscardResource => _resourceProvider.GeneralResources.Discard;
 
   }
 }

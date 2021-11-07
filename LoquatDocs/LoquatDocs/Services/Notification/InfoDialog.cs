@@ -8,11 +8,11 @@ namespace LoquatDocs.Services {
 
     private ContentDialog _controlDialog;
 
-    public InfoDialog(string title, string message) {
+    public InfoDialog(IResourceProvider resourceProvider, string title, string message) {
       _controlDialog = new ContentDialog() {
         Title = title,
         Content = message,
-        CloseButtonText = GeneralResources.Close,
+        CloseButtonText = resourceProvider.GeneralResources.Close,
         XamlRoot = App.MainWindow.Content.XamlRoot
       };
     }
@@ -21,17 +21,17 @@ namespace LoquatDocs.Services {
       await _controlDialog.ShowAsync();
     }
 
-    public static async Task CreateAndShowAsync(string title, string message) {
-      InfoDialog dialog = new InfoDialog(title, message);
+    public static async Task CreateAndShowAsync(IResourceProvider resourceProvider, string title, string message) {
+      InfoDialog dialog = new InfoDialog(resourceProvider, title, message);
       await dialog.ShowAsync();
     }
 
-    public static async Task CreateAndShowSuccessAsync(string message) {
-      await CreateAndShowAsync(GeneralResources.Success, message);
+    public static async Task CreateAndShowSuccessAsync(IResourceProvider resourceProvider, string message) {
+      await CreateAndShowAsync(resourceProvider, resourceProvider.GeneralResources.Success, message);
     }
 
-    public static async Task CreateAndShowErrorAsync(string message) {
-      await CreateAndShowAsync(GeneralResources.Error, message);
+    public static async Task CreateAndShowErrorAsync(IResourceProvider resourceProvider, string message) {
+      await CreateAndShowAsync(resourceProvider, resourceProvider.GeneralResources.Error, message);
     }
   }
 }

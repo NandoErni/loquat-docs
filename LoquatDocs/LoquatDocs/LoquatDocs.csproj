@@ -29,7 +29,6 @@
   <ItemGroup>
     <None Remove="Strings\en-US\LoquatDocsDbRepository.resw" />
     <None Remove="View\HomePage.xaml" />
-    <None Remove="View\ListDocumentsPage.xaml" />
     <None Remove="View\SearchPage.xaml" />
     <None Remove="Settings.xaml" />
     <None Remove="Strings\en-US\Document.resw" />
